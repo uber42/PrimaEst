@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Storage">
+      <UniqueIdentifier>{b64366f1-0a2c-4ed9-8d91-8a487dfddaa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Storage\Skiplist">
+      <UniqueIdentifier>{2a8675fa-a138-4142-b073-6d940d970811}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools">
+      <UniqueIdentifier>{0c7178c8-b374-469b-a02b-5f6b56805b19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test">
+      <UniqueIdentifier>{b1d6d90f-f3e6-41fe-b5f4-be396522a602}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test\SkipList">
+      <UniqueIdentifier>{6a443685-c841-4eab-a7a6-8af56ecf8ee9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{ab5e19d1-0394-4bcf-b62c-ed8c9d625be8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Storage\Skiplist\SkipList.h">
+      <Filter>Storage\Skiplist</Filter>
+    </ClInclude>
+    <ClInclude Include="global.h" />
+    <ClInclude Include="Tools\List.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Test\SkipList\SkipListTest.h">
+      <Filter>Test\SkipList</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Random.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Storage\Skiplist\SkipList.c">
+      <Filter>Storage\Skiplist</Filter>
+    </ClCompile>
+    <ClCompile Include="tests.c" />
+    <ClCompile Include="Test\SkipList\SkipListTest.c">
+      <Filter>Test\SkipList</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
