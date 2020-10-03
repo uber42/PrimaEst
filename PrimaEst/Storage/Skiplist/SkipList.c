@@ -5,12 +5,12 @@
  * @date Oct 2020
  */
 
-#include "../../global.h"
+#include "../../global.h" 
 
-/**
- * Сгенирировать высоту
- * @return Высота
- */
+ /**
+  * Сгенирировать высоту
+  * @return Высота
+  */
 static DWORD
 RandomHeight();
 
@@ -18,7 +18,7 @@ RandomHeight();
  * Создать узел списка с пропусками
  * @param[in] dwHeight	Высота
  * @param[in] pKey		Ключ
- * @param[in] pValue	Значение
+ * @param[in] pValue	Значение 
  * @return				Узел
  */
 PSSkipListNode
@@ -33,7 +33,7 @@ CreateSkipListNode(
  * @param[in] pKey		Ключ
  * @param[in] pValue	Значение
  * @return				Узел
- */
+ */ 
 PSSkipListNode
 CreateSkipListNode(
 	DWORD		dwHeight,

@@ -75,11 +75,11 @@ EOutputTypeToString(
 		return TRUE;
 	case EOT_TEXTFILE:
 		memcpy(pszOutputType,
-			LOG_EOT_TEXTFILE, sizeof(LOG_EOT_BINARYFILE));
+			LOG_EOT_TEXTFILE, sizeof(LOG_EOT_TEXTFILE));
 		return TRUE;
 	case EOT_CONSOLE:
 		memcpy(pszOutputType,
-			LOG_EOT_CONSOLE, sizeof(LOG_EOT_BINARYFILE));
+			LOG_EOT_CONSOLE, sizeof(LOG_EOT_CONSOLE));
 		return TRUE;
 	default:
 		return FALSE;
@@ -232,7 +232,7 @@ ParseLoggerConfigurationInternal(
 	}
 
 	BOOL bScopeResult = TRUE;
-	do 
+	do
 	{
 		BOOL  bConvertResult;
 		PCHAR pszItem;
@@ -247,7 +247,6 @@ ParseLoggerConfigurationInternal(
 		pszItem = CharLower(pFound->valuestring);
 		StringToEOutputType(&eOutputType, pszItem);
 		psLogConfiguration->eOutputType = eOutputType;
-
 
 		pFound = cJSON_GetObjectItem(pRoot, LOG_CONFIGURATION_LOG_FILE_PATH);
 		if (pFound == NULL)
@@ -265,7 +264,6 @@ ParseLoggerConfigurationInternal(
 			0, sizeof(psLogConfiguration->szLogFilePath));
 		memcpy(psLogConfiguration->szLogFilePath,
 			pFound->valuestring, nLength);
-
 
 		ELevelPriority eLowLevelPriority = LOG_DEFAULT_LOW_PRIORITY;
 		pFound = cJSON_GetObjectItem(pRoot, LOG_CONFIGURATION_LOW_PRIORITY);

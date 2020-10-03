@@ -4,7 +4,7 @@
 #define LOG_EOT_TEXTFILE				"text"
 #define LOG_EOT_BINARYFILE				"binary"
 
-#define LOG_ELP_DEBUG					"debug"
+#define LOG_ELP_DEBUG					"debug" 
 #define LOG_ELP_INFO					"info"
 #define LOG_ELP_WARN					"warn"
 #define LOG_ELP_ERROR					"error"
@@ -12,8 +12,8 @@
 
 #define LOG_ELP_HASH_SEED				0xFFFFFF00
 
-static 
-DWORD 
+static
+DWORD
 QuickFnvExecute(
 	PCHAR		pszBuffer,
 	DWORD		dwSeed
@@ -65,7 +65,7 @@ ParseLogTest_1()
 	BOOL bResult = ParseLoggerConfiguration(
 		L"../PrimaEst/Test/Resources/TestLogConfigurationOk.json",
 		&sLogConfiguration);
-	
+
 	assert(bResult == TRUE);
 	assert(sLogConfiguration.eLowerLevelPriority == ELP_DEBUG);
 	assert(sLogConfiguration.eUpperLevelPriority == ELP_EXTRA);

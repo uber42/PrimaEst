@@ -7,12 +7,12 @@
 
 #include "../global.h"
 
-/**
-* Посчитать один байт
-* @param[in] ucByte			Байт данных
-* @param[in] dwHashSeed		Начальный хэш
-* @return					Результат.
-*/
+ /**
+ * Посчитать один байт
+ * @param[in] ucByte			Байт данных
+ * @param[in] dwHashSeed		Начальный хэш
+ * @return					Результат.
+ */
 DWORD
 Fnv1aCodeOneByte(
 	BYTE	ucByte,
@@ -65,5 +65,5 @@ Fnv1aCodeOneByte(
 	DWORD	dwHashSeed
 )
 {
-	return (ucByte ^ dwHashSeed) * FNV_1A_PRIME;
+	return (ucByte ^ dwHashSeed)* FNV_1A_PRIME;
 }

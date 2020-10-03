@@ -12,6 +12,7 @@ int main()
 	//SkipListAddTest();
 	//SkipListSetTest();
 
+	/** Тесты для лога */
 	LogEnumFnvTest();
 	ParseLogTest_1();
 	ParseLogTest_2();

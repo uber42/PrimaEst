@@ -5,8 +5,6 @@
  * @date Oct 2020
  */
 
-
-
 #ifndef RANDOM_H
 #define RANDOM_H
 

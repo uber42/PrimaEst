@@ -20,14 +20,14 @@ typedef PVOID ASYNC_LOGGER, PASYNC_LOGGER;
 typedef enum _EOutputType
 {
 	/** Вывод в консоль */
-	EOT_CONSOLE		= 0xdf47bdd9,
+	EOT_CONSOLE = 0xdf47bdd9,
 
 	/** Вывод в текстовый файл */
-	EOT_TEXTFILE	= 0x44736337,
+	EOT_TEXTFILE = 0x44736337,
 
 	/** Вывод в бинайрный файл */
-	EOT_BINARYFILE	= 0xd7f85465
-} EOutputType, *PEOutputType;
+	EOT_BINARYFILE = 0xd7f85465
+} EOutputType, * PEOutputType;
 
 /**
  * Перечисление приоритетов вывода
@@ -36,20 +36,20 @@ typedef enum _EOutputType
 typedef enum _ELevelPriority
 {
 	/** Отладочные данные */
-	ELP_DEBUG		= 0x043e49e7,
+	ELP_DEBUG = 0x043e49e7,
 
 	/** Информация */
-	ELP_INFO		= 0x94e92a9c,
+	ELP_INFO = 0x94e92a9c,
 
 	/** Предупреждение */
-	ELP_WARN		= 0xc22283cc,
+	ELP_WARN = 0xc22283cc,
 
 	/** Ошибка */
-	ELP_ERROR		= 0xd9d3a7c6,
+	ELP_ERROR = 0xd9d3a7c6,
 
 	/** Критическая ошибка, за которой следует завершение программы */
-	ELP_EXTRA		= 0xdf823706
-} ELevelPriority, *PELevelPriority;
+	ELP_EXTRA = 0xdf823706
+} ELevelPriority, * PELevelPriority;
 
 /**
  * Конфигурация лога
@@ -67,7 +67,7 @@ typedef struct _SLogConfiguration
 
 	/** Верхний приоритет */
 	ELevelPriority	eUpperLevelPriority;
-} SLogConfiguration, *PSLogConfiguration;
+} SLogConfiguration, * PSLogConfiguration;
 
 /**
  * Данные записи лога
@@ -94,9 +94,9 @@ typedef struct _SLogEntry
 
 	/** Сообщение */
 	WCHAR			wszMessage[LOG_ENTRY_MAX_LENGTH];
-} SLogEntry, *PSLogEntry;
+} SLogEntry, * PSLogEntry;
 
-BOOL 
+BOOL
 StringToEOutputType(
 	PEOutputType	eOutputType,
 	PCHAR			pszOutputType
@@ -119,7 +119,6 @@ ELevelPriorityToString(
 	ELevelPriority	eOutputType,
 	PCHAR			pszOutputType
 );
-
 
 BOOL
 ParseLoggerConfiguration(

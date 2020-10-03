@@ -8,7 +8,7 @@
 #ifndef SKIP_LIST_H
 #define SKIP_LIST_H
 
-/** Максимальная высота */
+ /** Максимальная высота */
 #define SKIP_LIST_MAX_HEIGHT 32
 
 /**

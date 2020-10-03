@@ -18,7 +18,7 @@
 #define MESSAGE_QUEUE_BUFFER_NOT_ALLOW			(MESSAGE_QUEUE_STATUS_OK + 5)
 #define MESSAGE_QUEUE_BAD_HANDLER				(MESSAGE_QUEUE_STATUS_OK + 6)
 
-/** Описатель очереди сообщений */
+ /** Описатель очереди сообщений */
 typedef PVOID MESSAGE_QUEUE;
 
 /** Данные сообщения */

@@ -2,5 +2,5 @@
   "OutputType": "File",
   "LogFilePath": "./Log.txt",
   "LowPriority": "debug",
-  "HighPriority":  "critical"
+  "HighPriority": "critical"
 }
