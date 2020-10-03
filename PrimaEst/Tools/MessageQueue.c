@@ -199,22 +199,17 @@ MessageQueuePop(
 	PSMessageQueue psMessageQueue = (PSMessageQueue)hMessageQueue;
 
 	EnterCriticalSection(&psMessageQueue->crQueueLock);
-	while (psMessageQueue->bIsWork && ListIsEmpty(&psMessageQueue->sQueueMessages))
+	while (psMessageQueue->bIsWork &&
+			ListIsEmpty(&psMessageQueue->sQueueMessages))
 	{
 		LeaveCriticalSection(&psMessageQueue->crQueueLock);
 
-		DWORD dwWaitRes = WaitForSingleObject(psMessageQueue->hPushEvent, INFINITE);
+		DWORD dwWaitRes = WaitForSingleObject(
+			psMessageQueue->hPushEvent,
+			INFINITE);
 
 		if (dwWaitRes != WAIT_OBJECT_0)
 		{
-			*dwError = MESSAGE_QUEUE_EVENT_ERROR;
-			return FALSE;
-		}
-
-		if (!psMessageQueue->bIsWork)
-		{
-			SetEvent(psMessageQueue->hPushEvent);
-
 			*dwError = MESSAGE_QUEUE_CLOSED;
 			return FALSE;
 		}
@@ -222,16 +217,24 @@ MessageQueuePop(
 		EnterCriticalSection(&psMessageQueue->crQueueLock);
 	}
 
+	if (psMessageQueue->bIsWork != TRUE)
+	{
+		LeaveCriticalSection(&psMessageQueue->crQueueLock);
+
+		*dwError = MESSAGE_QUEUE_CLOSED;
+		return FALSE;
+	}
+
 	psMessageQueue->dwMessagesCount--;
 	PSList psFrontEntry = psMessageQueue->sQueueMessages.pFlink;
 	ListNodeDelete(psFrontEntry);
+
+	LeaveCriticalSection(&psMessageQueue->crQueueLock);
 
 	PSMessageContext psEntry = CONTAINING_RECORD(
 		psFrontEntry,
 		SMessageContext,
 		sEntry);
-
-	LeaveCriticalSection(&psMessageQueue->crQueueLock);
 
 	psMessageData->dwBufferSize = psEntry->dwBufferSize;
 	psMessageData->pBuffer = psEntry->pBuffer;
@@ -272,4 +275,18 @@ MessageQueueClear(
 	psMessageQueue->dwMessagesCount = 0;
 
 	LeaveCriticalSection(&psMessageQueue->crQueueLock);
+}
+
+/**
+* Получить количество элементов в очереди
+* @param[out]   hMessageQueue		Экземпляр очереди сообщений
+* @return Количество элементов в очереди
+*/
+DWORD
+MessageQueueGetCount(
+	MESSAGE_QUEUE hMessageQueue
+)
+{
+	PSMessageQueue psMessageQueue = (PSMessageQueue)hMessageQueue;
+	return psMessageQueue->dwMessagesCount;
 }

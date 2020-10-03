@@ -8,10 +8,8 @@
 #ifndef LOG_H
 #define LOG_H
 
-#define LOG_ENTRY_MAX_LENGTH	1 << 11
-#define LOG_ENUM_MAX_LENGTH		1 << 5
-
-typedef PVOID ASYNC_LOGGER, PASYNC_LOGGER;
+#define LOG_ENTRY_MAX_LENGTH	(1 << 11)
+#define LOG_ENUM_MAX_LENGTH		(1 << 5)
 
 /**
  * Перечисление видов вывода лога
@@ -69,66 +67,148 @@ typedef struct _SLogConfiguration
 	ELevelPriority	eUpperLevelPriority;
 } SLogConfiguration, * PSLogConfiguration;
 
+
 /**
- * Данные записи лога
+ * Конвертировать строку EOutputType
+ * @param[out]	eOutputType		Тип вывода
+ * @param[in]	pszOutputType	Строковое значение типа
+ * @return						Результат работы функции
  */
-typedef struct _SLogEntry
-{
-	/** Номер записи */
-	DWORD			dwNumber;
-
-	/** ИД процесса  */
-	DWORD			dwProcessId;
-
-	/** ИД нити */
-	DWORD			dwThreadId;
-
-	/** Время */
-	SYSTEMTIME		sTime;
-
-	/** Приоритет записи */
-	ELevelPriority	eLevelPriority;
-
-	/** Длина сообщения */
-	DWORD			dwMessageLength;
-
-	/** Сообщение */
-	WCHAR			wszMessage[LOG_ENTRY_MAX_LENGTH];
-} SLogEntry, * PSLogEntry;
-
 BOOL
 StringToEOutputType(
 	PEOutputType	eOutputType,
 	PCHAR			pszOutputType
 );
 
+/**
+ * Конвертировать EOutputType в строку
+ * @param[in]	eOutputType		Тип вывода
+ * @param[out]	pszOutputType	Строковое значение типа
+ * @return						Результат работы функции
+ */
 BOOL
 EOutputTypeToString(
 	EOutputType		eOutputType,
 	PCHAR			pszOutputType
 );
 
+/**
+ * Конвертировать строку в ELevelPriority
+ * @param[out]	eLevelPriority		Уровень приоритета
+ * @param[in]	pszLevelPriority	Строковое значение типа
+ * @return							Результат работы функции
+ */
 BOOL
 StringToELevelPriority(
-	PELevelPriority	eOutputType,
-	PCHAR			pszOutputType
+	PELevelPriority	eLevelPriority,
+	PCHAR			pszLevelPriority
 );
 
+/**
+ * Конвертировать ELevelPriority в строку
+ * @param[in]	eLevelPriority		Уровень приоритета
+ * @param[out]	pszLevelPriority	Строковое значение типа
+ * @return							Результат работы функции
+ */
 BOOL
 ELevelPriorityToString(
-	ELevelPriority	eOutputType,
-	PCHAR			pszOutputType
+	ELevelPriority	eLevelPriority,
+	PCHAR			pszLevelPriority
 );
 
+/**
+ * Распарсить файл с конфигурацией лога
+ * @param[in]	pwszConfigurationPath		Путь к файлу с конфигурацией
+ * @param[out]	psLogConfiguration			Структура конфигурации
+ * @return									Результат работы функции
+ */
 BOOL
 ParseLoggerConfiguration(
 	PWCHAR				pwszConfigurationPath,
 	PSLogConfiguration	psLogConfiguration
 );
 
-PASYNC_LOGGER
+/**
+ * Инициализировать логгер
+ * @param[in]	psLogConfiguration			Структура конфигурации
+ * @return									Результат работы функции
+ */
+BOOL
 InitializeAsyncLogger(
 	SLogConfiguration sLogConfiguration
 );
+
+/**
+ * Деинициализировать логгер
+ */
+VOID
+DeinitializeAsyncLogger();
+
+/**
+ * Записать отладочные данные
+ * @param[in]	szFormat	Формат записи
+ * @param[in]	...			Аргументы
+ */
+VOID
+LogDebug(
+	PCHAR szFormat,
+	...
+);
+
+/**
+ * Записать информацию о процессе выполнения программы
+ * @param[in]	szFormat	Формат записи
+ * @param[in]	...			Аргументы
+ */
+VOID
+LogInfo(
+	PCHAR szFormat,
+	...
+);
+
+/**
+ * Записать предупреждение
+ * @param[in]	szFormat	Формат записи
+ * @param[in]	...			Аргументы
+ */
+VOID
+LogWarning(
+	PCHAR szFormat,
+	...
+);
+
+/**
+ * Записать ошибку
+ * @param[in]	szFormat	Формат записи
+ * @param[in]	...			Аргументы
+ */
+VOID
+LogError(
+	PCHAR szFormat,
+	...
+);
+
+/**
+ * Записать критическую ошибку
+ * @param[in]	szFormat	Формат записи
+ * @param[in]	...			Аргументы
+ */
+VOID
+LogExtra(
+	PCHAR szFormat,
+	...
+);
+
+/**
+ * Приостановить вывод логов
+ */
+BOOL
+SuspendAsyncLogger();
+
+/**
+ * Возобновить/Начать вывод логов
+ */
+BOOL
+ResumeAsyncLogger();
 
 #endif // LOG_H

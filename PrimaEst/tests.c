@@ -13,9 +13,11 @@ int main()
 	//SkipListSetTest();
 
 	/** Тесты для лога */
-	LogEnumFnvTest();
-	ParseLogTest_1();
-	ParseLogTest_2();
+	//LogEnumFnvTest();
+	//ParseLogTest_1();
+	//ParseLogTest_2();
+	//LogWriteTest_1();
+	LogMultiThreadWriteTest_1();
 
 	system("PAUSE");
 }

@@ -95,4 +95,14 @@ MessageQueueClear(
 	MESSAGE_QUEUE hMessageQueue
 );
 
+/**
+* Получить количество элементов в очереди
+* @param[out]   hMessageQueue		Экземпляр очереди сообщений
+* @return Количество элементов в очереди
+*/
+DWORD
+MessageQueueGetCount(
+	MESSAGE_QUEUE hMessageQueue
+);
+
 #endif // MESSAGE_QUEUE_H

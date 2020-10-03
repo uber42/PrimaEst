@@ -27,6 +27,20 @@ QuickFnvExecute(
 		0xFFFFFF00);
 }
 
+static
+PVOID
+TestLogWriteRoutine(
+	LPVOID lpThreadContext
+)
+{
+	const int nIterCount = 10;
+	for (int i = 0; i < nIterCount; i++)
+	{
+		LogInfo("Number %d, Thread %d", i, GetCurrentThreadId());
+	}
+	return NULL;
+}
+
 VOID
 LogEnumFnvTest()
 {
@@ -83,4 +97,60 @@ ParseLogTest_2()
 		&sLogConfiguration);
 
 	assert(bResult == FALSE);
+}
+
+VOID
+LogWriteTest_1()
+{
+	SLogConfiguration sLogConfiguration;
+
+	BOOL bResult = ParseLoggerConfiguration(
+		L"../PrimaEst/Test/Resources/TestLogConfigurationOk.json",
+		&sLogConfiguration);
+
+	InitializeAsyncLogger(sLogConfiguration);
+	ResumeAsyncLogger();
+
+	for (int i = 0; i < 5; i++)
+	{
+		LogInfo("%d", i);
+	}
+
+	DeinitializeAsyncLogger();
+}
+
+VOID
+LogMultiThreadWriteTest_1()
+{
+	SLogConfiguration sLogConfiguration;
+
+	BOOL bResult = ParseLoggerConfiguration(
+		L"../PrimaEst/Test/Resources/TestLogConfigurationOk.json",
+		&sLogConfiguration);
+
+	InitializeAsyncLogger(sLogConfiguration);
+	ResumeAsyncLogger();
+
+	#define nThreadCount 10
+	HANDLE hThreads[nThreadCount];
+	for (int i = 0; i < nThreadCount; i++)
+	{
+		hThreads[i] = CreateThread(
+			NULL, 0,
+			(LPTHREAD_START_ROUTINE)& TestLogWriteRoutine,
+			NULL, 0, NULL
+		);
+	}
+
+	WaitForMultipleObjects(
+		nThreadCount,
+		hThreads, TRUE,
+		INFINITE);
+
+	for (int i = 0; i < nThreadCount; i++)
+	{
+		CloseHandle(hThreads[i]);
+	}
+
+	DeinitializeAsyncLogger();
 }
