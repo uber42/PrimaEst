@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file global.h
  *
  * @author Pavel Chursin

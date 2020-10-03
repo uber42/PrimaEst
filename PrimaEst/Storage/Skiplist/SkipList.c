@@ -1,4 +1,4 @@
-/**
+п»ї/**
  * @file SkipList.c
  *
  * @author Pavel Chursin
@@ -8,18 +8,18 @@
 #include "../../global.h" 
 
  /**
-  * Сгенирировать высоту
-  * @return Высота
+  * РЎРіРµРЅРёСЂРёСЂРѕРІР°С‚СЊ РІС‹СЃРѕС‚Сѓ
+  * @return Р’С‹СЃРѕС‚Р°
   */
-static DWORD
+static DWORD 
 RandomHeight();
 
 /**
- * Создать узел списка с пропусками
- * @param[in] dwHeight	Высота
- * @param[in] pKey		Ключ
- * @param[in] pValue	Значение 
- * @return				Узел
+ * РЎРѕР·РґР°С‚СЊ СѓР·РµР» СЃРїРёСЃРєР° СЃ РїСЂРѕРїСѓСЃРєР°РјРё
+ * @param[in] dwHeight	Р’С‹СЃРѕС‚Р°
+ * @param[in] pKey		РљР»СЋС‡
+ * @param[in] pValue	Р—РЅР°С‡РµРЅРёРµ 
+ * @return				РЈР·РµР»
  */
 PSSkipListNode
 CreateSkipListNode(
@@ -28,11 +28,11 @@ CreateSkipListNode(
 	PVOID	    pValue);
 
 /**
- * Создать узел списка с пропусками
- * @param[in] dwHeight	Высота
- * @param[in] pKey		Ключ
- * @param[in] pValue	Значение
- * @return				Узел
+ * РЎРѕР·РґР°С‚СЊ СѓР·РµР» СЃРїРёСЃРєР° СЃ РїСЂРѕРїСѓСЃРєР°РјРё
+ * @param[in] dwHeight	Р’С‹СЃРѕС‚Р°
+ * @param[in] pKey		РљР»СЋС‡
+ * @param[in] pValue	Р—РЅР°С‡РµРЅРёРµ
+ * @return				РЈР·РµР»
  */ 
 PSSkipListNode
 CreateSkipListNode(
@@ -60,9 +60,9 @@ CreateSkipListNode(
 }
 
 /**
- * Создать список с пропусками
- * @param[in] pfComparator	Компаратор
- * @return					Созданный список
+ * РЎРѕР·РґР°С‚СЊ СЃРїРёСЃРѕРє СЃ РїСЂРѕРїСѓСЃРєР°РјРё
+ * @param[in] pfComparator	РљРѕРјРїР°СЂР°С‚РѕСЂ
+ * @return					РЎРѕР·РґР°РЅРЅС‹Р№ СЃРїРёСЃРѕРє
  */
 PSSkipList
 CreateSkipList(
@@ -93,12 +93,12 @@ CreateSkipList(
 }
 
 /**
- * Добавить пару ключ-значение в список
- * Если ключ уже есть в структуре, то меняет значение
- * @param[in] psSkipList	Экземпляр списка
- * @param[in] pKey			Ключ
- * @param[in] pValue		Значение
- * @return					Добавленный узел
+ * Р”РѕР±Р°РІРёС‚СЊ РїР°СЂСѓ РєР»СЋС‡-Р·РЅР°С‡РµРЅРёРµ РІ СЃРїРёСЃРѕРє
+ * Р•СЃР»Рё РєР»СЋС‡ СѓР¶Рµ РµСЃС‚СЊ РІ СЃС‚СЂСѓРєС‚СѓСЂРµ, С‚Рѕ РјРµРЅСЏРµС‚ Р·РЅР°С‡РµРЅРёРµ
+ * @param[in] psSkipList	Р­РєР·РµРјРїР»СЏСЂ СЃРїРёСЃРєР°
+ * @param[in] pKey			РљР»СЋС‡
+ * @param[in] pValue		Р—РЅР°С‡РµРЅРёРµ
+ * @return					Р”РѕР±Р°РІР»РµРЅРЅС‹Р№ СѓР·РµР»
  */
 PSSkipListNode
 SkipListSet(
@@ -167,10 +167,10 @@ SkipListSet(
 }
 
 /**
- * Найти ключ в списке
- * @param[in] psSkipList	Экземпляр списка
- * @param[in] pKey			Ключ
- * @return					Найденный узел
+ * РќР°Р№С‚Рё РєР»СЋС‡ РІ СЃРїРёСЃРєРµ
+ * @param[in] psSkipList	Р­РєР·РµРјРїР»СЏСЂ СЃРїРёСЃРєР°
+ * @param[in] pKey			РљР»СЋС‡
+ * @return					РќР°Р№РґРµРЅРЅС‹Р№ СѓР·РµР»
  */
 PSSkipListNode
 SkipListFind(
@@ -220,9 +220,9 @@ SkipListFind(
 }
 
 /**
- * Удалить узел в списке по ключу
- * @param[in] psSkipList	Экземпляр списка
- * @param[in] pKey			Ключ
+ * РЈРґР°Р»РёС‚СЊ СѓР·РµР» РІ СЃРїРёСЃРєРµ РїРѕ РєР»СЋС‡Сѓ
+ * @param[in] psSkipList	Р­РєР·РµРјРїР»СЏСЂ СЃРїРёСЃРєР°
+ * @param[in] pKey			РљР»СЋС‡
  */
 VOID
 SkipListRemove(
@@ -285,9 +285,9 @@ SkipListRemove(
 }
 
 /**
- * Распечатать список с иерархией уровней
- * @param[in] psSkipList			Экземпляр списка
- * @param[in] pFSkipListPrinter		Функция описывающая вывод для
+ * Р Р°СЃРїРµС‡Р°С‚Р°С‚СЊ СЃРїРёСЃРѕРє СЃ РёРµСЂР°СЂС…РёРµР№ СѓСЂРѕРІРЅРµР№
+ * @param[in] psSkipList			Р­РєР·РµРјРїР»СЏСЂ СЃРїРёСЃРєР°
+ * @param[in] pFSkipListPrinter		Р¤СѓРЅРєС†РёСЏ РѕРїРёСЃС‹РІР°СЋС‰Р°СЏ РІС‹РІРѕРґ РґР»СЏ
  */
 VOID
 SkipListPrint(
@@ -342,9 +342,9 @@ SkipListPrint(
 }
 
 /**
- * Получить список всех элементов структуры
- * @param[in] psSkipList Экземпляр списка
- * @return				 Список всех элементов
+ * РџРѕР»СѓС‡РёС‚СЊ СЃРїРёСЃРѕРє РІСЃРµС… СЌР»РµРјРµРЅС‚РѕРІ СЃС‚СЂСѓРєС‚СѓСЂС‹
+ * @param[in] psSkipList Р­РєР·РµРјРїР»СЏСЂ СЃРїРёСЃРєР°
+ * @return				 РЎРїРёСЃРѕРє РІСЃРµС… СЌР»РµРјРµРЅС‚РѕРІ
  */
 PSList
 SkipListGetAll(
@@ -355,8 +355,8 @@ SkipListGetAll(
 }
 
 /**
- * Удалить все значения из списка
- * @param[in] psSkipList Экземпляр списка
+ * РЈРґР°Р»РёС‚СЊ РІСЃРµ Р·РЅР°С‡РµРЅРёСЏ РёР· СЃРїРёСЃРєР°
+ * @param[in] psSkipList Р­РєР·РµРјРїР»СЏСЂ СЃРїРёСЃРєР°
  */
 VOID
 SkipListClear(
@@ -393,8 +393,8 @@ SkipListClear(
 }
 
 /**
- * Освободить все ресурсы занятые структурой
- * @param[in] psSkipList Экземпляр списка
+ * РћСЃРІРѕР±РѕРґРёС‚СЊ РІСЃРµ СЂРµСЃСѓСЂСЃС‹ Р·Р°РЅСЏС‚С‹Рµ СЃС‚СЂСѓРєС‚СѓСЂРѕР№
+ * @param[in] psSkipList Р­РєР·РµРјРїР»СЏСЂ СЃРїРёСЃРєР°
  */
 VOID
 SkipListClose(
@@ -406,8 +406,8 @@ SkipListClose(
 }
 
 /**
- * Сгенирировать высоту
- * @return Высота
+ * РЎРіРµРЅРёСЂРёСЂРѕРІР°С‚СЊ РІС‹СЃРѕС‚Сѓ
+ * @return Р’С‹СЃРѕС‚Р°
  */
 static DWORD
 RandomHeight()

@@ -1,4 +1,4 @@
-#ifndef LOG_TEST_H
+﻿#ifndef LOG_TEST_H
 #define LOG_TEST_H
 
 VOID

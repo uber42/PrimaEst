@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file Log.c
  *
  * @author Pavel Chursin

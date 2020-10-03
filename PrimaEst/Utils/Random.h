@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file Random.h
  *
  * @author Pavel Chursin

@@ -1,4 +1,4 @@
-/**
+п»ї/**
  * @file Fnv1a.c
  *
  * @author Pavel Chursin
@@ -8,10 +8,10 @@
 #include "../global.h"
 
  /**
- * Посчитать один байт
- * @param[in] ucByte			Байт данных
- * @param[in] dwHashSeed		Начальный хэш
- * @return					Результат.
+ * РџРѕСЃС‡РёС‚Р°С‚СЊ РѕРґРёРЅ Р±Р°Р№С‚
+ * @param[in] ucByte			Р‘Р°Р№С‚ РґР°РЅРЅС‹С…
+ * @param[in] dwHashSeed		РќР°С‡Р°Р»СЊРЅС‹Р№ С…СЌС€
+ * @return					Р РµР·СѓР»СЊС‚Р°С‚.
  */
 DWORD
 Fnv1aCodeOneByte(
@@ -20,12 +20,12 @@ Fnv1aCodeOneByte(
 );
 
 /**
-* Посчитать FNV1A
-* @param[in] pData			Данные
-* @param[in] dwDataLength	Длина данных
-* @param[in] dwDataSize		Размер данных
-* @param[in] dwHashSeed		Начальный хэш
-* @return					Результат
+* РџРѕСЃС‡РёС‚Р°С‚СЊ FNV1A
+* @param[in] pData			Р”Р°РЅРЅС‹Рµ
+* @param[in] dwDataLength	Р”Р»РёРЅР° РґР°РЅРЅС‹С…
+* @param[in] dwDataSize		Р Р°Р·РјРµСЂ РґР°РЅРЅС‹С…
+* @param[in] dwHashSeed		РќР°С‡Р°Р»СЊРЅС‹Р№ С…СЌС€
+* @return					Р РµР·СѓР»СЊС‚Р°С‚
 */
 DWORD
 Fnv1aCompute(
@@ -54,10 +54,10 @@ Fnv1aCompute(
 }
 
 /**
-* Посчитать один байт
-* @param[in] ucByte			Байт данных
-* @param[in] dwHashSeed		Начальный хэш
-* @return					Результат.
+* РџРѕСЃС‡РёС‚Р°С‚СЊ РѕРґРёРЅ Р±Р°Р№С‚
+* @param[in] ucByte			Р‘Р°Р№С‚ РґР°РЅРЅС‹С…
+* @param[in] dwHashSeed		РќР°С‡Р°Р»СЊРЅС‹Р№ С…СЌС€
+* @return					Р РµР·СѓР»СЊС‚Р°С‚.
 */
 DWORD
 Fnv1aCodeOneByte(

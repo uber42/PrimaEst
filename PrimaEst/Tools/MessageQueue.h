@@ -1,4 +1,4 @@
-/**
+п»ї/**
  * @file MessageQueue.h
  *
  * @author Pavel Chursin
@@ -18,26 +18,26 @@
 #define MESSAGE_QUEUE_BUFFER_NOT_ALLOW			(MESSAGE_QUEUE_STATUS_OK + 5)
 #define MESSAGE_QUEUE_BAD_HANDLER				(MESSAGE_QUEUE_STATUS_OK + 6)
 
- /** Описатель очереди сообщений */
+ /** РћРїРёСЃР°С‚РµР»СЊ РѕС‡РµСЂРµРґРё СЃРѕРѕР±С‰РµРЅРёР№ */
 typedef PVOID MESSAGE_QUEUE;
 
-/** Данные сообщения */
+/** Р”Р°РЅРЅС‹Рµ СЃРѕРѕР±С‰РµРЅРёСЏ */
 typedef struct _SMessageData
 {
-	/** Размер сообщения */
+	/** Р Р°Р·РјРµСЂ СЃРѕРѕР±С‰РµРЅРёСЏ */
 	DWORD	dwBufferSize;
 
-	/** Буфер сообщения */
+	/** Р‘СѓС„РµСЂ СЃРѕРѕР±С‰РµРЅРёСЏ */
 	PVOID	pBuffer;
 } SMessageData, * PSMessageData;
 
 /**
-* Создать очередь сообщений
-* @param[out]		ppsMessageQueue		Экземпляр очереди сообщений
-* @param@param[in]	dwMessagesMaxCount	Максимальное количество сообщений в очереди
-* @param@param[in]	dwMessageBufferSize	Размер передаваемого сообщения
-* @param[out]		dwError				Ошибка
-* @return Результат работы функции.
+* РЎРѕР·РґР°С‚СЊ РѕС‡РµСЂРµРґСЊ СЃРѕРѕР±С‰РµРЅРёР№
+* @param[out]		ppsMessageQueue		Р­РєР·РµРјРїР»СЏСЂ РѕС‡РµСЂРµРґРё СЃРѕРѕР±С‰РµРЅРёР№
+* @param@param[in]	dwMessagesMaxCount	РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃРѕРѕР±С‰РµРЅРёР№ РІ РѕС‡РµСЂРµРґРё
+* @param@param[in]	dwMessageBufferSize	Р Р°Р·РјРµСЂ РїРµСЂРµРґР°РІР°РµРјРѕРіРѕ СЃРѕРѕР±С‰РµРЅРёСЏ
+* @param[out]		dwError				РћС€РёР±РєР°
+* @return Р РµР·СѓР»СЊС‚Р°С‚ СЂР°Р±РѕС‚С‹ С„СѓРЅРєС†РёРё.
 */
 _Success_(return != FALSE)
 BOOL
@@ -49,9 +49,9 @@ InitializeMessageQueue(
 );
 
 /**
-* Удалить очередь сообщений
-* @param[inout]   hMessageQueue		Экземпляр очереди сообщений
-* @return							Результат работы функции
+* РЈРґР°Р»РёС‚СЊ РѕС‡РµСЂРµРґСЊ СЃРѕРѕР±С‰РµРЅРёР№
+* @param[inout]   hMessageQueue		Р­РєР·РµРјРїР»СЏСЂ РѕС‡РµСЂРµРґРё СЃРѕРѕР±С‰РµРЅРёР№
+* @return							Р РµР·СѓР»СЊС‚Р°С‚ СЂР°Р±РѕС‚С‹ С„СѓРЅРєС†РёРё
 */
 VOID
 DeinitializeMessageQueue(
@@ -59,11 +59,11 @@ DeinitializeMessageQueue(
 );
 
 /**
-* Добавить сообщение в очередь
-* @param@param[in]  hMessageQueue	Экземпляр очереди сообщений
-* @param[out]		sMessageData	Сообщение
-* @param[out]		dwError		    Ошибка
-* @return							Результат работы функции
+* Р”РѕР±Р°РІРёС‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ РІ РѕС‡РµСЂРµРґСЊ
+* @param@param[in]  hMessageQueue	Р­РєР·РµРјРїР»СЏСЂ РѕС‡РµСЂРµРґРё СЃРѕРѕР±С‰РµРЅРёР№
+* @param[out]		sMessageData	РЎРѕРѕР±С‰РµРЅРёРµ
+* @param[out]		dwError		    РћС€РёР±РєР°
+* @return							Р РµР·СѓР»СЊС‚Р°С‚ СЂР°Р±РѕС‚С‹ С„СѓРЅРєС†РёРё
 */
 BOOL
 MessageQueuePush(
@@ -73,11 +73,11 @@ MessageQueuePush(
 );
 
 /**
-* Вытащить из очереди первый элемент
-* @param@param[in]  hMessageQueue		Экземпляр очереди сообщений
-* @param[out]		pMessageData		Данные
-* @param[out]		dwError		        Ошибка
-* @return Результат работы функции
+* Р’С‹С‚Р°С‰РёС‚СЊ РёР· РѕС‡РµСЂРµРґРё РїРµСЂРІС‹Р№ СЌР»РµРјРµРЅС‚
+* @param@param[in]  hMessageQueue		Р­РєР·РµРјРїР»СЏСЂ РѕС‡РµСЂРµРґРё СЃРѕРѕР±С‰РµРЅРёР№
+* @param[out]		pMessageData		Р”Р°РЅРЅС‹Рµ
+* @param[out]		dwError		        РћС€РёР±РєР°
+* @return Р РµР·СѓР»СЊС‚Р°С‚ СЂР°Р±РѕС‚С‹ С„СѓРЅРєС†РёРё
 */
 BOOL
 MessageQueuePop(
@@ -87,8 +87,8 @@ MessageQueuePop(
 );
 
 /**
-* Очистить очередь сообщений
-* @param[out]   hMessageQueue		Экземпляр очереди сообщений
+* РћС‡РёСЃС‚РёС‚СЊ РѕС‡РµСЂРµРґСЊ СЃРѕРѕР±С‰РµРЅРёР№
+* @param[out]   hMessageQueue		Р­РєР·РµРјРїР»СЏСЂ РѕС‡РµСЂРµРґРё СЃРѕРѕР±С‰РµРЅРёР№
 */
 VOID
 MessageQueueClear(

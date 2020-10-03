@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file List.h
  *
  * @author Pavel Chursin

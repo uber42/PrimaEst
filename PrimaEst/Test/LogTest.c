@@ -1,4 +1,4 @@
-#include "../global.h"
+﻿#include "../global.h"
 
 #define LOG_EOT_CONSOLE					"console"
 #define LOG_EOT_TEXTFILE				"text"
