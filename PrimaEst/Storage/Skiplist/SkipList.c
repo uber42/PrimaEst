@@ -1,18 +1,25 @@
+/**
+ * @file SkipList.c
+ *
+ * @author Pavel Chursin
+ * @date Oct 2020
+ */
+
 #include "../../global.h"
 
 /**
  * Сгенирировать высоту
- * [Ret] Высота
+ * @return Высота
  */
 static DWORD
 RandomHeight();
 
 /**
  * Создать узел списка с пропусками
- * [In] dwHeight	Высота
- * [In] pKey		Ключ 
- * [In] pValue		Значение
- * [Ret] Узел
+ * @param[in] dwHeight	Высота
+ * @param[in] pKey		Ключ
+ * @param[in] pValue	Значение
+ * @return				Узел
  */
 PSSkipListNode
 CreateSkipListNode(
@@ -20,19 +27,19 @@ CreateSkipListNode(
 	PVOID		pKey,
 	PVOID	    pValue);
 
-
 /**
  * Создать узел списка с пропусками
- * [In] dwHeight	Высота
- * [In] pKey		Ключ
- * [In] pValue		Значение
- * [Ret] Узел
+ * @param[in] dwHeight	Высота
+ * @param[in] pKey		Ключ
+ * @param[in] pValue	Значение
+ * @return				Узел
  */
 PSSkipListNode
 CreateSkipListNode(
 	DWORD		dwHeight,
 	PVOID		pKey,
-	PVOID	    pValue)
+	PVOID	    pValue
+)
 {
 	if (pKey == NULL || pValue == NULL)
 	{
@@ -54,8 +61,8 @@ CreateSkipListNode(
 
 /**
  * Создать список с пропусками
- * [In] pfComparator Компаратор
- * [Ret] Созданный список
+ * @param[in] pfComparator	Компаратор
+ * @return					Созданный список
  */
 PSSkipList
 CreateSkipList(
@@ -88,13 +95,13 @@ CreateSkipList(
 /**
  * Добавить пару ключ-значение в список
  * Если ключ уже есть в структуре, то меняет значение
- * [In] psSkipList	Экземпляр списка
- * [In] pKey		Ключ
- * [In] pValue		Значение
- * [Ret] Добавленный узел
+ * @param[in] psSkipList	Экземпляр списка
+ * @param[in] pKey			Ключ
+ * @param[in] pValue		Значение
+ * @return					Добавленный узел
  */
 PSSkipListNode
-SkipListAdd(
+SkipListSet(
 	PSSkipList	psSkipList,
 	PVOID		pKey,
 	PVOID		pValue
@@ -138,11 +145,12 @@ SkipListAdd(
 			else if (nCompareResult == 0)
 			{
 				psSkipListCurrentNode->pValue = pValue;
+				return psSkipListCurrentNode;
 			}
 		}
 
 		psListCurrent = psListEnd->pBlink;
-		if (dwIdx < dwHeight)
+		if ((DWORD)dwIdx < dwHeight)
 		{
 			ListAdd(&psSkipListNode->pLink[dwIdx], psListCurrent);
 		}
@@ -160,9 +168,9 @@ SkipListAdd(
 
 /**
  * Найти ключ в списке
- * [In] psSkipList	Экземпляр списка
- * [In] pKey		Ключ
- * [Ret] Найденный узел
+ * @param[in] psSkipList	Экземпляр списка
+ * @param[in] pKey			Ключ
+ * @return					Найденный узел
  */
 PSSkipListNode
 SkipListFind(
@@ -213,8 +221,8 @@ SkipListFind(
 
 /**
  * Удалить узел в списке по ключу
- * [In] psSkipList	Экземпляр списка
- * [In] pKey		Ключ
+ * @param[in] psSkipList	Экземпляр списка
+ * @param[in] pKey			Ключ
  */
 VOID
 SkipListRemove(
@@ -251,7 +259,7 @@ SkipListRemove(
 			}
 			else if (nComparationResult == 0)
 			{
-				for (DWORD dwCurrentHeight = 0; dwCurrentHeight < dwIdx + 1; dwCurrentHeight++)
+				for (DWORD dwCurrentHeight = 0; dwCurrentHeight < dwIdx + (DWORD)0x1; dwCurrentHeight++)
 				{
 					ListNodeDelete(psListCurrent);
 					if (ListIsEmpty(&psSkipList->pHead[dwCurrentHeight]))
@@ -278,13 +286,13 @@ SkipListRemove(
 
 /**
  * Распечатать список с иерархией уровней
- * [In] psSkipList			Экземпляр списка
- * [In] pFSkipListPrinter	Функция описывающая вывод для 
+ * @param[in] psSkipList			Экземпляр списка
+ * @param[in] pFSkipListPrinter		Функция описывающая вывод для
  */
 VOID
 SkipListPrint(
 	PSSkipList			psSkipList,
-	FSkipListPrinter*   pFSkipListPrinter
+	FSkipListPrinter* pFSkipListPrinter
 )
 {
 	INT dwIdx = (INT)psSkipList->dwHeight - 1;
@@ -335,8 +343,8 @@ SkipListPrint(
 
 /**
  * Получить список всех элементов структуры
- * [In] psSkipList Экземпляр списка
- * [Ret] Список всех элементов
+ * @param[in] psSkipList Экземпляр списка
+ * @return				 Список всех элементов
  */
 PSList
 SkipListGetAll(
@@ -348,7 +356,7 @@ SkipListGetAll(
 
 /**
  * Удалить все значения из списка
- * [In] psSkipList Экземпляр списка
+ * @param[in] psSkipList Экземпляр списка
  */
 VOID
 SkipListClear(
@@ -375,28 +383,41 @@ SkipListClear(
 		free(psSkipListCurrentNode);
 	}
 
-	psSkipList->dwHeight = 1;
-	psSkipList->dwCount = 0;
-
-	for (size_t i = 0; i < ARRAYSIZE(psSkipList->pHead); i++)
+	for (size_t i = 0; i < psSkipList->dwHeight; i++)
 	{
 		ListHeadInit(&psSkipList->pHead[i]);
 	}
+
+	psSkipList->dwHeight = 1;
+	psSkipList->dwCount = 0;
+}
+
+/**
+ * Освободить все ресурсы занятые структурой
+ * @param[in] psSkipList Экземпляр списка
+ */
+VOID
+SkipListClose(
+	PSSkipList			psSkipList
+)
+{
+	SkipListClear(psSkipList);
+	free(psSkipList);
 }
 
 /**
  * Сгенирировать высоту
- * [Ret] Высота
+ * @return Высота
  */
 static DWORD
 RandomHeight()
 {
-	DWORD dwRandom = NextRandom();
+	DWORD dwRandom = LehmerRandom();
 	DWORD dwBranching = 4;
 	DWORD dwHeight = 1;
 
 	while (dwHeight < SKIP_LIST_MAX_HEIGHT &&
-			NextRandom() % dwBranching == 0)
+		LehmerRandom() % dwBranching == 0)
 	{
 		dwHeight++;
 	}

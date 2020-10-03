@@ -1,4 +1,9 @@
-#pragma once
+/**
+ * @file global.h
+ *
+ * @author Pavel Chursin
+ * @date Oct 2020
+ */
 
 #define TESTS
 
@@ -11,8 +16,14 @@
 #include <stdlib.h>
 #include <assert.h>
 
+/** ThridParty */
+#include "ThirdParty/cJSON/cJSON_Utils.h"
+
 /** TOOLS */
 #include "Tools/List.h"
+#include "Tools/MessageQueue.h"
+#include "Tools/Fnv1a.h"
+#include "Tools/Log.h"
 
 /** STORAGE */
 #include "Storage/Skiplist/SkipList.h"
@@ -20,10 +31,10 @@
 /** UTILS */
 #include "Utils/Random.h"
 
-
 #ifdef TESTS
 
-#include "Test/SkipList/SkipListTest.h"
+#include "Test/SkipListTest.h"
+#include "Test/LogTest.h"
 
 #endif
 

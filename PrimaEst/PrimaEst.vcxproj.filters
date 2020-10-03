@@ -13,11 +13,26 @@
     <Filter Include="Test">
       <UniqueIdentifier>{b1d6d90f-f3e6-41fe-b5f4-be396522a602}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Test\SkipList">
-      <UniqueIdentifier>{6a443685-c841-4eab-a7a6-8af56ecf8ee9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Utils">
       <UniqueIdentifier>{ab5e19d1-0394-4bcf-b62c-ed8c9d625be8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Layout">
+      <UniqueIdentifier>{af9f19e1-968d-4daf-9407-55196514821b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty">
+      <UniqueIdentifier>{7b9ddcb9-5892-459e-b46a-ac0da8afd498}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\cJSON">
+      <UniqueIdentifier>{34e6895a-f30a-4033-af4c-29265c622303}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\Log">
+      <UniqueIdentifier>{281bd779-f6fd-4cbd-ba57-5a8acdb66f2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test\SkipList">
+      <UniqueIdentifier>{ea8bfbde-85a9-4641-bc32-203373f5cff3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test\Log">
+      <UniqueIdentifier>{de00db7c-0aa6-475a-ac9e-cb3c4f8162b2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -28,11 +43,29 @@
     <ClInclude Include="Tools\List.h">
       <Filter>Tools</Filter>
     </ClInclude>
-    <ClInclude Include="Test\SkipList\SkipListTest.h">
-      <Filter>Test\SkipList</Filter>
-    </ClInclude>
     <ClInclude Include="Utils\Random.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools\Fnv1a.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools\MessageQueue.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\cJSON\cJSON.h">
+      <Filter>ThirdParty\cJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\cJSON\cJSON_Utils.h">
+      <Filter>ThirdParty\cJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools\Log.h">
+      <Filter>Tools\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="Test\LogTest.h">
+      <Filter>Test\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="Test\SkipListTest.h">
+      <Filter>Test\SkipList</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -40,8 +73,31 @@
       <Filter>Storage\Skiplist</Filter>
     </ClCompile>
     <ClCompile Include="tests.c" />
-    <ClCompile Include="Test\SkipList\SkipListTest.c">
+    <ClCompile Include="Tools\Fnv1a.c">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Tools\MessageQueue.c">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\cJSON\cJSON.c">
+      <Filter>ThirdParty\cJSON</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\cJSON\cJSON_Utils.c">
+      <Filter>ThirdParty\cJSON</Filter>
+    </ClCompile>
+    <ClCompile Include="Tools\Log.c">
+      <Filter>Tools\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\LogTest.c">
+      <Filter>Test\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\SkipListTest.c">
       <Filter>Test\SkipList</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Layout\LogConfiguration.json">
+      <Filter>Layout</Filter>
+    </None>
   </ItemGroup>
 </Project>

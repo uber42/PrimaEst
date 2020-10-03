@@ -1,4 +1,9 @@
-#pragma once
+/**
+ * @file List.h
+ *
+ * @author Pavel Chursin
+ * @date Oct 2020
+ */
 
 #ifndef LIST_H
 #define LIST_H
@@ -8,7 +13,6 @@ typedef struct _SList
 	struct _SList* pFlink;
 	struct _SList* pBlink;
 } SList, * PSList;
-
 
 static inline void
 ListHeadInit(PSList pHead)
@@ -161,6 +165,8 @@ ListCutPosition(
 	pHeadTo->pFlink = pHeadFromFirst;
 	pHeadTo->pFlink->pBlink = pHeadTo;
 }
+
+#define LIST_FIRST(head) ((head)->pFlink)
 
 #define LIST_FIRST_ENTRY(head, type, member)    \
         CONTAINING_RECORD((head)->pFlink, type, member)

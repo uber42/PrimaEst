@@ -1,0 +1,6 @@
+{
+  "OutputType": "File",
+  "LogFilePath": "./Log.txt",
+  "LowPriority": "Debug",
+  "HighPriority":  "Extra"
+}

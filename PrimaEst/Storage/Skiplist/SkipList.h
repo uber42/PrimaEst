@@ -1,4 +1,9 @@
-#pragma once
+/**
+ * @file SkipList.h
+ *
+ * @author Pavel Chursin
+ * @date Oct 2020
+ */
 
 #ifndef SKIP_LIST_H
 #define SKIP_LIST_H
@@ -8,8 +13,8 @@
 
 /**
  * Компаратор ключей
- * [In] pFirst	Первый ключ
- * [In] pSecond Второй ключ
+ * @param[in] pFirst	Первый ключ
+ * @param[in] pSecond Второй ключ
  */
 typedef int FComp(
 	PVOID pFirst,
@@ -18,10 +23,10 @@ typedef int FComp(
 
 /**
  * Функция описывающая вывод для конкретного типа пары ключ-значение
- * [In] dwHeight	Высота
- * [In] fNewLevel	Был ли совершен переход на другой уровень
- * [In] pKey		Ключ
- * [In] pValue		Значение
+ * @param[in] dwHeight	Высота
+ * @param[in] fNewLevel	Был ли совершен переход на другой уровень
+ * @param[in] pKey		Ключ
+ * @param[in] pValue		Значение
  */
 typedef int FSkipListPrinter(
 	DWORD dwHeight,
@@ -45,7 +50,7 @@ typedef struct _SkipList {
 
 	/** Список уровней */
 	SList  pHead[SKIP_LIST_MAX_HEIGHT];
-} SSkipList, *PSSkipList;
+} SSkipList, * PSSkipList;
 
 /**
  * Структура узела списка с пропусками
@@ -64,24 +69,24 @@ typedef struct _SSkipListNode
 
 /**
  * Создать список с пропусками
- * [In] pfComparator Компаратор
- * [Ret] Созданный список
+ * @param[in] pfComparator Компаратор
+ * @return Созданный список
  */
 PSSkipList
 CreateSkipList(
-	FComp *pfComparator
+	FComp* pfComparator
 );
 
 /**
  * Добавить пару ключ-значение в список
  * Если ключ уже есть в структуре, то меняет значение
- * [In] psSkipList	Экземпляр списка
- * [In] pKey		Ключ
- * [In] pValue		Значение
- * [Ret] Добавленный узел
+ * @param[in] psSkipList	Экземпляр списка
+ * @param[in] pKey		Ключ
+ * @param[in] pValue		Значение
+ * @return Добавленный узел
  */
 PSSkipListNode
-SkipListAdd(
+SkipListSet(
 	PSSkipList	psSkipList,
 	PVOID		pKey,
 	PVOID		pValue
@@ -89,9 +94,9 @@ SkipListAdd(
 
 /**
  * Найти ключ в списке
- * [In] psSkipList	Экземпляр списка
- * [In] pKey		Ключ
- * [Ret] Найденный узел
+ * @param[in] psSkipList	Экземпляр списка
+ * @param[in] pKey		Ключ
+ * @return Найденный узел
  */
 PSSkipListNode
 SkipListFind(
@@ -101,8 +106,8 @@ SkipListFind(
 
 /**
  * Удалить узел в списке по ключу
- * [In] psSkipList	Экземпляр списка
- * [In] pKey		Ключ
+ * @param[in] psSkipList	Экземпляр списка
+ * @param[in] pKey		Ключ
  */
 VOID
 SkipListRemove(
@@ -112,19 +117,19 @@ SkipListRemove(
 
 /**
  * Распечатать список с иерархией уровней
- * [In] psSkipList			Экземпляр списка
- * [In] pFSkipListPrinter	Функция описывающая вывод для
+ * @param[in] psSkipList			Экземпляр списка
+ * @param[in] pFSkipListPrinter	Функция описывающая вывод для
  */
 VOID
 SkipListPrint(
 	PSSkipList			psSkipList,
-	FSkipListPrinter*	pFSkipListPrinter
+	FSkipListPrinter* pFSkipListPrinter
 );
 
 /**
  * Получить список всех элементов структуры
- * [In] psSkipList Экземпляр списка
- * [Ret] Список всех элементов
+ * @param[in] psSkipList Экземпляр списка
+ * @return Список всех элементов
  */
 PSList
 SkipListGetAll(
@@ -133,10 +138,19 @@ SkipListGetAll(
 
 /**
  * Удалить все значения из списка
- * [In] psSkipList Экземпляр списка
+ * @param[in] psSkipList Экземпляр списка
  */
 VOID
 SkipListClear(
+	PSSkipList			psSkipList
+);
+
+/**
+ * Освободить все ресурсы занятые структурой
+ * @param[in] psSkipList Экземпляр списка
+ */
+VOID
+SkipListClose(
 	PSSkipList			psSkipList
 );
 
