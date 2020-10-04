@@ -130,8 +130,10 @@ DeinitializeMessageQueue(
 
 	MessageQueueClear(hMessageQueue);
 
-	DeleteCriticalSection(&psMessageQueue->crQueueLock);
+	while (psMessageQueue->crQueueLock.OwningThread != 0x0);
+
 	CloseHandle(psMessageQueue->hPushEvent);
+	DeleteCriticalSection(&psMessageQueue->crQueueLock);
 
 	free(psMessageQueue);
 }
@@ -217,7 +219,7 @@ MessageQueuePop(
 		EnterCriticalSection(&psMessageQueue->crQueueLock);
 	}
 
-	if (psMessageQueue->bIsWork != TRUE)
+	if (!psMessageQueue->bIsWork)
 	{
 		LeaveCriticalSection(&psMessageQueue->crQueueLock);
 
