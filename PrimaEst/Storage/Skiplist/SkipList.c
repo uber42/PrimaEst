@@ -43,6 +43,7 @@ CreateSkipListNode(
 {
 	if (pKey == NULL || pValue == NULL)
 	{
+		LogDebug("[SkipList] Передан не нулевой аргумент");
 		return NULL;
 	}
 
@@ -50,6 +51,7 @@ CreateSkipListNode(
 	PSSkipListNode psSkipListNode = (PSSkipListNode)malloc(dwSize);
 	if (psSkipListNode == NULL)
 	{
+		LogError("[SkipList] Ошибка выделения памяти");
 		return NULL;
 	}
 
@@ -71,12 +73,14 @@ CreateSkipList(
 {
 	if (pfComparator == NULL)
 	{
+		LogDebug("[SkipList] Передан не инициализированный компаратор");
 		return NULL;
 	}
 
 	PSSkipList psSkipList = (PSSkipList)malloc(sizeof(SSkipList));
 	if (psSkipList == NULL)
 	{
+		LogError("[SkipList] Ошибка выделения памяти");
 		return NULL;
 	}
 

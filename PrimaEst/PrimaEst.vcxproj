@@ -128,30 +128,36 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="global.h" />
+    <ClInclude Include="Log\Log.h" />
+    <ClInclude Include="Storage\CommitLog\CommitLog.h" />
     <ClInclude Include="Storage\Skiplist\SkipList.h" />
+    <ClInclude Include="Storage\StorageConfiguration.h" />
     <ClInclude Include="Test\LogTest.h" />
     <ClInclude Include="Test\SkipListTest.h" />
     <ClInclude Include="ThirdParty\cJSON\cJSON.h" />
     <ClInclude Include="ThirdParty\cJSON\cJSON_Utils.h" />
     <ClInclude Include="Tools\Fnv1a.h" />
     <ClInclude Include="Tools\List.h" />
-    <ClInclude Include="Tools\Log.h" />
     <ClInclude Include="Tools\MessageQueue.h" />
     <ClInclude Include="Utils\Random.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Log\Log.c" />
+    <ClCompile Include="Storage\CommitLog\CommitLog.c" />
     <ClCompile Include="Storage\Skiplist\SkipList.c" />
+    <ClCompile Include="Storage\StorageConfiguration.c" />
     <ClCompile Include="tests.c" />
     <ClCompile Include="Test\LogTest.c" />
     <ClCompile Include="Test\SkipListTest.c" />
     <ClCompile Include="ThirdParty\cJSON\cJSON.c" />
     <ClCompile Include="ThirdParty\cJSON\cJSON_Utils.c" />
     <ClCompile Include="Tools\Fnv1a.c" />
-    <ClCompile Include="Tools\Log.c" />
     <ClCompile Include="Tools\MessageQueue.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Layout\LogConfiguration.json" />
+    <None Include="Test\Resources\TestLogConfigurationBad.json" />
+    <None Include="Test\Resources\TestLogConfigurationOk.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

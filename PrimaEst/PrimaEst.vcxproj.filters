@@ -4,9 +4,6 @@
     <Filter Include="Storage">
       <UniqueIdentifier>{b64366f1-0a2c-4ed9-8d91-8a487dfddaa6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Storage\Skiplist">
-      <UniqueIdentifier>{2a8675fa-a138-4142-b073-6d940d970811}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Tools">
       <UniqueIdentifier>{0c7178c8-b374-469b-a02b-5f6b56805b19}</UniqueIdentifier>
     </Filter>
@@ -25,19 +22,28 @@
     <Filter Include="ThirdParty\cJSON">
       <UniqueIdentifier>{34e6895a-f30a-4033-af4c-29265c622303}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Tools\Log">
-      <UniqueIdentifier>{281bd779-f6fd-4cbd-ba57-5a8acdb66f2d}</UniqueIdentifier>
+    <Filter Include="Storage\CommitLog">
+      <UniqueIdentifier>{2e56ce95-d91d-4535-b6c2-cdb6da4ed126}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Test\SkipList">
+    <Filter Include="Test\LogTest">
+      <UniqueIdentifier>{de00db7c-0aa6-475a-ac9e-cb3c4f8162b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test\SkipListTest">
       <UniqueIdentifier>{ea8bfbde-85a9-4641-bc32-203373f5cff3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Test\Log">
-      <UniqueIdentifier>{de00db7c-0aa6-475a-ac9e-cb3c4f8162b2}</UniqueIdentifier>
+    <Filter Include="Storage\SkipList">
+      <UniqueIdentifier>{2a8675fa-a138-4142-b073-6d940d970811}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Log">
+      <UniqueIdentifier>{81c9452e-2a23-4d0a-b83f-f4a75ffd7077}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test\Resources">
+      <UniqueIdentifier>{cb510614-b440-4923-af58-e5a8621dcbb4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Storage\Skiplist\SkipList.h">
-      <Filter>Storage\Skiplist</Filter>
+      <Filter>Storage\SkipList</Filter>
     </ClInclude>
     <ClInclude Include="global.h" />
     <ClInclude Include="Tools\List.h">
@@ -58,19 +64,25 @@
     <ClInclude Include="ThirdParty\cJSON\cJSON_Utils.h">
       <Filter>ThirdParty\cJSON</Filter>
     </ClInclude>
-    <ClInclude Include="Tools\Log.h">
-      <Filter>Tools\Log</Filter>
-    </ClInclude>
     <ClInclude Include="Test\LogTest.h">
-      <Filter>Test\Log</Filter>
+      <Filter>Test\LogTest</Filter>
     </ClInclude>
     <ClInclude Include="Test\SkipListTest.h">
-      <Filter>Test\SkipList</Filter>
+      <Filter>Test\SkipListTest</Filter>
+    </ClInclude>
+    <ClInclude Include="Storage\CommitLog\CommitLog.h">
+      <Filter>Storage\CommitLog</Filter>
+    </ClInclude>
+    <ClInclude Include="Storage\StorageConfiguration.h">
+      <Filter>Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="Log\Log.h">
+      <Filter>Log</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Storage\Skiplist\SkipList.c">
-      <Filter>Storage\Skiplist</Filter>
+      <Filter>Storage\SkipList</Filter>
     </ClCompile>
     <ClCompile Include="tests.c" />
     <ClCompile Include="Tools\Fnv1a.c">
@@ -85,19 +97,31 @@
     <ClCompile Include="ThirdParty\cJSON\cJSON_Utils.c">
       <Filter>ThirdParty\cJSON</Filter>
     </ClCompile>
-    <ClCompile Include="Tools\Log.c">
-      <Filter>Tools\Log</Filter>
-    </ClCompile>
     <ClCompile Include="Test\LogTest.c">
-      <Filter>Test\Log</Filter>
+      <Filter>Test\LogTest</Filter>
     </ClCompile>
     <ClCompile Include="Test\SkipListTest.c">
-      <Filter>Test\SkipList</Filter>
+      <Filter>Test\SkipListTest</Filter>
+    </ClCompile>
+    <ClCompile Include="Storage\CommitLog\CommitLog.c">
+      <Filter>Storage\CommitLog</Filter>
+    </ClCompile>
+    <ClCompile Include="Storage\StorageConfiguration.c">
+      <Filter>Storage</Filter>
+    </ClCompile>
+    <ClCompile Include="Log\Log.c">
+      <Filter>Log</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Layout\LogConfiguration.json">
       <Filter>Layout</Filter>
+    </None>
+    <None Include="Test\Resources\TestLogConfigurationBad.json">
+      <Filter>Test\Resources</Filter>
+    </None>
+    <None Include="Test\Resources\TestLogConfigurationOk.json">
+      <Filter>Test\Resources</Filter>
     </None>
   </ItemGroup>
 </Project>

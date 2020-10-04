@@ -137,7 +137,7 @@ FormatLogEntry(
 
 	return sprintf(
 		szBuffer,
-		"| %I64u | %d/%d/%d %d:%d:%d | %s | %d |\n\r%s\n",
+		"| %I64u | %d/%d/%d %d:%d:%d | %s | %d |\n%s\n",
 		psLogEntry->llNumber,
 		psLogEntry->sTime.wDay,
 		psLogEntry->sTime.wMonth,
@@ -173,6 +173,57 @@ ALConsoleWriter(
 	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	return WriteFile(
 		hStdOut,
+		szBuffer, iSize,
+		NULL, NULL
+	);
+}
+
+/**
+ * Записать в текстовый файл
+ * @param[in]	hFile		Дескриптор файла
+ * @param[in]	sLogEntry	Запись лога
+ * @return					Результат работы функции
+ */
+static
+BOOL
+ALTextFileWriter(
+	HANDLE		hFile,
+	PSLogEntry	psLogEntry
+)
+{
+	UNREFERENCED_PARAMETER(hFile);
+
+	CHAR szBuffer[LOG_HEADER_SIZE + LOG_ENTRY_MAX_LENGTH];
+	INT iSize = FormatLogEntry(szBuffer, psLogEntry);
+
+	return WriteFile(
+		hFile,
+		szBuffer, iSize,
+		NULL, NULL
+	);
+}
+
+
+/**
+ * Записать в текстовый файл
+ * @param[in]	hFile		Дескриптор файла
+ * @param[in]	sLogEntry	Запись лога
+ * @return					Результат работы функции
+ */
+static
+BOOL
+ALBinaryFileWriter(
+	HANDLE		hFile,
+	PSLogEntry	psLogEntry
+)
+{
+	UNREFERENCED_PARAMETER(hFile);
+
+	CHAR szBuffer[LOG_HEADER_SIZE + LOG_ENTRY_MAX_LENGTH];
+	INT iSize = FormatLogEntry(szBuffer, psLogEntry);
+
+	return WriteFile(
+		hFile,
 		szBuffer, iSize,
 		NULL, NULL
 	);
@@ -451,6 +502,8 @@ InitializeAsyncLogger(
 	SLogConfiguration sLogConfiguration
 )
 {
+#pragma warning( push )
+#pragma warning( disable : 6258)
 	memcpy(
 		&g_sAsyncLogger.sConfiguration,
 		&sLogConfiguration,
@@ -473,7 +526,9 @@ InitializeAsyncLogger(
 		&(DWORD){ 0 });
 	if (bResult == FALSE)
 	{
+
 		TerminateThread(g_sAsyncLogger.hThreadWriter, 0);
+		
 		CloseHandle(g_sAsyncLogger.hThreadWriter);
 
 		return FALSE;
@@ -494,6 +549,7 @@ InitializeAsyncLogger(
 		if (g_sAsyncLogger.hLogFile == INVALID_HANDLE_VALUE)
 		{
 			TerminateThread(g_sAsyncLogger.hThreadWriter, 0);
+
 			CloseHandle(g_sAsyncLogger.hThreadWriter);
 
 			DeinitializeMessageQueue(g_sAsyncLogger.hMessageQueue);
@@ -510,12 +566,16 @@ InitializeAsyncLogger(
 	{
 	case EOT_BINARYFILE:
 	case EOT_TEXTFILE:
+		g_sAsyncLogger.fWriter = ALTextFileWriter;
+		break;
 	case EOT_CONSOLE:
 		g_sAsyncLogger.fWriter = ALConsoleWriter;
 		break;
 	default:
 		return FALSE;
 	}
+	return TRUE;
+#pragma warning( pop ) 
 }
 
 /**
@@ -723,7 +783,6 @@ ParseLoggerConfigurationInternal(
 	BOOL bScopeResult = TRUE;
 	do
 	{
-		BOOL  bConvertResult;
 		PCHAR pszItem;
 
 		EOutputType eOutputType = LOG_DEFAULT_OUTPUT_TYPE;
@@ -828,7 +887,10 @@ DeinitializeAsyncLogger()
 		LOG_THREAD_TERMINATE_TIMEOUT);
 	if (dwWaitRes == WAIT_TIMEOUT)
 	{
+#pragma warning( push )
+#pragma warning( disable : 6258 )
 		TerminateThread(g_sAsyncLogger.hThreadWriter, 0);
+#pragma warning( pop )
 	}
 	CloseHandle(g_sAsyncLogger.hThreadWriter);
 

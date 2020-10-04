@@ -25,10 +25,12 @@
 #include "Tools/List.h"
 #include "Tools/MessageQueue.h"
 #include "Tools/Fnv1a.h"
-#include "Tools/Log.h"
+#include "Log/Log.h"
 
 /** STORAGE */
+#include "Storage/StorageConfiguration.h"
 #include "Storage/Skiplist/SkipList.h"
+#include "Storage/CommitLog/CommitLog.h"
 
 /** UTILS */
 #include "Utils/Random.h"

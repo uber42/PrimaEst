@@ -33,7 +33,7 @@ TestLogWriteRoutine(
 	LPVOID lpThreadContext
 )
 {
-	const int nIterCount = 10;
+	const int nIterCount = 100;
 	for (int i = 0; i < nIterCount; i++)
 	{
 		LogInfo("Number %d, Thread %d", i, GetCurrentThreadId());
