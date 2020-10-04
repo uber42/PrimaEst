@@ -18,13 +18,13 @@
 typedef enum _EOutputType
 {
 	/** Вывод в консоль */
-	EOT_CONSOLE = 0xdf47bdd9,
+	EOT_CONSOLE = 0x2e329b2a,
 
 	/** Вывод в текстовый файл */
-	EOT_TEXTFILE = 0x44736337,
+	EOT_TEXTFILE = 0xbde64e3e,
 
 	/** Вывод в бинайрный файл */
-	EOT_BINARYFILE = 0xd7f85465
+	EOT_BINARYFILE = 0xdd856cfc
 } EOutputType, * PEOutputType;
 
 /**

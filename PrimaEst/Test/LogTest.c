@@ -24,7 +24,7 @@ QuickFnvExecute(
 		pszBuffer,
 		(DWORD)dwLength,
 		sizeof(CHAR),
-		0xFFFFFF00);
+		dwSeed);
 }
 
 static

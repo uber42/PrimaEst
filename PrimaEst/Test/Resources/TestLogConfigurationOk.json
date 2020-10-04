@@ -1,5 +1,5 @@
 {
-  "OutputType": "Binary",
+  "OutputType": "Text",
   "LogFilePath": "./Log.txt",
   "LowPriority": "Debug",
   "HighPriority":  "Extra"

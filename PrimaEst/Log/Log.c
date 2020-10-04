@@ -219,12 +219,10 @@ ALBinaryFileWriter(
 {
 	UNREFERENCED_PARAMETER(hFile);
 
-	CHAR szBuffer[LOG_HEADER_SIZE + LOG_ENTRY_MAX_LENGTH];
-	INT iSize = FormatLogEntry(szBuffer, psLogEntry);
-
 	return WriteFile(
 		hFile,
-		szBuffer, iSize,
+		(LPCVOID)psLogEntry,
+		sizeof(SLogEntry),
 		NULL, NULL
 	);
 }
@@ -565,6 +563,8 @@ InitializeAsyncLogger(
 	switch (sLogConfiguration.eOutputType)
 	{
 	case EOT_BINARYFILE:
+		g_sAsyncLogger.fWriter = ALBinaryFileWriter;
+		break;
 	case EOT_TEXTFILE:
 		g_sAsyncLogger.fWriter = ALTextFileWriter;
 		break;

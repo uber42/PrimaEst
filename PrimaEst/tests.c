@@ -13,7 +13,7 @@ int main()
 	//SkipListSetTest();
 
 	/** Тесты для лога */
-	//LogEnumFnvTest();
+	LogEnumFnvTest();
 	//ParseLogTest_1();
 	//ParseLogTest_2();
 	//LogWriteTest_1();
