@@ -14,4 +14,13 @@ SkipListAddTest();
 VOID
 SkipListSetTest();
 
+VOID
+SkipListFindTest();
+
+VOID
+SkipListRemoveTest();
+
+VOID
+SkipListPrintTest();
+
 #endif // !SKIP_LIST_TEST_H

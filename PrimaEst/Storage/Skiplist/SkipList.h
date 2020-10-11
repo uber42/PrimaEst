@@ -107,9 +107,10 @@ SkipListFind(
 /**
  * Удалить узел в списке по ключу
  * @param[in] psSkipList	Экземпляр списка
- * @param[in] pKey		Ключ
+ * @param[in] pKey			Ключ
+ * @return					Удален ли узел ? (Может быть не удален только в случае если его нет)
  */
-VOID
+BOOL
 SkipListRemove(
 	PSSkipList	psSkipList,
 	PVOID		pKey

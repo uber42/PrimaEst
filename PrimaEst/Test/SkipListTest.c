@@ -64,7 +64,7 @@ SkipListAddTest()
 VOID
 SkipListSetTest()
 {
-	const size_t nCount = 3;
+	const size_t nCount = 20;
 
 	PSSkipList psSkipList = CreateSkipList(TestIntComparator);
 
@@ -95,9 +95,59 @@ SkipListSetTest()
 }
 
 VOID
+SkipListFindTest()
+{
+	const size_t nCount = 20;
+
+	PSSkipList psSkipList = CreateSkipList(TestIntComparator);
+
+	for (size_t i = 1; i <= nCount; i++)
+	{
+		SkipListSet(psSkipList, (void*)i, (void*)i);
+		SkipListSet(psSkipList, (void*)i, (void*)(0x400 + i));
+	}
+
+	for (size_t i = 1; i <= nCount; i++)
+	{
+		PSSkipListNode psSkipListNode = SkipListFind(psSkipList, (void*)i);
+		assert(psSkipListNode->pKey == (void*)i);
+	}
+
+	PSSkipListNode psSkipListNode = SkipListFind(psSkipList, (void*)9999);
+	assert(psSkipListNode == NULL);
+
+	SkipListClose(psSkipList);
+}
+
+VOID
 SkipListRemoveTest()
 {
-	const size_t nCount = 3;
+	const size_t nCount = 20;
+
+	PSSkipList psSkipList = CreateSkipList(TestIntComparator);
+
+	for (size_t i = 1; i <= nCount; i++)
+	{
+		SkipListSet(psSkipList, (void*)i, (void*)i);
+	}
+
+	SkipListPrint(psSkipList, TestSkipListPrinter);
+
+	for (size_t i = 2; i <= nCount; i+= 5)
+	{
+		SkipListRemove(psSkipList, (void*)i);
+
+		PSSkipListNode psSkipListNode = SkipListFind(psSkipList, (void*)i);
+		assert(psSkipListNode == NULL);
+	}
+
+	SkipListClear(psSkipList);
+}
+
+VOID
+SkipListPrintTest()
+{
+	const size_t nCount = 20;
 
 	PSSkipList psSkipList = CreateSkipList(TestIntComparator);
 
@@ -115,13 +165,13 @@ SkipListRemoveTest()
 		PSSkipListNode psSkipListNode = CONTAINING_RECORD(
 			sListCurrent,
 			SSkipListNode,
-			pLink[0]
+			pLink
 		);
 
-		assert((size_t)psSkipListNode->pKey == dwIdx &&
-			(size_t)psSkipListNode->pValue == (0x400 + dwIdx));
-		dwIdx++;
+		assert((size_t)psSkipListNode->pKey == dwIdx++);
 	}
 
-	SkipListClear(psSkipList);
+	SkipListPrint(psSkipList, TestSkipListPrinter);
+
+	SkipListClose(psSkipList);
 }

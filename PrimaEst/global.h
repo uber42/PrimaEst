@@ -5,8 +5,6 @@
  * @date Oct 2020
  */
 
-#define TESTS
-
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
@@ -25,6 +23,7 @@
 #include "Tools/List.h"
 #include "Tools/MessageQueue.h"
 #include "Tools/Fnv1a.h"
+#include "Tools/Crc32.h"
 #include "Log/Log.h"
 
 /** STORAGE */
@@ -39,6 +38,12 @@
 
 #include "Test/SkipListTest.h"
 #include "Test/LogTest.h"
+
+#endif
+
+#ifdef BENCHMARKS
+
+#include "Benchmarks/SkipList/Selection.h"
 
 #endif
 

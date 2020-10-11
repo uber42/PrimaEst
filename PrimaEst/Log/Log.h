@@ -11,6 +11,8 @@
 #define LOG_ENTRY_MAX_LENGTH	(1 << 11)
 #define LOG_ENUM_MAX_LENGTH		(1 << 5)
 
+typedef PVOID HASYNC_LOGGER;
+
 /**
  * Перечисление видов вывода лога
  * Значения приведены в FNV-1A для быстрого определения

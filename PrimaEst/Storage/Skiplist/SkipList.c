@@ -111,6 +111,8 @@ SkipListSet(
 	PVOID		pValue
 )
 {
+	PSList sListInsertion[SKIP_LIST_MAX_HEIGHT] = { 0 };
+
 	DWORD dwHeight = RandomHeight();
 	if (dwHeight > psSkipList->dwHeight)
 	{
@@ -156,13 +158,19 @@ SkipListSet(
 		psListCurrent = psListEnd->pBlink;
 		if ((DWORD)dwIdx < dwHeight)
 		{
-			ListAdd(&psSkipListNode->pLink[dwIdx], psListCurrent);
+			sListInsertion[dwIdx] = psListCurrent;
 		}
 
 		psListCurrent--;
 		psListEnd--;
 
 		dwIdx--;
+	}
+
+	for (DWORD dwIdx = 0; dwIdx < dwHeight; dwIdx++)
+	{
+		ListAdd(&psSkipListNode->pLink[dwIdx],
+			sListInsertion[dwIdx]);
 	}
 
 	psSkipList->dwCount++;
@@ -198,15 +206,14 @@ SkipListFind(
 				pLink[dwIdx]
 			);
 
-			if (psSkipList->pfComparator(
-				psSkipListCurrentNode->pKey, pKey) >= 0)
+			int nCompareResult = psSkipList->pfComparator(psSkipListCurrentNode->pKey, pKey);
+
+			if (nCompareResult > 0)
 			{
 				psListEnd = &psSkipListCurrentNode->pLink[dwIdx];
 				break;
 			}
-
-			if (psSkipList->pfComparator(
-				psSkipListCurrentNode->pKey, pKey) == 0)
+			else if (nCompareResult == 0)
 			{
 				return psSkipListCurrentNode;
 			}
@@ -227,8 +234,9 @@ SkipListFind(
  * Удалить узел в списке по ключу
  * @param[in] psSkipList	Экземпляр списка
  * @param[in] pKey			Ключ
+ * @return					Удален ли узел ? (Может быть не удален только в случае если его нет)
  */
-VOID
+BOOL
 SkipListRemove(
 	PSSkipList	psSkipList,
 	PVOID		pKey
@@ -263,9 +271,9 @@ SkipListRemove(
 			}
 			else if (nComparationResult == 0)
 			{
-				for (DWORD dwCurrentHeight = 0; dwCurrentHeight < dwIdx + (DWORD)0x1; dwCurrentHeight++)
+				for (DWORD dwCurrentHeight = 0; dwCurrentHeight <= dwIdx; dwCurrentHeight++)
 				{
-					ListNodeDelete(psListCurrent);
+					ListNodeDelete(&psSkipListCurrentNode->pLink[dwCurrentHeight]);
 					if (ListIsEmpty(&psSkipList->pHead[dwCurrentHeight]))
 					{
 						psSkipList->dwHeight--;
@@ -275,7 +283,7 @@ SkipListRemove(
 				free(psSkipListCurrentNode);
 				psSkipList->dwCount--;
 
-				return;
+				return TRUE;
 			}
 		}
 
@@ -286,6 +294,8 @@ SkipListRemove(
 
 		dwIdx--;
 	}
+
+	return FALSE;
 }
 
 /**
@@ -296,7 +306,7 @@ SkipListRemove(
 VOID
 SkipListPrint(
 	PSSkipList			psSkipList,
-	FSkipListPrinter* pFSkipListPrinter
+	FSkipListPrinter*	pFSkipListPrinter
 )
 {
 	INT dwIdx = (INT)psSkipList->dwHeight - 1;
