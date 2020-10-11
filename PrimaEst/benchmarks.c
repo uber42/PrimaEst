@@ -11,7 +11,7 @@
 
 int main()
 {
-	SelectionGeneralOperation();
+	SkipListSelectionGeneralOperation();
 }
 
 #endif

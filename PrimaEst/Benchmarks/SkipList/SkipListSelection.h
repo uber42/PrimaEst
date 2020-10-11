@@ -11,4 +11,4 @@
  * Insert, Remove, Search
  */
 VOID
-SelectionGeneralOperation();
+SkipListSelectionGeneralOperation();

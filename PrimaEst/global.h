@@ -43,7 +43,7 @@
 
 #ifdef BENCHMARKS
 
-#include "Benchmarks/SkipList/Selection.h"
+#include "Benchmarks/SkipList/SkipListSelection.h"
 
 #endif
 

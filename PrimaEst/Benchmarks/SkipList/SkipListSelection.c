@@ -175,7 +175,7 @@ InternalFindSelection()
   * Insert, Search, Remove
   */
 VOID
-SelectionGeneralOperation()
+SkipListSelectionGeneralOperation()
 {
 	HANDLE hOutFile = CreateFile(
 		".\\Benchmarks\\SkipList\\selection.bin",
