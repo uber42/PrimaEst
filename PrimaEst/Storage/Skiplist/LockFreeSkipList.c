@@ -1,11 +1,11 @@
-#include "../../global.h"
+п»ї#include "../../global.h"
 
 /**
- * Создать узел списка с пропусками
- * @param[in] dwHeight	Высота
- * @param[in] pKey		Ключ
- * @param[in] pValue	Значение
- * @return				Узел
+ * РЎРѕР·РґР°С‚СЊ СѓР·РµР» СЃРїРёСЃРєР° СЃ РїСЂРѕРїСѓСЃРєР°РјРё
+ * @param[in] dwHeight	Р’С‹СЃРѕС‚Р°
+ * @param[in] pKey		РљР»СЋС‡
+ * @param[in] pValue	Р—РЅР°С‡РµРЅРёРµ
+ * @return				РЈР·РµР»
  */
 PSLockFreeSkipListNode
 CreateLockFreeSkipListNode(
@@ -15,11 +15,11 @@ CreateLockFreeSkipListNode(
 
 
 /**
- * Создать список с пропусками
- * @param[in] pfComparator		Компаратор
- * @param[in] pfEraser			Функция удаления узла
- * @param[in] pfValueChanger	Функция изменения значения узла
- * @return Созданный список
+ * РЎРѕР·РґР°С‚СЊ СЃРїРёСЃРѕРє СЃ РїСЂРѕРїСѓСЃРєР°РјРё
+ * @param[in] pfComparator		РљРѕРјРїР°СЂР°С‚РѕСЂ
+ * @param[in] pfEraser			Р¤СѓРЅРєС†РёСЏ СѓРґР°Р»РµРЅРёСЏ СѓР·Р»Р°
+ * @param[in] pfValueChanger	Р¤СѓРЅРєС†РёСЏ РёР·РјРµРЅРµРЅРёСЏ Р·РЅР°С‡РµРЅРёСЏ СѓР·Р»Р°
+ * @return РЎРѕР·РґР°РЅРЅС‹Р№ СЃРїРёСЃРѕРє
  */
 PSLockFreeSkipList
 CreateLockFreeSkipList(
@@ -31,7 +31,7 @@ CreateLockFreeSkipList(
 	PSLockFreeSkipList psLockFreeSkipList = malloc(sizeof(SLockFreeSkipList));
 	if (!psLockFreeSkipList)
 	{
-		LogError("[LockFreeSkipList] Ошибка выделения памяти");
+		LogError("[LockFreeSkipList] РћС€РёР±РєР° РІС‹РґРµР»РµРЅРёСЏ РїР°РјСЏС‚Рё");
 		return NULL;
 	}
 
@@ -57,12 +57,12 @@ CreateLockFreeSkipList(
 
 
 /**
- * Добавить пару ключ-значение в список
- * Если ключ уже есть в структуре, то меняет значение
- * @param[in] psSkipList	Экземпляр списка
- * @param[in] pKey			Ключ
- * @param[in] pValue		Значение
- * @return Добавленный узел
+ * Р”РѕР±Р°РІРёС‚СЊ РїР°СЂСѓ РєР»СЋС‡-Р·РЅР°С‡РµРЅРёРµ РІ СЃРїРёСЃРѕРє
+ * Р•СЃР»Рё РєР»СЋС‡ СѓР¶Рµ РµСЃС‚СЊ РІ СЃС‚СЂСѓРєС‚СѓСЂРµ, С‚Рѕ РјРµРЅСЏРµС‚ Р·РЅР°С‡РµРЅРёРµ
+ * @param[in] psSkipList	Р­РєР·РµРјРїР»СЏСЂ СЃРїРёСЃРєР°
+ * @param[in] pKey			РљР»СЋС‡
+ * @param[in] pValue		Р—РЅР°С‡РµРЅРёРµ
+ * @return Р”РѕР±Р°РІР»РµРЅРЅС‹Р№ СѓР·РµР»
  */
 PSLockFreeSkipListNode
 LockFreeSkipListSet(
@@ -112,7 +112,7 @@ LockFreeSkipListSet(
 		dwRndHeight, pKey, pValue);
 	if (!psFoundNode)
 	{
-		LogError("[LockFreeSkipList] Ошибка выделения памяти");
+		LogError("[LockFreeSkipList] РћС€РёР±РєР° РІС‹РґРµР»РµРЅРёСЏ РїР°РјСЏС‚Рё");
 		return NULL;
 	}
 
@@ -141,10 +141,10 @@ LockFreeSkipListSet(
 }
 
 /**
- * Найти ключ в списке
- * @param[in] psSkipList	Экземпляр списка
- * @param[in] pKey		Ключ
- * @return Найденный узел
+ * РќР°Р№С‚Рё РєР»СЋС‡ РІ СЃРїРёСЃРєРµ
+ * @param[in] psSkipList	Р­РєР·РµРјРїР»СЏСЂ СЃРїРёСЃРєР°
+ * @param[in] pKey		РљР»СЋС‡
+ * @return РќР°Р№РґРµРЅРЅС‹Р№ СѓР·РµР»
  */
 PSLockFreeSkipListNode
 LockFreeSkipListFind(
@@ -183,8 +183,8 @@ LockFreeSkipListFind(
 }
 
 /**
- * Удалить все значения из списка
- * @param[in] psSkipList Экземпляр списка
+ * РЈРґР°Р»РёС‚СЊ РІСЃРµ Р·РЅР°С‡РµРЅРёСЏ РёР· СЃРїРёСЃРєР°
+ * @param[in] psSkipList Р­РєР·РµРјРїР»СЏСЂ СЃРїРёСЃРєР°
  */
 VOID
 LockFreeSkipListClear(
@@ -203,8 +203,8 @@ LockFreeSkipListClear(
 }
 
 /**
- * Освободить все ресурсы занятые структурой
- * @param[in] psSkipList Экземпляр списка
+ * РћСЃРІРѕР±РѕРґРёС‚СЊ РІСЃРµ СЂРµСЃСѓСЂСЃС‹ Р·Р°РЅСЏС‚С‹Рµ СЃС‚СЂСѓРєС‚СѓСЂРѕР№
+ * @param[in] psSkipList Р­РєР·РµРјРїР»СЏСЂ СЃРїРёСЃРєР°
  */
 VOID
 LockFreeSkipListClose(
@@ -218,11 +218,11 @@ LockFreeSkipListClose(
 
 
 /**
- * Создать узел списка с пропусками
- * @param[in] dwHeight	Высота
- * @param[in] pKey		Ключ
- * @param[in] pValue	Значение
- * @return				Узел
+ * РЎРѕР·РґР°С‚СЊ СѓР·РµР» СЃРїРёСЃРєР° СЃ РїСЂРѕРїСѓСЃРєР°РјРё
+ * @param[in] dwHeight	Р’С‹СЃРѕС‚Р°
+ * @param[in] pKey		РљР»СЋС‡
+ * @param[in] pValue	Р—РЅР°С‡РµРЅРёРµ
+ * @return				РЈР·РµР»
  */
 PSLockFreeSkipListNode
 CreateLockFreeSkipListNode(
@@ -235,7 +235,7 @@ CreateLockFreeSkipListNode(
 	PSLockFreeSkipListNode psSkipListNode = (PSLockFreeSkipListNode)malloc(dwSize);
 	if (psSkipListNode == NULL)
 	{
-		LogError("[SkipList] Ошибка выделения памяти");
+		LogError("[SkipList] РћС€РёР±РєР° РІС‹РґРµР»РµРЅРёСЏ РїР°РјСЏС‚Рё");
 		return NULL;
 	}
 
@@ -247,10 +247,10 @@ CreateLockFreeSkipListNode(
 
 
 /**
- * Получить все элементы
- * @param[in] psSkipList	Экземпляр списка
- * @param[out] pdwSize		Количество элементов
- * @return					Список
+ * РџРѕР»СѓС‡РёС‚СЊ РІСЃРµ СЌР»РµРјРµРЅС‚С‹
+ * @param[in] psSkipList	Р­РєР·РµРјРїР»СЏСЂ СЃРїРёСЃРєР°
+ * @param[out] pdwSize		РљРѕР»РёС‡РµСЃС‚РІРѕ СЌР»РµРјРµРЅС‚РѕРІ
+ * @return					РЎРїРёСЃРѕРє
  */
 PSLockFreeSkipListNode*
 LockFreeSkipListGetAll(

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file StorageConfiguration.c
  *
  * @author Pavel Chursin

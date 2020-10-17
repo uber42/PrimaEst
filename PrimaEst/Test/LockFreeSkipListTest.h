@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file SkipListTest.h
  *
  * @author Pavel Chursin

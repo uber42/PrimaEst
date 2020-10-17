@@ -1,4 +1,4 @@
-/**
+п»ї/**
  * @file StorageConfiguration.h
  *
  * @author Pavel Chursin
@@ -6,7 +6,7 @@
  */
 
 /**
- * Конфигурация лога фиксации
+ * РљРѕРЅС„РёРіСѓСЂР°С†РёСЏ Р»РѕРіР° С„РёРєСЃР°С†РёРё
  */
 typedef struct _SCommitLogConfiguration
 {
@@ -16,7 +16,7 @@ typedef struct _SCommitLogConfiguration
 } SCommitLogConfiguration, *PSCommitLogConfiguration;
 
 /**
- * Конфигурация хранилища
+ * РљРѕРЅС„РёРіСѓСЂР°С†РёСЏ С…СЂР°РЅРёР»РёС‰Р°
  */
 typedef struct _SStorageConfiguration
 {

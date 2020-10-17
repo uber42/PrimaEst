@@ -1,4 +1,4 @@
-/**
+п»ї/**
  * @file SkipListDefinitions.h
  *
  * @author Pavel Chursin
@@ -8,13 +8,13 @@
 #ifndef SKIP_LIST_DEFINITIONS_H
 #define SKIP_LIST_DEFINITIONS_H
 
-/** Максимальная высота */
+/** РњР°РєСЃРёРјР°Р»СЊРЅР°СЏ РІС‹СЃРѕС‚Р° */
 #define SKIP_LIST_MAX_HEIGHT 12
 
 /**
- * Компаратор ключей
- * @param[in] pFirst	Первый ключ
- * @param[in] pSecond	Второй ключ
+ * РљРѕРјРїР°СЂР°С‚РѕСЂ РєР»СЋС‡РµР№
+ * @param[in] pFirst	РџРµСЂРІС‹Р№ РєР»СЋС‡
+ * @param[in] pSecond	Р’С‚РѕСЂРѕР№ РєР»СЋС‡
  */
 typedef int FSkipListComp(
 	PVOID pFirst,
@@ -22,11 +22,11 @@ typedef int FSkipListComp(
 );
 
 /**
- * Функция описывающая вывод для конкретного типа пары ключ-значение
- * @param[in] dwHeight	Высота
- * @param[in] fNewLevel	Был ли совершен переход на другой уровень
- * @param[in] pKey		Ключ
- * @param[in] pValue	Значение
+ * Р¤СѓРЅРєС†РёСЏ РѕРїРёСЃС‹РІР°СЋС‰Р°СЏ РІС‹РІРѕРґ РґР»СЏ РєРѕРЅРєСЂРµС‚РЅРѕРіРѕ С‚РёРїР° РїР°СЂС‹ РєР»СЋС‡-Р·РЅР°С‡РµРЅРёРµ
+ * @param[in] dwHeight	Р’С‹СЃРѕС‚Р°
+ * @param[in] fNewLevel	Р‘С‹Р» Р»Рё СЃРѕРІРµСЂС€РµРЅ РїРµСЂРµС…РѕРґ РЅР° РґСЂСѓРіРѕР№ СѓСЂРѕРІРµРЅСЊ
+ * @param[in] pKey		РљР»СЋС‡
+ * @param[in] pValue	Р—РЅР°С‡РµРЅРёРµ
  */
 typedef int FSkipListPrinter(
 	DWORD dwHeight,
@@ -36,16 +36,16 @@ typedef int FSkipListPrinter(
 );
 
 /**
- * Функция описывающая удаление узла структуры
- * @param[in] dwHeight	Высота
+ * Р¤СѓРЅРєС†РёСЏ РѕРїРёСЃС‹РІР°СЋС‰Р°СЏ СѓРґР°Р»РµРЅРёРµ СѓР·Р»Р° СЃС‚СЂСѓРєС‚СѓСЂС‹
+ * @param[in] dwHeight	Р’С‹СЃРѕС‚Р°
  */
 typedef int FSkipListNodeEraser(
 	PVOID	pNode
 );
 
 /**
- * Функция описывающая удаление узла структуры
- * @param[in] dwHeight	Высота
+ * Р¤СѓРЅРєС†РёСЏ РѕРїРёСЃС‹РІР°СЋС‰Р°СЏ СѓРґР°Р»РµРЅРёРµ СѓР·Р»Р° СЃС‚СЂСѓРєС‚СѓСЂС‹
+ * @param[in] dwHeight	Р’С‹СЃРѕС‚Р°
  */
 typedef int FSkipListNodeValueChanger(
 	PVOID	*pValueDest,
@@ -53,8 +53,8 @@ typedef int FSkipListNodeValueChanger(
 );
 
 /**
- * Сгенирировать высоту
- * @return Высота
+ * РЎРіРµРЅРёСЂРёСЂРѕРІР°С‚СЊ РІС‹СЃРѕС‚Сѓ
+ * @return Р’С‹СЃРѕС‚Р°
  */
 static DWORD
 RandomHeight()
