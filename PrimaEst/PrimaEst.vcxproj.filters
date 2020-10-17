@@ -91,11 +91,20 @@
     <ClInclude Include="Tools\Crc32.h">
       <Filter>Tools</Filter>
     </ClInclude>
-    <ClInclude Include="Benchmarks\SkipList\Selection.h">
-      <Filter>Benchmarks\SkipList</Filter>
-    </ClInclude>
     <ClInclude Include="ThirdParty\murmur3\murmur3.h">
       <Filter>ThirdParty\murmur3</Filter>
+    </ClInclude>
+    <ClInclude Include="Benchmarks\SkipList\SkipListSelection.h">
+      <Filter>Benchmarks\SkipList</Filter>
+    </ClInclude>
+    <ClInclude Include="Storage\Skiplist\LockFreeSkipList.h">
+      <Filter>Storage\SkipList</Filter>
+    </ClInclude>
+    <ClInclude Include="Storage\Skiplist\SkipListDefinitions.h">
+      <Filter>Storage\SkipList</Filter>
+    </ClInclude>
+    <ClInclude Include="Test\LockFreeSkipListTest.h">
+      <Filter>Test\SkipListTest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -133,12 +142,15 @@
     <ClCompile Include="Tools\Crc32.c">
       <Filter>Tools</Filter>
     </ClCompile>
-    <ClCompile Include="Benchmarks\SkipList\Selection.c">
-      <Filter>Benchmarks\SkipList</Filter>
-    </ClCompile>
     <ClCompile Include="benchmarks.c" />
     <ClCompile Include="ThirdParty\murmur3\murmur3.c">
       <Filter>ThirdParty\murmur3</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmarks\SkipList\SkipListSelection.c">
+      <Filter>Benchmarks\SkipList</Filter>
+    </ClCompile>
+    <ClCompile Include="Storage\Skiplist\LockFreeSkipList.c">
+      <Filter>Storage\SkipList</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -148,10 +160,16 @@
     <None Include="Test\Resources\TestLogConfigurationOk.json">
       <Filter>Test\Resources</Filter>
     </None>
-    <None Include="Benchmarks\SkipList\comp_plot.py">
+    <None Include="Benchmarks\SkipList\LockFreeSkipListPlot.py">
       <Filter>Benchmarks\SkipList</Filter>
     </None>
-    <None Include="Benchmarks\SkipList\single_plot.py">
+    <None Include="Benchmarks\SkipList\SkipListPlot.py">
+      <Filter>Benchmarks\SkipList</Filter>
+    </None>
+    <None Include="Benchmarks\SkipList\FindMultiThread.py">
+      <Filter>Benchmarks\SkipList</Filter>
+    </None>
+    <None Include="Benchmarks\SkipList\SetMultiThread.py">
       <Filter>Benchmarks\SkipList</Filter>
     </None>
   </ItemGroup>

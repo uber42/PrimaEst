@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Benchmark|Win32">
@@ -141,12 +141,13 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Benchmark|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
+      <Optimization>MaxSpeed</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <ExceptionHandling>false</ExceptionHandling>
       <CompileAs>CompileAsC</CompileAs>
       <PreprocessorDefinitions>BENCHMARKS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -186,10 +187,11 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Benchmark|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
+      <Optimization>MaxSpeed</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>BENCHMARKS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -243,12 +245,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Benchmarks\SkipList\Selection.h" />
+    <ClInclude Include="Benchmarks\SkipList\SkipListSelection.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="Log\Log.h" />
     <ClInclude Include="Storage\CommitLog\CommitLog.h" />
+    <ClInclude Include="Storage\Skiplist\LockFreeSkipList.h" />
     <ClInclude Include="Storage\Skiplist\SkipList.h" />
+    <ClInclude Include="Storage\Skiplist\SkipListDefinitions.h" />
     <ClInclude Include="Storage\StorageConfiguration.h" />
+    <ClInclude Include="Test\LockFreeSkipListTest.h" />
     <ClInclude Include="Test\LogTest.h" />
     <ClInclude Include="Test\SkipListTest.h" />
     <ClInclude Include="ThirdParty\cJSON\cJSON.h" />
@@ -262,9 +267,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="benchmarks.c" />
-    <ClCompile Include="Benchmarks\SkipList\Selection.c" />
+    <ClCompile Include="Benchmarks\SkipList\SkipListSelection.c" />
     <ClCompile Include="Log\Log.c" />
     <ClCompile Include="Storage\CommitLog\CommitLog.c" />
+    <ClCompile Include="Storage\Skiplist\LockFreeSkipList.c" />
     <ClCompile Include="Storage\Skiplist\SkipList.c" />
     <ClCompile Include="Storage\StorageConfiguration.c" />
     <ClCompile Include="tests.c" />
@@ -278,8 +284,10 @@
     <ClCompile Include="Tools\MessageQueue.c" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Benchmarks\SkipList\comp_plot.py" />
-    <None Include="Benchmarks\SkipList\single_plot.py" />
+    <None Include="Benchmarks\SkipList\FindMultiThread.py" />
+    <None Include="Benchmarks\SkipList\LockFreeSkipListPlot.py" />
+    <None Include="Benchmarks\SkipList\SetMultiThread.py" />
+    <None Include="Benchmarks\SkipList\SkipListPlot.py" />
     <None Include="Test\Resources\TestLogConfigurationBad.json" />
     <None Include="Test\Resources\TestLogConfigurationOk.json" />
   </ItemGroup>

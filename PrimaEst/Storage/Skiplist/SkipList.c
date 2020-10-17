@@ -7,13 +7,6 @@
 
 #include "../../global.h" 
 
- /**
-  * Сгенирировать высоту
-  * @return Высота
-  */
-static DWORD 
-RandomHeight();
-
 /**
  * Создать узел списка с пропусками
  * @param[in] dwHeight	Высота
@@ -41,12 +34,6 @@ CreateSkipListNode(
 	PVOID	    pValue
 )
 {
-	if (pKey == NULL || pValue == NULL)
-	{
-		LogDebug("[SkipList] Передан не нулевой аргумент");
-		return NULL;
-	}
-
 	DWORD dwSize = sizeof(SSkipListNode) + dwHeight * sizeof(SList);
 	PSSkipListNode psSkipListNode = (PSSkipListNode)malloc(dwSize);
 	if (psSkipListNode == NULL)
@@ -63,12 +50,16 @@ CreateSkipListNode(
 
 /**
  * Создать список с пропусками
- * @param[in] pfComparator	Компаратор
- * @return					Созданный список
+ * @param[in] pfComparator		Компаратор
+ * @param[in] pfEraser			Функция удаления узла
+ * @param[in] pfValueChanger	Функция изменения значения узла
+ * @return Созданный список
  */
 PSSkipList
 CreateSkipList(
-	FComp* pfComparator
+	FSkipListComp*				pfComparator,
+	FSkipListNodeEraser*		pfEraser,
+	FSkipListNodeValueChanger*	pfValueChanger
 )
 {
 	if (pfComparator == NULL)
@@ -86,6 +77,8 @@ CreateSkipList(
 
 	psSkipList->dwHeight = 1;
 	psSkipList->dwCount = 0;
+	psSkipList->pfEraser = pfEraser;
+	psSkipList->pfValueChanger = pfValueChanger;
 	psSkipList->pfComparator = pfComparator;
 
 	for (size_t i = 0; i < ARRAYSIZE(psSkipList->pHead); i++)
@@ -150,7 +143,7 @@ SkipListSet(
 			}
 			else if (nCompareResult == 0)
 			{
-				psSkipListCurrentNode->pValue = pValue;
+				psSkipList->pfValueChanger(&psSkipListCurrentNode->pValue, pValue);
 				return psSkipListCurrentNode;
 			}
 		}
@@ -172,7 +165,7 @@ SkipListSet(
 		ListAdd(&psSkipListNode->pLink[dwIdx],
 			sListInsertion[dwIdx]);
 	}
-
+	
 	psSkipList->dwCount++;
 
 	return psSkipListNode;
@@ -206,7 +199,8 @@ SkipListFind(
 				pLink[dwIdx]
 			);
 
-			int nCompareResult = psSkipList->pfComparator(psSkipListCurrentNode->pKey, pKey);
+			int nCompareResult = 
+				psSkipList->pfComparator(psSkipListCurrentNode->pKey, pKey);
 
 			if (nCompareResult > 0)
 			{
@@ -394,6 +388,8 @@ SkipListClear(
 			pLink
 		);
 
+		psSkipList->pfEraser(psSkipListCurrentNode);
+
 		free(psSkipListCurrentNode);
 	}
 
@@ -419,22 +415,3 @@ SkipListClose(
 	free(psSkipList);
 }
 
-/**
- * Сгенирировать высоту
- * @return Высота
- */
-static DWORD
-RandomHeight()
-{
-	DWORD dwRandom = LehmerRandom();
-	DWORD dwBranching = 4;
-	DWORD dwHeight = 1;
-
-	while (dwHeight < SKIP_LIST_MAX_HEIGHT &&
-		LehmerRandom() % dwBranching == 0)
-	{
-		dwHeight++;
-	}
-
-	return dwHeight;
-}

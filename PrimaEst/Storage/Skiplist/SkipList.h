@@ -8,37 +8,13 @@
 #ifndef SKIP_LIST_H
 #define SKIP_LIST_H
 
- /** Максимальная высота */
-#define SKIP_LIST_MAX_HEIGHT 32
-
-/**
- * Компаратор ключей
- * @param[in] pFirst	Первый ключ
- * @param[in] pSecond Второй ключ
- */
-typedef int FComp(
-	PVOID pFirst,
-	PVOID pSecond
-);
-
-/**
- * Функция описывающая вывод для конкретного типа пары ключ-значение
- * @param[in] dwHeight	Высота
- * @param[in] fNewLevel	Был ли совершен переход на другой уровень
- * @param[in] pKey		Ключ
- * @param[in] pValue		Значение
- */
-typedef int FSkipListPrinter(
-	DWORD dwHeight,
-	BOOL  fNewLevel,
-	PVOID pKey,
-	PVOID pValue
-);
+#include "SkipListDefinitions.h"
 
 /**
  * Структура список с пропусками
  */
-typedef struct _SkipList {
+typedef struct _SkipList
+{
 	/** Количество записей */
 	DWORD  dwCount;
 
@@ -46,7 +22,13 @@ typedef struct _SkipList {
 	DWORD  dwHeight;
 
 	/** Компаратор */
-	FComp* pfComparator;
+	FSkipListComp* pfComparator;
+
+	/** Функция удаления узла */
+	FSkipListNodeEraser* pfEraser;
+
+	/** Функция изменения значения узла */
+	FSkipListNodeValueChanger* pfValueChanger;
 
 	/** Список уровней */
 	SList  pHead[SKIP_LIST_MAX_HEIGHT];
@@ -69,12 +51,16 @@ typedef struct _SSkipListNode
 
 /**
  * Создать список с пропусками
- * @param[in] pfComparator Компаратор
+ * @param[in] pfComparator		Компаратор
+ * @param[in] pfEraser			Функция удаления узла
+ * @param[in] pfValueChanger	Функция изменения значения узла
  * @return Созданный список
  */
 PSSkipList
 CreateSkipList(
-	FComp* pfComparator
+	FSkipListComp*				pfComparator,
+	FSkipListNodeEraser*		pfEraser,
+	FSkipListNodeValueChanger*	pfValueChanger
 );
 
 /**

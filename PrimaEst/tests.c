@@ -11,13 +11,18 @@
 
 int main()
 {
-	SkipListAddTest();
-	SkipListSetTest();
-	SkipListFindTest();
-	SkipListPrintTest();
-	SkipListRemoveTest();
+	//LockFreeSkipListAddTest();
+	//LockFreeSkipListFintTest();
+	//LockFreeSkipListMultiThreadAddTest();
+	//LockFreeSkipListMultiThreadFind();
+	//LockFreeSkipListMultiThreadAddAndFind();
 
-	/** Тесты для лога */
+	//SkipListAddTest();
+	//SkipListSetTest();
+	//SkipListFindTest();
+	//SkipListPrintTest();
+	//SkipListRemoveTest();
+
 	//LogEnumFnvTest();
 	//ParseLogTest_1();
 	//ParseLogTest_2();

@@ -17,6 +17,22 @@ TestIntComparator(void* a, void* b)
 }
 
 static
+void
+TestIntEraser(void* arg)
+{
+	UNREFERENCED_PARAMETER(arg);
+
+	return;
+}
+
+static
+void
+TestIntChanger(void** pValueDest, void* pValueSrc)
+{
+	*pValueDest = pValueSrc;
+}
+
+static
 int
 TestSkipListPrinter(
 	DWORD dwHeight,
@@ -36,7 +52,10 @@ SkipListAddTest()
 {
 	const size_t nCount = 100;
 
-	PSSkipList psSkipList = CreateSkipList(TestIntComparator);
+	PSSkipList psSkipList = CreateSkipList(
+		TestIntComparator,
+		TestIntEraser,
+		TestIntChanger);
 
 	for (size_t i = 1; i <= nCount; i++)
 	{
@@ -66,7 +85,10 @@ SkipListSetTest()
 {
 	const size_t nCount = 20;
 
-	PSSkipList psSkipList = CreateSkipList(TestIntComparator);
+	PSSkipList psSkipList = CreateSkipList(
+		TestIntComparator,
+		TestIntEraser,
+		TestIntChanger);
 
 	for (size_t i = 1; i <= nCount; i++)
 	{
@@ -99,7 +121,10 @@ SkipListFindTest()
 {
 	const size_t nCount = 20;
 
-	PSSkipList psSkipList = CreateSkipList(TestIntComparator);
+	PSSkipList psSkipList = CreateSkipList(
+		TestIntComparator,
+		TestIntEraser,
+		TestIntChanger);
 
 	for (size_t i = 1; i <= nCount; i++)
 	{
@@ -124,7 +149,10 @@ SkipListRemoveTest()
 {
 	const size_t nCount = 20;
 
-	PSSkipList psSkipList = CreateSkipList(TestIntComparator);
+	PSSkipList psSkipList = CreateSkipList(
+		TestIntComparator,
+		TestIntEraser,
+		TestIntChanger);
 
 	for (size_t i = 1; i <= nCount; i++)
 	{
@@ -149,7 +177,10 @@ SkipListPrintTest()
 {
 	const size_t nCount = 20;
 
-	PSSkipList psSkipList = CreateSkipList(TestIntComparator);
+	PSSkipList psSkipList = CreateSkipList(
+		TestIntComparator,
+		TestIntEraser,
+		TestIntChanger);
 
 	for (size_t i = 1; i <= nCount; i++)
 	{

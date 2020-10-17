@@ -15,9 +15,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <intrin.h>
 
  /** ThridParty */
 #include "ThirdParty/cJSON/cJSON_Utils.h"
+#include "ThirdParty/murmur3/murmur3.h"
 
 /** TOOLS */
 #include "Tools/List.h"
@@ -29,6 +31,8 @@
 /** STORAGE */
 #include "Storage/StorageConfiguration.h"
 #include "Storage/Skiplist/SkipList.h"
+#include "Storage/Skiplist/LockFreeSkipList.h"
+#include "Storage/Skiplist/SkipListDefinitions.h"
 #include "Storage/CommitLog/CommitLog.h"
 
 /** UTILS */
@@ -36,6 +40,7 @@
 
 #ifdef TESTS
 
+#include "Test/LockFreeSkipListTest.h"
 #include "Test/SkipListTest.h"
 #include "Test/LogTest.h"
 

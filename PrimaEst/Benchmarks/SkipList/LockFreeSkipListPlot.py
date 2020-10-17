@@ -19,7 +19,7 @@ selection = [
 	1000000,
 ]
 
-with open("selection.bin", mode='rb') as file:
+with open("LockFreeSkipListSelection.bin", mode='rb') as file:
     fileContent = file.read()
 
 dataset = []
@@ -31,18 +31,15 @@ for i in range(0, len(fileContent), 4):
             byteorder='little', signed=True)
         )
 
-setselection = dataset[:len(dataset) // 3]
-findselection = dataset[len(dataset) // 3:2 * len(dataset) // 3]
-removeselection = dataset[2 * len(dataset) // 3:]
-
+setselection = dataset[:len(dataset) // 2]
+findselection = dataset[len(dataset) // 2:]
 
 fig, ax = plt.subplots()
 plt.xlabel("Количество элементов", fontsize=16)
 plt.ylabel("Время 10e-3с", fontsize=16)
-ax.plot(selection, setselection, label="Вставка")
-ax.plot(selection, findselection, label="Поиск")
-ax.plot(selection, removeselection, label="Удаление")
+ax.plot(selection, setselection, label="Insert")
+ax.plot(selection, findselection, label="Search")
 ax.legend()
 
-fig.savefig("./single_plot")
+fig.savefig("./LockFreeSkipList")
 plt.show()

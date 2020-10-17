@@ -11,7 +11,10 @@
 
 int main()
 {
-	SkipListSelectionGeneralOperation();
+	SkipListSelection();
+	LockFreeSkipListSelection();
+	MultiThreadFindSkipListSelection();
+	MultiThreadSetSkipListSelection();
 }
 
 #endif
