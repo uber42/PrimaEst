@@ -14,7 +14,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
 #include <intrin.h>
 
  /** ThridParty */
@@ -27,6 +26,10 @@
 #include "Tools/Fnv1a.h"
 #include "Tools/Crc32.h"
 #include "Log/Log.h"
+#include "Tools/Bitset.h"
+
+/** UTILS */
+#include "Utils/Random.h"
 
 /** STORAGE */
 #include "Storage/StorageConfiguration.h"
@@ -35,14 +38,14 @@
 #include "Storage/Skiplist/SkipListDefinitions.h"
 #include "Storage/CommitLog/CommitLog.h"
 
-/** UTILS */
-#include "Utils/Random.h"
-
 #ifdef TESTS
+
+#include <assert.h>
 
 #include "Test/LockFreeSkipListTest.h"
 #include "Test/SkipListTest.h"
 #include "Test/LogTest.h"
+#include "Test/BitsetTest.h"
 
 #endif
 

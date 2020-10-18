@@ -11,11 +11,26 @@
 
 int main()
 {
+	BitsetSetBitTest();
+	BitsetSet8MaskTest();
+	BitsetSet16MaskTest();
+	BitsetSet64Mask_x86Test();
+	BitsetSet64Mask_x64Test();
+	BitsetSet128Mask_x86Test();
+	BitsetSet128Mask_x64Test();
+	BitsetCheckBitTest();
+	BitsetCheck8MaskTest();
+	BitsetCheck64Mask_x86Test();
+	BitsetCheck64Mask_x64Test();
+	BitsetCheck128Mask_x86Test();
+	BitsetCheck128Mask_x64Test();
+
 	//LockFreeSkipListAddTest();
 	//LockFreeSkipListFintTest();
 	//LockFreeSkipListMultiThreadAddTest();
 	//LockFreeSkipListMultiThreadFind();
 	//LockFreeSkipListMultiThreadAddAndFind();
+	//LockFreeSkipListResetTest();
 
 	//SkipListAddTest();
 	//SkipListSetTest();

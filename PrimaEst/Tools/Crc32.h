@@ -114,7 +114,7 @@ Crc32FileCompute(
 
 		for (DWORD i = 0; i < dwBytesRead; i++)
 		{
-			dwCrc = UpdateCRC32(bBuffer, dwCrc);
+			dwCrc = UpdateCRC32(bBuffer[i], dwCrc);
 		}
 
 		dwSize -= dwBytesRead;

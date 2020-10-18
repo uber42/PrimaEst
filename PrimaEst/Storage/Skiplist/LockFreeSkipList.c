@@ -1,4 +1,11 @@
-﻿#include "../../global.h"
+﻿/**
+ * @file LockFreeSkipList.c
+ *
+ * @author Pavel Chursin
+ * @date Oct 2020
+ */
+
+#include "../../global.h"
 
 /**
  * Создать узел списка с пропусками
@@ -11,7 +18,8 @@ PSLockFreeSkipListNode
 CreateLockFreeSkipListNode(
 	DWORD		dwHeight,
 	PVOID		pKey,
-	PVOID	    pValue);
+	PVOID	    pValue
+);
 
 
 /**
@@ -89,7 +97,7 @@ LockFreeSkipListSet(
 		{
 			if (!nCompare)
 			{
-				psSkipList->pfValueChanger(&psNextNode->pKey, pKey);
+				psSkipList->pfValueChanger(&psNextNode->pValue, pValue);
 				return psNextNode;
 			}
 			psNode = psNextNode;
@@ -107,7 +115,7 @@ LockFreeSkipListSet(
 		}
 	}
 
-	DWORD dwRndHeight = RandomHeight();
+	LONG dwRndHeight = RandomHeight();
 	psFoundNode = CreateLockFreeSkipListNode(
 		dwRndHeight, pKey, pValue);
 	if (!psFoundNode)
@@ -191,10 +199,10 @@ LockFreeSkipListClear(
 	PSLockFreeSkipList	psSkipList
 )
 {
-	PSLockFreeSkipListNode psIter = psSkipList->psNode->pHead[0];
+	volatile PSLockFreeSkipListNode psIter = psSkipList->psNode->pHead[0];
 	for (DWORD dxIdx = 0; dxIdx < psSkipList->dwCount; dxIdx++)
 	{
-		PSLockFreeSkipListNode psDelete = psIter;
+		volatile PSLockFreeSkipListNode psDelete = psIter;
 		psIter = psIter->pHead[0];
 
 		psSkipList->pfEraser(psDelete);
@@ -258,6 +266,6 @@ LockFreeSkipListGetAll(
 	PDWORD				pdwSize
 )
 {
-	*pdwSize = psSkipList->dwCount;
+	*pdwSize = (DWORD)psSkipList->dwCount;
 	return psSkipList->psNode->pHead;
 }

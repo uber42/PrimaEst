@@ -1,4 +1,11 @@
-﻿#ifndef LOG_TEST_H
+﻿/**
+ * @file LogTest.h
+ *
+ * @author Pavel Chursin
+ * @date Oct 2020
+ */
+
+#ifndef LOG_TEST_H
 #define LOG_TEST_H
 
 VOID

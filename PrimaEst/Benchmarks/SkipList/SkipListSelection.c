@@ -43,8 +43,6 @@ void
 TestIntEraser(void* arg)
 {
 	UNREFERENCED_PARAMETER(arg);
-
-	return;
 }
 
 static
@@ -292,7 +290,7 @@ InternalLockFreeFindSelection()
 
 	memset(pnTime, 0, sizeof(dwSize));
 
-	PSSkipList psSkipList = CreateLockFreeSkipList(
+	PSLockFreeSkipList psSkipList = CreateLockFreeSkipList(
 		TestIntComparator,
 		TestIntEraser,
 		TestIntChanger);
@@ -419,7 +417,7 @@ SetLockFreeSkipListRoutine(
 	LONG lTime = 0;
 	LONG lTotal = 0;
 
-	for (int i = arg->dwFrom; i < arg->dwTo; i++)
+	for (DWORD i = arg->dwFrom; i < arg->dwTo; i++)
 	{
 		lTime = clock();
 
@@ -448,7 +446,7 @@ FindLockFreeSkipListRoutine(
 	LONG lTime = 0;
 	LONG lTotal = 0;
 
-	for (int i = arg->dwFrom; i < arg->dwTo; i++)
+	for (DWORD i = arg->dwFrom; i < arg->dwTo; i++)
 	{
 		lTime = clock();
 
@@ -475,7 +473,7 @@ FindSkipListRoutine(
 	LONG lTime = 0;
 	LONG lTotal = 0;
 
-	for (int i = arg->dwFrom; i < arg->dwTo; i++)
+	for (DWORD i = arg->dwFrom; i < arg->dwTo; i++)
 	{
 		lTime = clock();
 
@@ -504,7 +502,7 @@ SetSkipListRoutine(
 	LONG lTime = 0;
 	LONG lTotal = 0;
 
-	for (int i = arg->dwFrom; i < arg->dwTo; i++)
+	for (DWORD i = arg->dwFrom; i < arg->dwTo; i++)
 	{
 		lTime = clock();
 
@@ -541,28 +539,28 @@ InternalMultiThreadSetSelection()
 
 	InitializeCriticalSection(&crWriteLock);
 
-	for (int i = 1; i <= SKIP_LIST_BENCHMARK_THREAD_COUNT; i++)
+	for (DWORD i = 1; i <= SKIP_LIST_BENCHMARK_THREAD_COUNT; i++)
 	{
 		PSSkipList psSkipList = CreateSkipList(
 			TestIntComparator,
 			TestIntEraser,
 			TestIntChanger);
 
-		for (int j = 0; j < i; j++)
+		for (DWORD j = 0; j < i; j++)
 		{
 			sArgs[j].crWriteLock = &crWriteLock;
 			sArgs[j].dwThreadsCount = i;
 			sArgs[j].nTime = 0;
 			sArgs[j].psSkipList = psSkipList;
-			sArgs[j].dwFrom = (SKIP_LIST_BENCHMARK_BOUND / i) * j;
-			sArgs[j].dwTo = (SKIP_LIST_BENCHMARK_BOUND / i) * (j + 1);
+			sArgs[j].dwFrom = (DWORD)(SKIP_LIST_BENCHMARK_BOUND / i) * j;
+			sArgs[j].dwTo = (DWORD)(SKIP_LIST_BENCHMARK_BOUND / i) * (j + 1);
 
 			hThreads[j] = CreateThread(
 				NULL, 0, SetSkipListRoutine,
 				&sArgs[j], CREATE_SUSPENDED, NULL);
 		}
 
-		for (int j = 0; j < i; j++)
+		for (DWORD j = 0; j < i; j++)
 		{
 #pragma warning(suppress: 6387)
 			ResumeThread(hThreads[j]);
@@ -570,7 +568,7 @@ InternalMultiThreadSetSelection()
 
 		WaitForMultipleObjects(i, hThreads, TRUE, INFINITE);
 
-		for (int j = 0; j < i; j++)
+		for (DWORD j = 0; j < i; j++)
 		{
 #pragma warning(suppress: 6385)
 			pnTime[i - 1] += sArgs[j].nTime;
@@ -617,23 +615,23 @@ InternalMultiThreadFindSelection()
 
 	InitializeCriticalSection(&crWriteLock);
 
-	for (int i = 1; i <= SKIP_LIST_BENCHMARK_THREAD_COUNT; i++)
+	for (DWORD i = 1; i <= SKIP_LIST_BENCHMARK_THREAD_COUNT; i++)
 	{
-		for (int j = 0; j < i; j++)
+		for (DWORD j = 0; j < i; j++)
 		{
 			sArgs[j].crWriteLock = &crWriteLock;
 			sArgs[j].dwThreadsCount = i;
 			sArgs[j].nTime = 0;
 			sArgs[j].psSkipList = psSkipList;
-			sArgs[j].dwFrom = (SKIP_LIST_BENCHMARK_BOUND / i) * j;
-			sArgs[j].dwTo = (SKIP_LIST_BENCHMARK_BOUND / i) * (j + 1);
+			sArgs[j].dwFrom = (DWORD)(SKIP_LIST_BENCHMARK_BOUND / i) * j;
+			sArgs[j].dwTo = (DWORD)(SKIP_LIST_BENCHMARK_BOUND / i) * (j + 1);
 
 			hThreads[j] = CreateThread(
 				NULL, 0, FindSkipListRoutine,
 				&sArgs[j], CREATE_SUSPENDED, NULL);
 		}
 
-		for (int j = 0; j < i; j++)
+		for (DWORD j = 0; j < i; j++)
 		{
 #pragma warning(suppress: 6387)
 			ResumeThread(hThreads[j]);
@@ -641,7 +639,7 @@ InternalMultiThreadFindSelection()
 
 		WaitForMultipleObjects(i, hThreads, TRUE, INFINITE);
 
-		for (int j = 0; j < i; j++)
+		for (DWORD j = 0; j < i; j++)
 		{
 #pragma warning(suppress: 6385)
 			pnTime[i - 1] += sArgs[j].nTime;
@@ -678,28 +676,28 @@ InternalMultiThreadLockFreeSetSelection()
 
 	InitializeCriticalSection(&crWriteLock);
 
-	for (int i = 1; i <= SKIP_LIST_BENCHMARK_THREAD_COUNT; i++)
+	for (DWORD i = 1; i <= SKIP_LIST_BENCHMARK_THREAD_COUNT; i++)
 	{
-		PSSkipList psSkipList = CreateLockFreeSkipList(
+		PSLockFreeSkipList psSkipList = CreateLockFreeSkipList(
 			TestIntComparator,
 			TestIntEraser,
 			TestIntChanger);
 
-		for (int j = 0; j < i; j++)
+		for (DWORD j = 0; j < i; j++)
 		{
 			sArgs[j].crWriteLock = &crWriteLock;
 			sArgs[j].dwThreadsCount = i;
 			sArgs[j].nTime = 0;
 			sArgs[j].psSkipList = psSkipList;
-			sArgs[j].dwFrom = (SKIP_LIST_BENCHMARK_BOUND / i) * j;
-			sArgs[j].dwTo = (SKIP_LIST_BENCHMARK_BOUND / i) * (j + 1);
+			sArgs[j].dwFrom = (DWORD)(SKIP_LIST_BENCHMARK_BOUND / i) * j;
+			sArgs[j].dwTo = (DWORD)(SKIP_LIST_BENCHMARK_BOUND / i) * (j + 1);
 
 			hThreads[j] = CreateThread(
 				NULL, 0, SetLockFreeSkipListRoutine,
 				&sArgs[j], CREATE_SUSPENDED, NULL);
 		}
 
-		for (int j = 0; j < i; j++)
+		for (DWORD j = 0; j < i; j++)
 		{
 #pragma warning(suppress: 6387)
 			ResumeThread(hThreads[j]);
@@ -707,7 +705,7 @@ InternalMultiThreadLockFreeSetSelection()
 
 		WaitForMultipleObjects(i, hThreads, TRUE, INFINITE);
 
-		for (int j = 0; j < i; j++)
+		for (DWORD j = 0; j < i; j++)
 		{
 #pragma warning(suppress: 6385)
 			pnTime[i - 1] += sArgs[j].nTime;
@@ -738,7 +736,7 @@ InternalMultiThreadLockFreeFindSelection()
 		pnTime[i] = 0;
 	}
 
-	PSSkipList psSkipList = CreateLockFreeSkipList(
+	PSLockFreeSkipList psSkipList = CreateLockFreeSkipList(
 		TestIntComparator,
 		TestIntEraser,
 		TestIntChanger);
@@ -751,22 +749,22 @@ InternalMultiThreadLockFreeFindSelection()
 	HANDLE hThreads[SKIP_LIST_BENCHMARK_THREAD_COUNT];
 	SBenchmarkSkipListArg sArgs[SKIP_LIST_BENCHMARK_THREAD_COUNT];
 
-	for (int i = 1; i <= SKIP_LIST_BENCHMARK_THREAD_COUNT; i++)
+	for (DWORD i = 1; i <= SKIP_LIST_BENCHMARK_THREAD_COUNT; i++)
 	{
-		for (int j = 0; j < i; j++)
+		for (DWORD j = 0; j < i; j++)
 		{
 			sArgs[j].dwThreadsCount = i;
 			sArgs[j].nTime = 0;
 			sArgs[j].psSkipList = psSkipList;
-			sArgs[j].dwFrom = (SKIP_LIST_BENCHMARK_BOUND / i) * j;
-			sArgs[j].dwTo = (SKIP_LIST_BENCHMARK_BOUND / i) * (j + 1);
+			sArgs[j].dwFrom = (DWORD)(SKIP_LIST_BENCHMARK_BOUND / i) * j;
+			sArgs[j].dwTo = (DWORD)(SKIP_LIST_BENCHMARK_BOUND / i) * (j + 1);
 
 			hThreads[j] = CreateThread(
 				NULL, 0, FindLockFreeSkipListRoutine,
 				&sArgs[j], CREATE_SUSPENDED, NULL);
 		}
 
-		for (int j = 0; j < i; j++)
+		for (DWORD j = 0; j < i; j++)
 		{
 #pragma warning(suppress: 6387)
 			ResumeThread(hThreads[j]);
@@ -774,7 +772,7 @@ InternalMultiThreadLockFreeFindSelection()
 
 		WaitForMultipleObjects(i, hThreads, TRUE, INFINITE);
 
-		for (int j = 0; j < i; j++)
+		for (DWORD j = 0; j < i; j++)
 		{
 #pragma warning(suppress: 6385)
 			pnTime[i - 1] += sArgs[j].nTime;

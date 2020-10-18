@@ -1,4 +1,11 @@
-﻿#include "../global.h"
+﻿/**
+ * @file LogTest.c
+ *
+ * @author Pavel Chursin
+ * @date Oct 2020
+ */
+
+#include "../global.h"
 
 #define LOG_EOT_CONSOLE					"console"
 #define LOG_EOT_TEXTFILE				"text"

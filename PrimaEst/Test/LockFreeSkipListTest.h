@@ -23,4 +23,7 @@ LockFreeSkipListMultiThreadFind();
 VOID
 LockFreeSkipListMultiThreadAddAndFind();
 
+VOID
+LockFreeSkipListResetTest();
+
 #endif // !SKIP_LIST_TEST_H

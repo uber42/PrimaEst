@@ -265,7 +265,7 @@ SkipListRemove(
 			}
 			else if (nComparationResult == 0)
 			{
-				for (DWORD dwCurrentHeight = 0; dwCurrentHeight <= dwIdx; dwCurrentHeight++)
+				for (INT dwCurrentHeight = 0; dwCurrentHeight <= dwIdx; dwCurrentHeight++)
 				{
 					ListNodeDelete(&psSkipListCurrentNode->pLink[dwCurrentHeight]);
 					if (ListIsEmpty(&psSkipList->pHead[dwCurrentHeight]))
@@ -274,6 +274,7 @@ SkipListRemove(
 					}
 				}
 
+				psSkipList->pfEraser(psSkipListCurrentNode);
 				free(psSkipListCurrentNode);
 				psSkipList->dwCount--;
 

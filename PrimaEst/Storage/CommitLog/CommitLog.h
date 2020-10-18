@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file CommitLog.h
  *
  * @author Pavel Chursin

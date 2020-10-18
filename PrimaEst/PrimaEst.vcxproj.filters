@@ -34,9 +34,6 @@
     <Filter Include="Log">
       <UniqueIdentifier>{81c9452e-2a23-4d0a-b83f-f4a75ffd7077}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Test\Resources">
-      <UniqueIdentifier>{cb510614-b440-4923-af58-e5a8621dcbb4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Benchmarks">
       <UniqueIdentifier>{e1551df8-ed30-459a-abb5-e96b566c5471}</UniqueIdentifier>
     </Filter>
@@ -48,6 +45,12 @@
     </Filter>
     <Filter Include="ThirdParty\murmur3">
       <UniqueIdentifier>{f240ea09-4150-4da5-975d-49745a389d45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test\BitsetTest">
+      <UniqueIdentifier>{42117240-cd7f-49ea-b57e-2db52bab88f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test\TestResources">
+      <UniqueIdentifier>{cb510614-b440-4923-af58-e5a8621dcbb4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +109,15 @@
     <ClInclude Include="Test\LockFreeSkipListTest.h">
       <Filter>Test\SkipListTest</Filter>
     </ClInclude>
+    <ClInclude Include="Storage\BloomFilter\BloomFilter.h">
+      <Filter>Storage\BloomFilter</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools\Bitset.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Test\BitsetTest.h">
+      <Filter>Test\BitsetTest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Storage\Skiplist\SkipList.c">
@@ -152,13 +164,25 @@
     <ClCompile Include="Storage\Skiplist\LockFreeSkipList.c">
       <Filter>Storage\SkipList</Filter>
     </ClCompile>
+    <ClCompile Include="Test\LockFreeSkipListTest.c">
+      <Filter>Test\SkipListTest</Filter>
+    </ClCompile>
+    <ClCompile Include="Storage\BloomFilter\BloomFilter.c">
+      <Filter>Storage\BloomFilter</Filter>
+    </ClCompile>
+    <ClCompile Include="Tools\Bitset.c">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\BitsetTest.c">
+      <Filter>Test\BitsetTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Test\Resources\TestLogConfigurationBad.json">
-      <Filter>Test\Resources</Filter>
+      <Filter>Test\TestResources</Filter>
     </None>
     <None Include="Test\Resources\TestLogConfigurationOk.json">
-      <Filter>Test\Resources</Filter>
+      <Filter>Test\TestResources</Filter>
     </None>
     <None Include="Benchmarks\SkipList\LockFreeSkipListPlot.py">
       <Filter>Benchmarks\SkipList</Filter>

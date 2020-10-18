@@ -39,7 +39,7 @@ typedef int FSkipListPrinter(
  * Функция описывающая удаление узла структуры
  * @param[in] dwHeight	Высота
  */
-typedef int FSkipListNodeEraser(
+typedef VOID FSkipListNodeEraser(
 	PVOID	pNode
 );
 
@@ -47,7 +47,7 @@ typedef int FSkipListNodeEraser(
  * Функция описывающая удаление узла структуры
  * @param[in] dwHeight	Высота
  */
-typedef int FSkipListNodeValueChanger(
+typedef VOID FSkipListNodeValueChanger(
 	PVOID	*pValueDest,
 	PVOID	pValueSrc
 );
@@ -56,7 +56,8 @@ typedef int FSkipListNodeValueChanger(
  * Сгенирировать высоту
  * @return Высота
  */
-static DWORD
+static 
+DWORD
 RandomHeight()
 {
 	DWORD dwRandom = LehmerRandom();
