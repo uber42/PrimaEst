@@ -1,4 +1,4 @@
-/**
+п»ї/**
  * @file Bitset.c
  *
  * @author Pavel Chursin
@@ -9,9 +9,9 @@
 
 
  /**
- * Создать байтовое множество
- * @param[in] dwCount		Количество битов в множестве
- * @return					Экземпляр.
+ * РЎРѕР·РґР°С‚СЊ Р±Р°Р№С‚РѕРІРѕРµ РјРЅРѕР¶РµСЃС‚РІРѕ
+ * @param[in] dwCount		РљРѕР»РёС‡РµСЃС‚РІРѕ Р±РёС‚РѕРІ РІ РјРЅРѕР¶РµСЃС‚РІРµ
+ * @return					Р­РєР·РµРјРїР»СЏСЂ.
  */
 PSBitset
 CreateBitset(
@@ -46,8 +46,8 @@ CreateBitset(
 }
 
 /**
-* Удалить байтовое множество
-* @param[in] psBitset		Экземпляр
+* РЈРґР°Р»РёС‚СЊ Р±Р°Р№С‚РѕРІРѕРµ РјРЅРѕР¶РµСЃС‚РІРѕ
+* @param[in] psBitset		Р­РєР·РµРјРїР»СЏСЂ
 */
 VOID
 DeleteBitset(
@@ -64,10 +64,10 @@ DeleteBitset(
 }
 
 /**
-* Установить бит без проверки на попадание в множество
-* @param[in] psBitset		Экземпляр
-* @param[in] dwCount		Номер бита
-* @return					Экземпляр.
+* РЈСЃС‚Р°РЅРѕРІРёС‚СЊ Р±РёС‚ Р±РµР· РїСЂРѕРІРµСЂРєРё РЅР° РїРѕРїР°РґР°РЅРёРµ РІ РјРЅРѕР¶РµСЃС‚РІРѕ
+* @param[in] psBitset		Р­РєР·РµРјРїР»СЏСЂ
+* @param[in] dwCount		РќРѕРјРµСЂ Р±РёС‚Р°
+* @return					Р­РєР·РµРјРїР»СЏСЂ.
 */
 inline
 static
@@ -88,10 +88,10 @@ InternalBitsetSetBit(
 
 
 /**
-* Установить бит
-* @param[in] psBitset		Экземпляр
-* @param[in] dwCount		Номер бита
-* @return					Экземпляр.
+* РЈСЃС‚Р°РЅРѕРІРёС‚СЊ Р±РёС‚
+* @param[in] psBitset		Р­РєР·РµРјРїР»СЏСЂ
+* @param[in] dwCount		РќРѕРјРµСЂ Р±РёС‚Р°
+* @return					Р­РєР·РµРјРїР»СЏСЂ.
 */
 BOOL
 BitsetSetBit
@@ -111,11 +111,11 @@ BitsetSetBit
 
 
 /**
-* Установить маску
-* @param[in] psBitset		Экземпляр
-* @param[in] bMask			Маска
-* @param[in] dwOffset		Сдвиг от начала множества
-* @return					Экземпляр.
+* РЈСЃС‚Р°РЅРѕРІРёС‚СЊ РјР°СЃРєСѓ
+* @param[in] psBitset		Р­РєР·РµРјРїР»СЏСЂ
+* @param[in] bMask			РњР°СЃРєР°
+* @param[in] dwOffset		РЎРґРІРёРі РѕС‚ РЅР°С‡Р°Р»Р° РјРЅРѕР¶РµСЃС‚РІР°
+* @return					Р­РєР·РµРјРїР»СЏСЂ.
 */
 inline
 static
@@ -141,11 +141,11 @@ InternalBitsetSetMask
 }
 
 /**
-* Установить маску 8 бит
-* @param[in] psBitset		Экземпляр
-* @param[in] bMask			Маска
-* @param[in] dwOffset		Сдвиг от начала множества
-* @return					Экземпляр.
+* РЈСЃС‚Р°РЅРѕРІРёС‚СЊ РјР°СЃРєСѓ 8 Р±РёС‚
+* @param[in] psBitset		Р­РєР·РµРјРїР»СЏСЂ
+* @param[in] bMask			РњР°СЃРєР°
+* @param[in] dwOffset		РЎРґРІРёРі РѕС‚ РЅР°С‡Р°Р»Р° РјРЅРѕР¶РµСЃС‚РІР°
+* @return					Р­РєР·РµРјРїР»СЏСЂ.
 */
 BOOL
 BitsetSet8Mask
@@ -166,11 +166,11 @@ BitsetSet8Mask
 }
 
 /**
-* Установить маску 16 бит
-* @param[in] psBitset		Экземпляр
-* @param[in] wMask			Маска
-* @param[in] dwOffset		Сдвиг от начала множества
-* @return					Экземпляр.
+* РЈСЃС‚Р°РЅРѕРІРёС‚СЊ РјР°СЃРєСѓ 16 Р±РёС‚
+* @param[in] psBitset		Р­РєР·РµРјРїР»СЏСЂ
+* @param[in] wMask			РњР°СЃРєР°
+* @param[in] dwOffset		РЎРґРІРёРі РѕС‚ РЅР°С‡Р°Р»Р° РјРЅРѕР¶РµСЃС‚РІР°
+* @return					Р­РєР·РµРјРїР»СЏСЂ.
 */
 BOOL
 BitsetSet16Mask
@@ -191,11 +191,11 @@ BitsetSet16Mask
 }
 
 /**
-* Установить маску 32 бит
-* @param[in] psBitset		Экземпляр
-* @param[in] dwMask			Маска
-* @param[in] dwOffset		Сдвиг от начала множества
-* @return					Экземпляр.
+* РЈСЃС‚Р°РЅРѕРІРёС‚СЊ РјР°СЃРєСѓ 32 Р±РёС‚
+* @param[in] psBitset		Р­РєР·РµРјРїР»СЏСЂ
+* @param[in] dwMask			РњР°СЃРєР°
+* @param[in] dwOffset		РЎРґРІРёРі РѕС‚ РЅР°С‡Р°Р»Р° РјРЅРѕР¶РµСЃС‚РІР°
+* @return					Р­РєР·РµРјРїР»СЏСЂ.
 */
 BOOL
 BitsetSet32Mask
@@ -216,11 +216,11 @@ BitsetSet32Mask
 }
 
 /**
-* Установить маску 64 бит
-* @param[in] psBitset		Экземпляр
-* @param[in] pdwMask		Маска
-* @param[in] dwOffset		Сдвиг от начала множества
-* @return					Экземпляр.
+* РЈСЃС‚Р°РЅРѕРІРёС‚СЊ РјР°СЃРєСѓ 64 Р±РёС‚
+* @param[in] psBitset		Р­РєР·РµРјРїР»СЏСЂ
+* @param[in] pdwMask		РњР°СЃРєР°
+* @param[in] dwOffset		РЎРґРІРёРі РѕС‚ РЅР°С‡Р°Р»Р° РјРЅРѕР¶РµСЃС‚РІР°
+* @return					Р­РєР·РµРјРїР»СЏСЂ.
 */
 BOOL
 BitsetSet64Mask_x86
@@ -243,11 +243,11 @@ BitsetSet64Mask_x86
 }
 
 /**
-* Установить маску 128 бит
-* @param[in] psBitset		Экземпляр
-* @param[in] pdwMask		Номер бита
-* @param[in] dwOffset		Сдвиг от начала множества
-* @return					Экземпляр.
+* РЈСЃС‚Р°РЅРѕРІРёС‚СЊ РјР°СЃРєСѓ 128 Р±РёС‚
+* @param[in] psBitset		Р­РєР·РµРјРїР»СЏСЂ
+* @param[in] pdwMask		РќРѕРјРµСЂ Р±РёС‚Р°
+* @param[in] dwOffset		РЎРґРІРёРі РѕС‚ РЅР°С‡Р°Р»Р° РјРЅРѕР¶РµСЃС‚РІР°
+* @return					Р­РєР·РµРјРїР»СЏСЂ.
 */
 BOOL
 BitsetSet128Mask_x86
@@ -272,11 +272,11 @@ BitsetSet128Mask_x86
 }
 
 /**
-* Проверить маску 64 бит для x64
-* @param[in] psBitset		Экземпляр
-* @param[in] pdwMask		Маска
-* @param[in] dwOffset		Сдвиг от начала множества
-* @return					Экземпляр.
+* РџСЂРѕРІРµСЂРёС‚СЊ РјР°СЃРєСѓ 64 Р±РёС‚ РґР»СЏ x64
+* @param[in] psBitset		Р­РєР·РµРјРїР»СЏСЂ
+* @param[in] pdwMask		РњР°СЃРєР°
+* @param[in] dwOffset		РЎРґРІРёРі РѕС‚ РЅР°С‡Р°Р»Р° РјРЅРѕР¶РµСЃС‚РІР°
+* @return					Р­РєР·РµРјРїР»СЏСЂ.
 */
 BOOL
 BitsetSet64Mask_x64
@@ -297,11 +297,11 @@ BitsetSet64Mask_x64
 }
 
 /**
-* Проверить маску 128 бит для x64
-* @param[in] psBitset		Экземпляр
-* @param[in] pllMask		Маска
-* @param[in] dwOffset		Сдвиг от начала множества
-* @return					Экземпляр.
+* РџСЂРѕРІРµСЂРёС‚СЊ РјР°СЃРєСѓ 128 Р±РёС‚ РґР»СЏ x64
+* @param[in] psBitset		Р­РєР·РµРјРїР»СЏСЂ
+* @param[in] pllMask		РњР°СЃРєР°
+* @param[in] dwOffset		РЎРґРІРёРі РѕС‚ РЅР°С‡Р°Р»Р° РјРЅРѕР¶РµСЃС‚РІР°
+* @return					Р­РєР·РµРјРїР»СЏСЂ.
 */
 BOOL
 BitsetSet128Mask_x64
@@ -324,10 +324,10 @@ BitsetSet128Mask_x64
 }
 
 /**
-* Проверить бит без проверки на попадание в границы
-* @param[in] psBitset		Экземпляр
-* @param[in] dwCount		Номер бита
-* @return					Экземпляр.
+* РџСЂРѕРІРµСЂРёС‚СЊ Р±РёС‚ Р±РµР· РїСЂРѕРІРµСЂРєРё РЅР° РїРѕРїР°РґР°РЅРёРµ РІ РіСЂР°РЅРёС†С‹
+* @param[in] psBitset		Р­РєР·РµРјРїР»СЏСЂ
+* @param[in] dwCount		РќРѕРјРµСЂ Р±РёС‚Р°
+* @return					Р­РєР·РµРјРїР»СЏСЂ.
 */
 inline
 static
@@ -348,10 +348,10 @@ InternalBitsetCheckBit(
 
 
 /**
-* Проверить бит
-* @param[in] psBitset		Экземпляр
-* @param[in] dwCount		Номер бита
-* @return					Экземпляр.
+* РџСЂРѕРІРµСЂРёС‚СЊ Р±РёС‚
+* @param[in] psBitset		Р­РєР·РµРјРїР»СЏСЂ
+* @param[in] dwCount		РќРѕРјРµСЂ Р±РёС‚Р°
+* @return					Р­РєР·РµРјРїР»СЏСЂ.
 */
 BOOL
 BitsetCheckBit
@@ -369,11 +369,11 @@ BitsetCheckBit
 }
 
 /**
-* Проверить маску
-* @param[in] psBitset		Экземпляр
-* @param[in] bMask			Маска
-* @param[in] dwOffset		Сдвиг от начала множества
-* @return					Экземпляр.
+* РџСЂРѕРІРµСЂРёС‚СЊ РјР°СЃРєСѓ
+* @param[in] psBitset		Р­РєР·РµРјРїР»СЏСЂ
+* @param[in] bMask			РњР°СЃРєР°
+* @param[in] dwOffset		РЎРґРІРёРі РѕС‚ РЅР°С‡Р°Р»Р° РјРЅРѕР¶РµСЃС‚РІР°
+* @return					Р­РєР·РµРјРїР»СЏСЂ.
 */
 inline
 static
@@ -400,11 +400,11 @@ InternalBitsetCheckMask
 }
 
 /**
-* Проверить маску 8 бит
-* @param[in] psBitset		Экземпляр
-* @param[in] bMask			Маска
-* @param[in] dwOffset		Сдвиг от начала множества
-* @return					Экземпляр.
+* РџСЂРѕРІРµСЂРёС‚СЊ РјР°СЃРєСѓ 8 Р±РёС‚
+* @param[in] psBitset		Р­РєР·РµРјРїР»СЏСЂ
+* @param[in] bMask			РњР°СЃРєР°
+* @param[in] dwOffset		РЎРґРІРёРі РѕС‚ РЅР°С‡Р°Р»Р° РјРЅРѕР¶РµСЃС‚РІР°
+* @return					Р­РєР·РµРјРїР»СЏСЂ.
 */
 BOOL
 BitsetCheck8Mask
@@ -423,11 +423,11 @@ BitsetCheck8Mask
 }
 
 /**
-* Проверить маску 16 бит
-* @param[in] psBitset		Экземпляр
-* @param[in] wMask			Маска
-* @param[in] dwOffset		Сдвиг от начала множества
-* @return					Экземпляр.
+* РџСЂРѕРІРµСЂРёС‚СЊ РјР°СЃРєСѓ 16 Р±РёС‚
+* @param[in] psBitset		Р­РєР·РµРјРїР»СЏСЂ
+* @param[in] wMask			РњР°СЃРєР°
+* @param[in] dwOffset		РЎРґРІРёРі РѕС‚ РЅР°С‡Р°Р»Р° РјРЅРѕР¶РµСЃС‚РІР°
+* @return					Р­РєР·РµРјРїР»СЏСЂ.
 */
 BOOL
 BitsetCheck16Mask
@@ -446,11 +446,11 @@ BitsetCheck16Mask
 }
 
 /**
-* Проверить маску 32 бит
-* @param[in] psBitset		Экземпляр
-* @param[in] dwMask			Маска
-* @param[in] dwOffset		Сдвиг от начала множества
-* @return					Экземпляр.
+* РџСЂРѕРІРµСЂРёС‚СЊ РјР°СЃРєСѓ 32 Р±РёС‚
+* @param[in] psBitset		Р­РєР·РµРјРїР»СЏСЂ
+* @param[in] dwMask			РњР°СЃРєР°
+* @param[in] dwOffset		РЎРґРІРёРі РѕС‚ РЅР°С‡Р°Р»Р° РјРЅРѕР¶РµСЃС‚РІР°
+* @return					Р­РєР·РµРјРїР»СЏСЂ.
 */
 BOOL
 BitsetCheck32Mask
@@ -469,11 +469,11 @@ BitsetCheck32Mask
 }
 
 /**
-* Проверить маску 64 бит
-* @param[in] psBitset		Экземпляр
-* @param[in] pdwMask		Маска
-* @param[in] dwOffset		Сдвиг от начала множества
-* @return					Экземпляр.
+* РџСЂРѕРІРµСЂРёС‚СЊ РјР°СЃРєСѓ 64 Р±РёС‚
+* @param[in] psBitset		Р­РєР·РµРјРїР»СЏСЂ
+* @param[in] pdwMask		РњР°СЃРєР°
+* @param[in] dwOffset		РЎРґРІРёРі РѕС‚ РЅР°С‡Р°Р»Р° РјРЅРѕР¶РµСЃС‚РІР°
+* @return					Р­РєР·РµРјРїР»СЏСЂ.
 */
 BOOL
 BitsetCheck64Mask_x86
@@ -494,11 +494,11 @@ BitsetCheck64Mask_x86
 }
 
 /**
-* Проверить маску 128 бит
-* @param[in] psBitset		Экземпляр
-* @param[in] pdwMask		Номер бита
-* @param[in] dwOffset		Сдвиг от начала множества
-* @return					Экземпляр.
+* РџСЂРѕРІРµСЂРёС‚СЊ РјР°СЃРєСѓ 128 Р±РёС‚
+* @param[in] psBitset		Р­РєР·РµРјРїР»СЏСЂ
+* @param[in] pdwMask		РќРѕРјРµСЂ Р±РёС‚Р°
+* @param[in] dwOffset		РЎРґРІРёРі РѕС‚ РЅР°С‡Р°Р»Р° РјРЅРѕР¶РµСЃС‚РІР°
+* @return					Р­РєР·РµРјРїР»СЏСЂ.
 */
 BOOL
 BitsetCheck128Mask_x86
@@ -521,11 +521,11 @@ BitsetCheck128Mask_x86
 }
 
 /**
-* Проверить маску 64 бит для x64
-* @param[in] psBitset		Экземпляр
-* @param[in] pdwMask		Маска
-* @param[in] dwOffset		Сдвиг от начала множества
-* @return					Экземпляр.
+* РџСЂРѕРІРµСЂРёС‚СЊ РјР°СЃРєСѓ 64 Р±РёС‚ РґР»СЏ x64
+* @param[in] psBitset		Р­РєР·РµРјРїР»СЏСЂ
+* @param[in] pdwMask		РњР°СЃРєР°
+* @param[in] dwOffset		РЎРґРІРёРі РѕС‚ РЅР°С‡Р°Р»Р° РјРЅРѕР¶РµСЃС‚РІР°
+* @return					Р­РєР·РµРјРїР»СЏСЂ.
 */
 BOOL
 BitsetCheck64Mask_x64
@@ -544,11 +544,11 @@ BitsetCheck64Mask_x64
 }
 
 /**
-* Проверить маску 128 бит для x64
-* @param[in] psBitset		Экземпляр
-* @param[in] pllMask		Маска
-* @param[in] dwOffset		Сдвиг от начала множества
-* @return					Экземпляр.
+* РџСЂРѕРІРµСЂРёС‚СЊ РјР°СЃРєСѓ 128 Р±РёС‚ РґР»СЏ x64
+* @param[in] psBitset		Р­РєР·РµРјРїР»СЏСЂ
+* @param[in] pllMask		РњР°СЃРєР°
+* @param[in] dwOffset		РЎРґРІРёРі РѕС‚ РЅР°С‡Р°Р»Р° РјРЅРѕР¶РµСЃС‚РІР°
+* @return					Р­РєР·РµРјРїР»СЏСЂ.
 */
 BOOL
 BitsetCheck128Mask_x64
