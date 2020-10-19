@@ -44,3 +44,9 @@ BitsetCheck64Mask_x64Test();
 
 VOID
 BitsetCheck128Mask_x64Test();
+
+VOID
+BitsetCheck128MaskAligned_x86Test();
+
+VOID
+BitsetCheck128MaskAligned_x64Test();

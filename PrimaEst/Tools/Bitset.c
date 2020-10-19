@@ -141,6 +141,30 @@ InternalBitsetSetMask
 }
 
 /**
+* Установить маску в выровненной памяти
+* @param[in] psBitset		Экземпляр
+* @param[in] bMask			Маска
+* @param[in] dwOffset		Сдвиг от начала множества
+* @return					Экземпляр.
+*/
+inline
+static
+VOID
+InternalBitsetSetMaskAligned
+(
+	PSBitset	psBitset,
+	BS_TYPE		bMask,
+	DWORD		dwOffset
+)
+{
+	DWORD dwBsOffset = dwOffset / BS_TYPE_BITS;
+
+	PBS_TYPE pbCurrentBlock = psBitset->pllBegin - dwBsOffset;
+
+	*pbCurrentBlock |= bMask;
+}
+
+/**
 * Установить маску 8 бит
 * @param[in] psBitset		Экземпляр
 * @param[in] bMask			Маска
@@ -316,9 +340,8 @@ BitsetSet128Mask_x64
 		return FALSE;
 	}
 
-	BS_TYPE bsMask = ((BS_TYPE)pllMask[0]) | ((BS_TYPE)pllMask[1] << 32);
-
-	InternalBitsetSetMask(psBitset, (BS_TYPE)bsMask, dwOffset);
+	InternalBitsetSetMask(psBitset, (BS_TYPE)pllMask[0], dwOffset);
+	InternalBitsetSetMask(psBitset, (BS_TYPE)pllMask[1], dwOffset + BS_TYPE_BITS);
 
 	return TRUE;
 }
@@ -397,6 +420,29 @@ InternalBitsetCheckMask
 
 	return	(*pbCurrentBlock & bHighPart) == bHighPart &&
 			(*pbNextBlock & bLowPart) == bLowPart;
+}
+
+/** 
+* Проверить маску в выровненной памяти
+* @param[in] psBitset		Экземпляр
+* @param[in] bMask			Маска
+* @param[in] dwOffset		Сдвиг от начала множества
+* @return					Экземпляр.
+*/
+inline
+static
+BOOL
+InternalBitsetCheckMaskAligned
+(
+	PSBitset	psBitset,
+	BS_TYPE		bMask,
+	DWORD		dwOffset
+)
+{
+	DWORD dwBsOffset = dwOffset / BS_TYPE_BITS;
+	PBS_TYPE pbCurrentBlock = psBitset->pllBegin - dwBsOffset;
+
+	return	(*pbCurrentBlock & bMask) == bMask;
 }
 
 /**
@@ -563,7 +609,96 @@ BitsetCheck128Mask_x64
 		return FALSE;
 	}
 
-	BS_TYPE bsMask = ((BS_TYPE)pllMask[0]) | ((BS_TYPE)pllMask[1] << 32);
+	return	InternalBitsetCheckMask(psBitset, (BS_TYPE)pllMask[0], dwOffset) &&
+			InternalBitsetCheckMask(psBitset, (BS_TYPE)pllMask[1], dwOffset + BS_TYPE_BITS);
+}
 
-	return InternalBitsetCheckMask(psBitset, (BS_TYPE)bsMask, dwOffset);
+/**
+* Установить маску 128 бит для x86
+* @param[in] psBitset		Экземпляр
+* @param[in] pdwMask		Номер бита
+* @param[in] dwOffset		Сдвиг от начала множества
+* @return					Экземпляр.
+* Использовать только если уверены что обращаетесь к участкам выровненным по 64 бита
+* и не выходите за границы созданного байтового множества
+*/
+VOID
+BitsetSet128MaskAligned_x86
+(
+	PSBitset	psBitset,
+	DWORD		pdwMask[4],
+	DWORD		dwOffset
+)
+{
+	BS_TYPE bsMaskLow = ((BS_TYPE)pdwMask[0]) | ((BS_TYPE)pdwMask[1] << 32);
+	BS_TYPE bsMaskHigh = ((BS_TYPE)pdwMask[2]) | ((BS_TYPE)pdwMask[3] << 32);
+
+	InternalBitsetSetMaskAligned(psBitset, bsMaskLow, dwOffset);
+	InternalBitsetSetMaskAligned(psBitset, bsMaskHigh, dwOffset + BS_TYPE_BITS);
+}
+
+/**
+* Установить маску 128 бит для x64 в выровненной памяти
+* @param[in] psBitset		Экземпляр
+* @param[in] pllMask		Маска
+* @param[in] dwOffset		Сдвиг от начала множества
+* @return					Экземпляр.
+* Использовать только если уверены что обращаетесь к участкам выровненным по 64 бита
+* и не выходите за границы созданного байтового множества
+*/
+VOID
+BitsetSet128MaskAligned_x64
+(
+	PSBitset	psBitset,
+	ULONG64		pllMask[2],
+	DWORD		dwOffset
+)
+{
+	InternalBitsetSetMaskAligned(psBitset, pllMask[0], dwOffset);
+	InternalBitsetSetMaskAligned(psBitset, pllMask[1], dwOffset + BS_TYPE_BITS);
+}
+
+/**
+* Проверить маску 128 бит для x86  в выровненной памяти
+* @param[in] psBitset		Экземпляр
+* @param[in] pdwMask		Номер бита
+* @param[in] dwOffset		Сдвиг от начала множества
+* @return					Экземпляр.
+* Использовать только если уверены что обращаетесь к участкам выровненным по 64 бита
+* и не выходите за границы созданного байтового множества
+*/
+BOOL
+BitsetCheck128MaskAligned_x86
+(
+	PSBitset	psBitset,
+	DWORD		pdwMask[4],
+	DWORD		dwOffset
+)
+{
+	BS_TYPE bsMaskLow = ((BS_TYPE)pdwMask[0]) | ((BS_TYPE)pdwMask[1] << 32);
+	BS_TYPE bsMaskHigh = ((BS_TYPE)pdwMask[2]) | ((BS_TYPE)pdwMask[3] << 32);
+
+	return	InternalBitsetCheckMaskAligned(psBitset, (BS_TYPE)bsMaskLow, dwOffset) &&
+			InternalBitsetCheckMaskAligned(psBitset, (BS_TYPE)bsMaskHigh, dwOffset + BS_TYPE_BITS);
+}
+
+/**
+* Проверить маску 128 бит для x64 в выровненной памяти
+* @param[in] psBitset		Экземпляр
+* @param[in] pllMask		Маска
+* @param[in] dwOffset		Сдвиг от начала множества
+* @return					Экземпляр.
+* Использовать только если уверены что обращаетесь к участкам выровненным по 64 бита
+* и не выходите за границы созданного байтового множества
+*/
+BOOL
+BitsetCheck128MaskAligned_x64
+(
+	PSBitset	psBitset,
+	ULONG64		pllMask[2],
+	DWORD		dwOffset
+)
+{
+	return	InternalBitsetCheckMaskAligned(psBitset, (BS_TYPE)pllMask[0], dwOffset) &&
+			InternalBitsetCheckMaskAligned(psBitset, (BS_TYPE)pllMask[1], dwOffset + BS_TYPE_BITS);
 }

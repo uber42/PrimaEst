@@ -72,7 +72,7 @@ CreateLockFreeSkipList(
  * @param[in] pValue		Значение
  * @return Добавленный узел
  */
-PSLockFreeSkipListNode
+BOOL
 LockFreeSkipListSet(
 	PSLockFreeSkipList	psSkipList,
 	PVOID				pKey,

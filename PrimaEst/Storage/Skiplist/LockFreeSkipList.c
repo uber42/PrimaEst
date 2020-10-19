@@ -72,7 +72,7 @@ CreateLockFreeSkipList(
  * @param[in] pValue		Значение
  * @return Добавленный узел
  */
-PSLockFreeSkipListNode
+BOOL
 LockFreeSkipListSet(
 	PSLockFreeSkipList	psSkipList,
 	PVOID				pKey,
@@ -98,7 +98,7 @@ LockFreeSkipListSet(
 			if (!nCompare)
 			{
 				psSkipList->pfValueChanger(&psNextNode->pValue, pValue);
-				return psNextNode;
+				return TRUE;
 			}
 			psNode = psNextNode;
 		}
@@ -121,7 +121,7 @@ LockFreeSkipListSet(
 	if (!psFoundNode)
 	{
 		LogError("[LockFreeSkipList] Ошибка выделения памяти");
-		return NULL;
+		return FALSE;
 	}
 
 	if (dwRndHeight > psSkipList->dwHeight)
@@ -145,7 +145,7 @@ LockFreeSkipListSet(
 
 	InterlockedAdd64(&psSkipList->dwCount, 1);
 
-	return psFoundNode;
+	return TRUE;
 }
 
 /**

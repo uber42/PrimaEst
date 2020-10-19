@@ -196,5 +196,8 @@
     <None Include="Benchmarks\SkipList\SetMultiThread.py">
       <Filter>Benchmarks\SkipList</Filter>
     </None>
+    <None Include="Benchmarks\SkipList\Readme.md">
+      <Filter>Benchmarks\SkipList</Filter>
+    </None>
   </ItemGroup>
 </Project>

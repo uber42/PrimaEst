@@ -293,6 +293,7 @@
   <ItemGroup>
     <None Include="Benchmarks\SkipList\FindMultiThread.py" />
     <None Include="Benchmarks\SkipList\LockFreeSkipListPlot.py" />
+    <None Include="Benchmarks\SkipList\Readme.md" />
     <None Include="Benchmarks\SkipList\SetMultiThread.py" />
     <None Include="Benchmarks\SkipList\SkipListPlot.py" />
     <None Include="Test\Resources\TestLogConfigurationBad.json" />

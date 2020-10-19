@@ -12,15 +12,13 @@
 #if defined(_M_X64) || defined(_M_AMD64)
 
 #define MurMurHash128 MurmurHash3_x64_128
-#define BitsetSet64Mask BitsetSet64Mask_x64
-#define BitsetSet128Mask BitsetSet128Mask_x64
+#define BitsetSet128Mask BitsetSet128MaskAligned_x64
+#define BitsetCheck128Mask BitsetCheck128MaskAligned_x64
 
 #elif defined(_M_IX86)
 
 #define MurMurHash128 MurmurHash3_x86_128
-#define BitsetSet64Mask BitsetSet64Mask_x86
-#define BitsetSet128Mask BitsetSet128Mask_x86
-
-#else
+#define BitsetSet128Mask BitsetSet128MaskAligned_x86
+#define BitsetCheck128Mask BitsetCheck128MaskAligned_x86
 
 #endif

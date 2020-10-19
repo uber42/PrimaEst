@@ -148,6 +148,21 @@ BitsetSet128Mask_x86
 );
 
 /**
+* Установить маску 128 бит для x86
+* @param[in] psBitset		Экземпляр
+* @param[in] pdwMask		Номер бита
+* @param[in] dwOffset		Сдвиг от начала множества
+* @return					Экземпляр.
+*/
+VOID
+BitsetSet128MaskAligned_x86
+(
+	PSBitset	psBitset,
+	DWORD		pdwMask[4],
+	DWORD		dwOffset
+);
+
+/**
 * Установить маску 64 бит для x64
 * @param[in] psBitset		Экземпляр
 * @param[in] pdwMask		Маска
@@ -171,6 +186,21 @@ BitsetSet64Mask_x64
 */
 BOOL
 BitsetSet128Mask_x64
+(
+	PSBitset	psBitset,
+	ULONG64		pllMask[2],
+	DWORD		dwOffset
+);
+
+/**
+* Установить маску 128 бит для x64 в выровненной памяти
+* @param[in] psBitset		Экземпляр
+* @param[in] pllMask		Маска
+* @param[in] dwOffset		Сдвиг от начала множества
+* @return					Экземпляр.
+*/
+VOID
+BitsetSet128MaskAligned_x64
 (
 	PSBitset	psBitset,
 	ULONG64		pllMask[2],
@@ -268,6 +298,21 @@ BitsetCheck128Mask_x86
 );
 
 /**
+* Проверить маску 128 бит для x86  в выровненной памяти
+* @param[in] psBitset		Экземпляр
+* @param[in] pdwMask		Номер бита
+* @param[in] dwOffset		Сдвиг от начала множества
+* @return					Экземпляр.
+*/
+BOOL
+BitsetCheck128MaskAligned_x86
+(
+	PSBitset	psBitset,
+	DWORD		pdwMask[4],
+	DWORD		dwOffset
+);
+
+/**
 * Проверить маску 64 бит для x64
 * @param[in] psBitset		Экземпляр
 * @param[in] pdwMask		Маска
@@ -291,6 +336,21 @@ BitsetCheck64Mask_x64
 */
 BOOL
 BitsetCheck128Mask_x64
+(
+	PSBitset	psBitset,
+	ULONG64		pllMask[2],
+	DWORD		dwOffset
+);
+
+/**
+* Проверить маску 128 бит для x64 в выровненной памяти
+* @param[in] psBitset		Экземпляр
+* @param[in] pllMask		Маска
+* @param[in] dwOffset		Сдвиг от начала множества
+* @return					Экземпляр.
+*/
+BOOL
+BitsetCheck128MaskAligned_x64
 (
 	PSBitset	psBitset,
 	ULONG64		pllMask[2],

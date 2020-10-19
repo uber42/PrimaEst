@@ -24,6 +24,8 @@ int main()
 	BitsetCheck64Mask_x64Test();
 	BitsetCheck128Mask_x86Test();
 	BitsetCheck128Mask_x64Test();
+	BitsetCheck128MaskAligned_x86Test();
+	BitsetCheck128MaskAligned_x64Test();
 
 	//LockFreeSkipListAddTest();
 	//LockFreeSkipListFintTest();

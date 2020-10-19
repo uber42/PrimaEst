@@ -39,7 +39,6 @@ typedef struct _SMessageData
 * @param[out]		dwError				Ошибка
 * @return Результат работы функции.
 */
-_Success_(return != FALSE)
 BOOL
 InitializeMessageQueue(
 	MESSAGE_QUEUE* hMessageQueue,

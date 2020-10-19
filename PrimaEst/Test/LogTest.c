@@ -139,7 +139,7 @@ LogMultiThreadWriteTest_1()
 	ResumeAsyncLogger();
 
 	#define nThreadCount 10
-	HANDLE hThreads[nThreadCount];
+	HANDLE hThreads[nThreadCount] = { 0 };
 	for (int i = 0; i < nThreadCount; i++)
 	{
 		hThreads[i] = CreateThread(
@@ -156,6 +156,8 @@ LogMultiThreadWriteTest_1()
 
 	for (int i = 0; i < nThreadCount; i++)
 	{
+#pragma warning(suppress : 6387)
+#pragma warning(suppress : 6001)
 		CloseHandle(hThreads[i]);
 	}
 

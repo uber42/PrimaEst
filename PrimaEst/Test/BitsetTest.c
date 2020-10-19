@@ -320,3 +320,35 @@ BitsetCheck128Mask_x64Test()
 
 	DeleteBitset(psBitset);
 }
+
+VOID
+BitsetCheck128MaskAligned_x86Test()
+{
+	DWORD dwCount = 512;
+
+	PSBitset psBitset = CreateBitset(dwCount);
+
+	DWORD pbsMask[4] = { 0xAAAAAAAA, 0xFFFFFFFF, 0xBBBBBBBB, 0xCCCCCCCC };
+
+	BitsetSet128MaskAligned_x86(psBitset, pbsMask, 0);
+
+	assert(BitsetCheck128MaskAligned_x86(psBitset, pbsMask, 0) == TRUE);
+
+	DeleteBitset(psBitset);
+}
+
+VOID
+BitsetCheck128MaskAligned_x64Test()
+{
+	DWORD dwCount = 512;
+
+	PSBitset psBitset = CreateBitset(dwCount);
+
+	BS_TYPE pbsMask[2] = { 0xFFFFFFFFAAAAAAAA, 0xCCCCCCCCBBBBBBBB };
+
+	BitsetSet128MaskAligned_x64(psBitset, pbsMask, 0);
+
+	assert(BitsetCheck128MaskAligned_x64(psBitset, pbsMask, 0) == TRUE);
+
+	DeleteBitset(psBitset);
+}

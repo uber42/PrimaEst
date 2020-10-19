@@ -1,6 +1,4 @@
-﻿
-
-#ifndef CRC32_H
+﻿#ifndef CRC32_H
 #define CRC32_H
 
 #define CRC_FILEREAD_BUFFER 1 << 10
