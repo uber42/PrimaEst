@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <intrin.h>
+#include <assert.h>
 
  /** ThridParty */
 #include "ThirdParty/cJSON/cJSON_Utils.h"

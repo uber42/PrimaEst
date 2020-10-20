@@ -22,8 +22,7 @@ selection = [
 	600000,
 	700000,
 	800000,
-	900000,
-	1000000,
+	900000
 ]
 
 with open("LockFreeSkipListSelection.bin", mode='rb') as file:

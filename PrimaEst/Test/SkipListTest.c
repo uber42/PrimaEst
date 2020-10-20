@@ -159,8 +159,6 @@ SkipListRemoveTest()
 		SkipListSet(psSkipList, (void*)i, (void*)i);
 	}
 
-	SkipListPrint(psSkipList, TestSkipListPrinter);
-
 	for (size_t i = 2; i <= nCount; i+= 5)
 	{
 		SkipListRemove(psSkipList, (void*)i);
@@ -201,8 +199,6 @@ SkipListPrintTest()
 
 		assert((size_t)psSkipListNode->pKey == dwIdx++);
 	}
-
-	SkipListPrint(psSkipList, TestSkipListPrinter);
 
 	SkipListClose(psSkipList);
 }

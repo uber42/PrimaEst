@@ -118,6 +118,9 @@
     <ClInclude Include="Test\BitsetTest.h">
       <Filter>Test\BitsetTest</Filter>
     </ClInclude>
+    <ClInclude Include="Tools\MarkablePtr.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Storage\Skiplist\SkipList.c">

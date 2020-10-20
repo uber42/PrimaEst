@@ -16,13 +16,16 @@
 typedef struct _SLockFreeSkipListNode
 {
 	/** Ключ */
-	PVOID pKey;
+	PVOID				pKey;
 
 	/** Значение */
-	PVOID pValue;
+	PVOID				pValue;
+
+	/** Высота узла */
+	DWORD				dwHeight;
 
 	/** Список узлов */
-	volatile struct _SLockFreeSkipListNode* pHead[1];
+	struct _SLockFreeSkipListNode* pNext[];
 } SLockFreeSkipListNode, * PSLockFreeSkipListNode;
 
 /**
@@ -30,38 +33,36 @@ typedef struct _SLockFreeSkipListNode
  */
 typedef struct _SLockFreeSkipList 
 {
-	/** Количество записей */
-	volatile LONG64 dwCount;
-
-	/** Высота */
-	volatile LONG  dwHeight;
-
-	/** Компаратор */
-	FSkipListComp* pfComparator;
 
 	/** Функция удаления узла */
-	FSkipListNodeEraser* pfEraser;
+	FSkipListNodeEraser*		pfEraser;
 
 	/** Функция изменения значения узла */
-	FSkipListNodeValueChanger* pfValueChanger;
+	FSkipListNodeValueChanger*	pfValueChanger;
 
-	/** Список узлов */
-	PSLockFreeSkipListNode	psNode;
+	/** Компаратор */
+	FSkipListComp*				pfComparator;
+
+	/** Голова списка */
+	PSLockFreeSkipListNode		psHead;
+
+	/** Хвост списка */
+	PSLockFreeSkipListNode		psTail;
 } SLockFreeSkipList, *PSLockFreeSkipList;
 
 
 /**
- * Создать список с пропусками
+ * Создать Lock-Free список с пропусками
  * @param[in] pfComparator		Компаратор
  * @param[in] pfEraser			Функция удаления узла
  * @param[in] pfValueChanger	Функция изменения значения узла
  * @return Созданный список
  */
-PSLockFreeSkipList
+PSSkipList
 CreateLockFreeSkipList(
-	FSkipListComp* pfComparator,
-	FSkipListNodeEraser* pfEraser,
-	FSkipListNodeValueChanger* pfValueChanger
+	FSkipListComp*				pfComparator,
+	FSkipListNodeEraser*		pfEraser,
+	FSkipListNodeValueChanger*	pfValueChanger
 );
 
 /**
@@ -83,9 +84,9 @@ LockFreeSkipListSet(
  * Найти ключ в списке
  * @param[in] psSkipList	Экземпляр списка
  * @param[in] pKey		Ключ
- * @return Найденный узел
+ * @return Есть ли элемент по ключу ?
  */
-PSLockFreeSkipListNode
+BOOL
 LockFreeSkipListFind(
 	PSLockFreeSkipList	psSkipList,
 	PVOID				pKey
@@ -100,6 +101,7 @@ LockFreeSkipListClear(
 	PSLockFreeSkipList	psSkipList
 );
 
+
 /**
  * Освободить все ресурсы занятые структурой
  * @param[in] psSkipList Экземпляр списка
@@ -109,18 +111,14 @@ LockFreeSkipListClose(
 	PSLockFreeSkipList	psSkipList
 );
 
+
 /**
- * Получить все элементы
- * @param[in] psSkipList	Экземпляр списка
- * @param[out] pdwSize		Количество элементов
- * @return					Список
+ * Вывод списка
+ * @param[in] psSkipList Экземпляр списка
  */
-PSLockFreeSkipListNode*
-LockFreeSkipListGetAll(
-	PSLockFreeSkipList	psSkipList,
-	PDWORD				pdwSize
+VOID
+LockFreeSkipListPrint(
+	PSLockFreeSkipList	psSkipList
 );
-
-
 
 #endif

@@ -22,7 +22,7 @@ for i in range(0, len(fileContent), 4):
             byteorder='little', signed=True)
         )
 
-selection = list(range(1, 11))
+selection = list(range(1, 64))
 
 findselection = dataset[:len(dataset) // 2]
 findlockfreeselection = dataset[len(dataset) // 2:]
@@ -30,8 +30,8 @@ findlockfreeselection = dataset[len(dataset) // 2:]
 fig, ax = plt.subplots()
 plt.xlabel("Количество потоков", fontsize=16)
 plt.ylabel("Время 10e-3с", fontsize=16)
-ax.plot(selection, findselection, label="Lock read")
-ax.plot(selection, findlockfreeselection, label="Lock-Free read")
+ax.plot(selection, findselection, label="Lock Read")
+ax.plot(selection, findlockfreeselection, label="Lock-Free Read")
 ax.legend()
 
 fig.savefig("./FindMultiThread")
