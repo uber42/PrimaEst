@@ -25,7 +25,8 @@ static int nSelectionCount[] =
 	600000,
 	700000,
 	800000,
-	900000
+	900000,
+	1000000
 };
 
 static
@@ -368,7 +369,7 @@ LockFreeSkipListSelection()
 
 
 #define SKIP_LIST_BENCHMARK_THREAD_COUNT	63
-#define SKIP_LIST_BENCHMARK_BOUND			10e5
+#define SKIP_LIST_BENCHMARK_BOUND			2 * 10e5
 
 typedef struct _SBenchmarkSkipListArg
 {
@@ -385,10 +386,10 @@ typedef struct _SBenchmarkSkipListArg
 	DWORD				dwThreadsCount;
 
 	/** Начало диапозона */
-	DWORD				dwFrom;
+	LONG64				dwFrom;
 
 	/** Конец диапозона */
-	DWORD				dwTo;
+	LONG64				dwTo;
 } SBenchmarkSkipListArg, *PSBenchmarkSkipListArg;
 
 
@@ -417,7 +418,7 @@ SetLockFreeSkipListRoutine(
 	LONG lTime = 0;
 	LONG lTotal = 0;
 
-	for (DWORD i = arg->dwFrom; i < arg->dwTo; i++)
+	for (LONG64 i = arg->dwFrom; i < arg->dwTo; i++)
 	{
 		lTime = clock();
 
@@ -444,7 +445,7 @@ FindLockFreeSkipListRoutine(
 	LONG lTime = 0;
 	LONG lTotal = 0;
 
-	for (DWORD i = arg->dwFrom; i < arg->dwTo; i++)
+	for (LONG64 i = arg->dwFrom; i < arg->dwTo; i++)
 	{
 		lTime = clock();
 
@@ -471,7 +472,7 @@ FindSkipListRoutine(
 	LONG lTime = 0;
 	LONG lTotal = 0;
 
-	for (DWORD i = arg->dwFrom; i < arg->dwTo; i++)
+	for (LONG64 i = arg->dwFrom; i < arg->dwTo; i++)
 	{
 		lTime = clock();
 
@@ -500,7 +501,7 @@ SetSkipListRoutine(
 	LONG lTime = 0;
 	LONG lTotal = 0;
 
-	for (DWORD i = arg->dwFrom; i < arg->dwTo; i++)
+	for (LONG64 i = arg->dwFrom; i < arg->dwTo; i++)
 	{
 		lTime = clock();
 
@@ -537,21 +538,21 @@ InternalMultiThreadSetSelection()
 
 	InitializeCriticalSection(&crWriteLock);
 
-	for (DWORD i = 1; i <= SKIP_LIST_BENCHMARK_THREAD_COUNT; i++)
+	for (LONG64 i = 1; i <= SKIP_LIST_BENCHMARK_THREAD_COUNT; i++)
 	{
 		PSSkipList psSkipList = CreateSkipList(
 			TestIntComparator,
 			TestIntEraser,
 			TestIntChanger);
 
-		for (DWORD j = 0; j < i; j++)
+		for (LONG64 j = 0; j < i; j++)
 		{
 			sArgs[j].crWriteLock = &crWriteLock;
 			sArgs[j].dwThreadsCount = i;
 			sArgs[j].nTime = 0;
 			sArgs[j].psSkipList = psSkipList;
-			sArgs[j].dwFrom = (DWORD)(SKIP_LIST_BENCHMARK_BOUND / i) * j;
-			sArgs[j].dwTo = (DWORD)(SKIP_LIST_BENCHMARK_BOUND / i) * (j + 1);
+			sArgs[j].dwFrom = (LONG64)(SKIP_LIST_BENCHMARK_BOUND / i) * j;
+			sArgs[j].dwTo = (LONG64)(SKIP_LIST_BENCHMARK_BOUND / i) * (j + 1);
 
 			hThreads[j] = CreateThread(
 				NULL, 0, SetSkipListRoutine,
@@ -613,16 +614,16 @@ InternalMultiThreadFindSelection()
 
 	InitializeCriticalSection(&crWriteLock);
 
-	for (DWORD i = 1; i <= SKIP_LIST_BENCHMARK_THREAD_COUNT; i++)
+	for (LONG64 i = 1; i <= SKIP_LIST_BENCHMARK_THREAD_COUNT; i++)
 	{
-		for (DWORD j = 0; j < i; j++)
+		for (LONG64 j = 0; j < i; j++)
 		{
 			sArgs[j].crWriteLock = &crWriteLock;
 			sArgs[j].dwThreadsCount = i;
 			sArgs[j].nTime = 0;
 			sArgs[j].psSkipList = psSkipList;
-			sArgs[j].dwFrom = (DWORD)(SKIP_LIST_BENCHMARK_BOUND / i) * j;
-			sArgs[j].dwTo = (DWORD)(SKIP_LIST_BENCHMARK_BOUND / i) * (j + 1);
+			sArgs[j].dwFrom = (LONG64)(SKIP_LIST_BENCHMARK_BOUND / i) * j;
+			sArgs[j].dwTo = (LONG64)(SKIP_LIST_BENCHMARK_BOUND / i) * (j + 1);
 
 			hThreads[j] = CreateThread(
 				NULL, 0, FindSkipListRoutine,
@@ -679,21 +680,21 @@ InternalMultiThreadLockFreeSetSelection()
 
 	InitializeCriticalSection(&crWriteLock);
 
-	for (DWORD i = 1; i <= SKIP_LIST_BENCHMARK_THREAD_COUNT; i++)
+	for (LONG64 i = 1; i <= SKIP_LIST_BENCHMARK_THREAD_COUNT; i++)
 	{
 		PSLockFreeSkipList psSkipList = CreateLockFreeSkipList(
 			TestIntComparator,
 			TestIntEraser,
 			TestIntChanger);
 
-		for (DWORD j = 0; j < i; j++)
+		for (LONG64 j = 0; j < i; j++)
 		{
 			sArgs[j].crWriteLock = &crWriteLock;
 			sArgs[j].dwThreadsCount = i;
 			sArgs[j].nTime = 0;
 			sArgs[j].psSkipList = psSkipList;
-			sArgs[j].dwFrom = (DWORD)(SKIP_LIST_BENCHMARK_BOUND / i) * j;
-			sArgs[j].dwTo = (DWORD)(SKIP_LIST_BENCHMARK_BOUND / i) * (j + 1);
+			sArgs[j].dwFrom = (LONG64)(SKIP_LIST_BENCHMARK_BOUND / i) * j;
+			sArgs[j].dwTo = (LONG64)(SKIP_LIST_BENCHMARK_BOUND / i) * (j + 1);
 
 			hThreads[j] = CreateThread(
 				NULL, 0, SetLockFreeSkipListRoutine,
@@ -752,15 +753,15 @@ InternalMultiThreadLockFreeFindSelection()
 	HANDLE hThreads[SKIP_LIST_BENCHMARK_THREAD_COUNT];
 	SBenchmarkSkipListArg sArgs[SKIP_LIST_BENCHMARK_THREAD_COUNT];
 
-	for (DWORD i = 1; i <= SKIP_LIST_BENCHMARK_THREAD_COUNT; i++)
+	for (LONG64 i = 1; i <= SKIP_LIST_BENCHMARK_THREAD_COUNT; i++)
 	{
-		for (DWORD j = 0; j < i; j++)
+		for (LONG64 j = 0; j < i; j++)
 		{
 			sArgs[j].dwThreadsCount = i;
 			sArgs[j].nTime = 0;
 			sArgs[j].psSkipList = psSkipList;
-			sArgs[j].dwFrom = (DWORD)(SKIP_LIST_BENCHMARK_BOUND / i) * j;
-			sArgs[j].dwTo = (DWORD)(SKIP_LIST_BENCHMARK_BOUND / i) * (j + 1);
+			sArgs[j].dwFrom = (LONG64)(SKIP_LIST_BENCHMARK_BOUND / i) * j;
+			sArgs[j].dwTo = (LONG64)(SKIP_LIST_BENCHMARK_BOUND / i) * (j + 1);
 
 			hThreads[j] = CreateThread(
 				NULL, 0, FindLockFreeSkipListRoutine,

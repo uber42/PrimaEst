@@ -22,7 +22,8 @@ selection = [
 	600000,
 	700000,
 	800000,
-	900000
+	900000,
+	1000000
 ]
 
 with open("SkipListSelection.bin", mode='rb') as file:
@@ -43,8 +44,8 @@ findselection = dataset[len(dataset) // 2:]
 fig, ax = plt.subplots()
 plt.xlabel("Количество элементов", fontsize=16)
 plt.ylabel("Время 10e-3с", fontsize=16)
-ax.plot(selection, setselection, label="Insert")
-ax.plot(selection, findselection, label="Search")
+ax.plot(selection, setselection, label="Write")
+ax.plot(selection, findselection, label="Read")
 ax.legend()
 
 fig.savefig("./SkipList")
