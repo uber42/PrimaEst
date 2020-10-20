@@ -25,7 +25,7 @@ typedef struct _SLockFreeSkipListNode
 	DWORD				dwHeight;
 
 	/** Список узлов */
-	struct _SLockFreeSkipListNode* pNext[1];
+	struct _SLockFreeSkipListNode* pNext[];
 } SLockFreeSkipListNode, * PSLockFreeSkipListNode;
 
 /**
@@ -84,9 +84,9 @@ LockFreeSkipListSet(
  * Найти ключ в списке
  * @param[in] psSkipList	Экземпляр списка
  * @param[in] pKey		Ключ
- * @return Найденный узел
+ * @return Есть ли элемент по ключу ?
  */
-PSLockFreeSkipListNode
+BOOL
 LockFreeSkipListFind(
 	PSLockFreeSkipList	psSkipList,
 	PVOID				pKey
@@ -101,6 +101,7 @@ LockFreeSkipListClear(
 	PSLockFreeSkipList	psSkipList
 );
 
+
 /**
  * Освободить все ресурсы занятые структурой
  * @param[in] psSkipList Экземпляр списка
@@ -111,5 +112,13 @@ LockFreeSkipListClose(
 );
 
 
+/**
+ * Вывод списка
+ * @param[in] psSkipList Экземпляр списка
+ */
+VOID
+LockFreeSkipListPrint(
+	PSLockFreeSkipList	psSkipList
+);
 
 #endif

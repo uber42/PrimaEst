@@ -15,7 +15,17 @@
 static int nSelectionCount[] =
 {
 	100,
-	1000
+	1000,
+	10000,
+	100000,
+	200000,
+	300000,
+	400000,
+	500000,
+	600000,
+	700000,
+	800000,
+	900000
 };
 
 static
@@ -358,7 +368,7 @@ LockFreeSkipListSelection()
 
 
 #define SKIP_LIST_BENCHMARK_THREAD_COUNT	63
-#define SKIP_LIST_BENCHMARK_BOUND			10e3
+#define SKIP_LIST_BENCHMARK_BOUND			10e5
 
 typedef struct _SBenchmarkSkipListArg
 {

@@ -30,8 +30,8 @@ findlockfreeselection = dataset[len(dataset) // 2:]
 fig, ax = plt.subplots()
 plt.xlabel("Количество потоков", fontsize=16)
 plt.ylabel("Время 10e-3с", fontsize=16)
-ax.plot(selection, findselection, label="Implementation 1")
-ax.plot(selection, findlockfreeselection, label="Implementation 2")
+ax.plot(selection, findselection, label="Lock Set")
+ax.plot(selection, findlockfreeselection, label="Lock-Free Set")
 ax.legend()
 
 fig.savefig("./SetMultiThread")

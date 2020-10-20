@@ -34,11 +34,11 @@ int main()
 	LockFreeSkipListMultiThreadAddAndFind();
 	LockFreeSkipListResetTest();
 
-	//SkipListAddTest();
-	//SkipListSetTest();
-	//SkipListFindTest();
-	//SkipListPrintTest();
-	//SkipListRemoveTest();
+	SkipListAddTest();
+	SkipListSetTest();
+	SkipListFindTest();
+	SkipListPrintTest();
+	SkipListRemoveTest();
 
 	//LogEnumFnvTest();
 	//ParseLogTest_1();

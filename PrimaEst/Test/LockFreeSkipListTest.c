@@ -42,14 +42,13 @@ LockFreeSkipListAddTest()
 	
 	assert(psLockFree != NULL);
 
-	for (int i = 1; i <= 10; i++)
+	for (int i = 1; i <= 100; i++)
 	{
 		LockFreeSkipListSet(psLockFree, (void*)i, (void*)i);
 	}
 	
 	PSLockFreeSkipListNode psCurr = psLockFree->psHead->pNext[0];
-	PSLockFreeSkipListNode psNext;
-	for (int i = 1; i <= 10; i++)
+	for (int i = 1; i <= 100; i++)
 	{
 		assert((int)psCurr->pKey == i);
 		psCurr = psCurr->pNext[0];
@@ -137,8 +136,6 @@ MultiThreadFindRoutine(
 			nTotalMisses += nCurrentMisses;
 		}
 	}
-
-	printf("%d\n", nTotalMisses);
 
 	return 0;
 }
