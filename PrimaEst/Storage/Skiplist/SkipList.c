@@ -62,12 +62,6 @@ CreateSkipList(
 	FSkipListNodeValueChanger*	pfValueChanger
 )
 {
-	if (pfComparator == NULL)
-	{
-		LogDebug("[SkipList] Передан не инициализированный компаратор");
-		return NULL;
-	}
-
 	PSSkipList psSkipList = (PSSkipList)malloc(sizeof(SSkipList));
 	if (psSkipList == NULL)
 	{

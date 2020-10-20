@@ -15,18 +15,7 @@
 static int nSelectionCount[] =
 {
 	100,
-	1000,
-	10000,
-	100000,
-	200000,
-	300000,
-	400000,
-	500000,
-	600000,
-	700000,
-	800000,
-	900000,
-	1000000,
+	1000
 };
 
 static
@@ -234,10 +223,11 @@ SkipListSelection()
 
 
 LONG*
-InternalSetSelection();
+InternalLockFreeSetSelection();
 
 LONG*
-InternalRemoveSelection();
+InternalLockFreeFindSelection();
+
 
 LONG*
 InternalLockFreeSetSelection()
@@ -253,7 +243,7 @@ InternalLockFreeSetSelection()
 
 	for (int i = 0; i < ARRAYSIZE(nSelectionCount); i++)
 	{
-		PSSkipList psSkipList = CreateSkipList(
+		PSLockFreeSkipList psSkipList = CreateLockFreeSkipList(
 			TestIntComparator,
 			TestIntEraser,
 			TestIntChanger);
@@ -265,12 +255,12 @@ InternalLockFreeSetSelection()
 		{
 			lTime = clock();
 
-			SkipListSet(psSkipList, (void*)j, (void*)j);
+			LockFreeSkipListSet(psSkipList, (void*)j, (void*)j);
 
 			lTotal += (clock() - lTime);
 		}
 
-		SkipListClose(psSkipList);
+		LockFreeSkipListClose(psSkipList);
 
 		pnTime[i] = lTotal;
 	}
@@ -367,8 +357,8 @@ LockFreeSkipListSelection()
 }
 
 
-#define SKIP_LIST_BENCHMARK_THREAD_COUNT	10
-#define SKIP_LIST_BENCHMARK_BOUND			10e5
+#define SKIP_LIST_BENCHMARK_THREAD_COUNT	63
+#define SKIP_LIST_BENCHMARK_BOUND			10e3
 
 typedef struct _SBenchmarkSkipListArg
 {
@@ -421,9 +411,7 @@ SetLockFreeSkipListRoutine(
 	{
 		lTime = clock();
 
-		EnterCriticalSection(arg->crWriteLock);
 		LockFreeSkipListSet(psSkipList, (void*)i, (void*)i);
-		LeaveCriticalSection(arg->crWriteLock);
 
 		lTotal += (clock() - lTime);
 	}
@@ -636,8 +624,13 @@ InternalMultiThreadFindSelection()
 #pragma warning(suppress: 6387)
 			ResumeThread(hThreads[j]);
 		}
+		
+		DWORD dwWaitRes = WaitForMultipleObjects(i, hThreads, TRUE, INFINITE);
 
-		WaitForMultipleObjects(i, hThreads, TRUE, INFINITE);
+		if (dwWaitRes != WAIT_OBJECT_0)
+		{
+			printf("BAD");
+		}
 
 		for (DWORD j = 0; j < i; j++)
 		{

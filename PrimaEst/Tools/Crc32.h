@@ -50,7 +50,7 @@ static DWORD crc_32_tab[] = {
 };
 
 static 
-inline
+__inline
 DWORD 
 UpdateCRC32(
 	BYTE	bCurrentSymbol,

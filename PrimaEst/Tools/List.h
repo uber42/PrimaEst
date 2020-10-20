@@ -14,14 +14,14 @@ typedef struct _SList
 	struct _SList* pBlink;
 } SList, * PSList;
 
-static inline void
+static __inline void
 ListHeadInit(PSList pHead)
 {
 	pHead->pBlink = pHead;
 	pHead->pFlink = pHead;
 }
 
-static inline void
+static __inline void
 ListAdd(
 	PSList pNode,
 	PSList pHead)
@@ -34,7 +34,7 @@ ListAdd(
 	pHead->pFlink = pNode;
 }
 
-static inline void
+static __inline void
 ListAddToEnd(
 	PSList pNode,
 	PSList pHead)
@@ -47,7 +47,7 @@ ListAddToEnd(
 	pHead->pBlink = pNode;
 }
 
-static inline void
+static __inline void
 ListNodeDelete(PSList pNode)
 {
 	PSList pFlink = pNode->pFlink;
@@ -57,26 +57,26 @@ ListNodeDelete(PSList pNode)
 	pBlink->pFlink = pFlink;
 }
 
-static inline void
+static __inline void
 ListDeleteAndInit(PSList pNode)
 {
 	ListNodeDelete(pNode);
 	ListHeadInit(pNode);
 }
 
-static inline signed int
+static __inline signed int
 ListIsEmpty(PSList pHead)
 {
 	return (pHead == pHead->pFlink);
 }
 
-static inline signed int
+static __inline signed int
 ListIsSingular(PSList pHead)
 {
 	return (!ListIsEmpty(pHead) && pHead->pFlink == pHead->pBlink);
 }
 
-static inline void
+static __inline void
 ListSplice(
 	PSList pList,
 	PSList pHead)
@@ -97,7 +97,7 @@ ListSplice(
 	pHeadFirst->pBlink = pListLast;
 }
 
-static inline void
+static __inline void
 ListSpliceWithEnd(
 	PSList pList,
 	PSList pHead)
@@ -118,7 +118,7 @@ ListSpliceWithEnd(
 	pHead->pBlink = pListLast;
 }
 
-static inline void
+static __inline void
 ListSpliceInit(
 	PSList pList,
 	PSList pHead)
@@ -127,7 +127,7 @@ ListSpliceInit(
 	ListHeadInit(pList);
 }
 
-static inline void
+static __inline void
 ListSpliceWithEndInit(
 	PSList pList,
 	PSList pHead
@@ -137,7 +137,7 @@ ListSpliceWithEndInit(
 	ListHeadInit(pList);
 }
 
-static inline void
+static __inline void
 ListCutPosition(
 	PSList pHeadTo,
 	PSList pHeadFrom,

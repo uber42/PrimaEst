@@ -17,19 +17,36 @@
 PSLockFreeSkipListNode
 CreateLockFreeSkipListNode(
 	DWORD		dwHeight,
-	PVOID		pKey,
+	LONG64		pKey,
 	PVOID	    pValue
 );
 
+/**
+ * Найти ключ в списке с поиском предшественников и узлов для вставки
+ * @param[in] psSkipList	Экземпляр списка
+ * @param[in] psPredsNodes	Узлы предшественники
+ * @param[in] psSuccsNodes	Узлы для вставки
+ * @param[out] psFoundNode	Найденный узел
+ * @param[in] pKey			Ключ
+ * @return Найденный узел
+ */
+BOOL
+InternalLockFreeSkipListFind(
+	PSLockFreeSkipList					psSkipList,
+	PSLockFreeSkipListNode*				psPredsNodes,
+	PSLockFreeSkipListNode*				psSuccsNodes,
+	PSLockFreeSkipListNode*				psFoundNode,
+	PVOID								pKey
+);
 
 /**
- * Создать список с пропусками
+ * Создать Lock-Free список с пропусками
  * @param[in] pfComparator		Компаратор
  * @param[in] pfEraser			Функция удаления узла
  * @param[in] pfValueChanger	Функция изменения значения узла
  * @return Созданный список
  */
-PSLockFreeSkipList
+PSSkipList
 CreateLockFreeSkipList(
 	FSkipListComp*				pfComparator,
 	FSkipListNodeEraser*		pfEraser,
@@ -43,26 +60,36 @@ CreateLockFreeSkipList(
 		return NULL;
 	}
 
-	psLockFreeSkipList->dwCount = 0;
-	psLockFreeSkipList->dwHeight = 1;
-	psLockFreeSkipList->pfComparator = pfComparator;
 	psLockFreeSkipList->pfEraser = pfEraser;
 	psLockFreeSkipList->pfValueChanger = pfValueChanger;
-	psLockFreeSkipList->psNode = CreateLockFreeSkipListNode(SKIP_LIST_MAX_HEIGHT, NULL, NULL);
-	if (!psLockFreeSkipList->psNode)
+	psLockFreeSkipList->pfComparator = pfComparator;
+
+	psLockFreeSkipList->psHead = CreateLockFreeSkipListNode(SKIP_LIST_MAX_HEIGHT, LLONG_MIN, NULL);
+	if (!psLockFreeSkipList->psHead)
 	{
+		LogError("[LockFreeSkipList] Ошибка выделения памяти");
+
+		free(psLockFreeSkipList);
+		return NULL;
+	}
+
+	psLockFreeSkipList->psTail = CreateLockFreeSkipListNode(SKIP_LIST_MAX_HEIGHT, LLONG_MAX, NULL);
+	if (!psLockFreeSkipList->psTail)
+	{
+		LogError("[LockFreeSkipList] Ошибка выделения памяти");
+
+		free(psLockFreeSkipList->psHead);
 		free(psLockFreeSkipList);
 		return NULL;
 	}
 
 	for (DWORD dwIdx = 0; dwIdx < SKIP_LIST_MAX_HEIGHT; dwIdx++)
 	{
-		psLockFreeSkipList->psNode->pHead[dwIdx] = NULL;
+		psLockFreeSkipList->psHead->pNext[dwIdx] = psLockFreeSkipList->psTail;
 	}
 
 	return psLockFreeSkipList;
 }
-
 
 /**
  * Добавить пару ключ-значение в список
@@ -79,73 +106,78 @@ LockFreeSkipListSet(
 	PVOID				pValue
 )
 {
-	PSLockFreeSkipListNode sListInsertion[SKIP_LIST_MAX_HEIGHT] = { 0 };
+	DWORD dwRndHeight = RandomHeight1();
 
-	PSLockFreeSkipListNode psFoundNode = NULL;
-	PSLockFreeSkipListNode psNode = psSkipList->psNode;
-	DWORD dwHeight = psSkipList->dwHeight - 1;
+	PSLockFreeSkipListNode psPredecessors[SKIP_LIST_MAX_HEIGHT];
+	PSLockFreeSkipListNode psSuccessors[SKIP_LIST_MAX_HEIGHT];
 
-	while (TRUE)
+	do 
 	{
-		_ReadWriteBarrier();
-		PSLockFreeSkipListNode psNextNode = psNode->pHead[dwHeight];
+		PSLockFreeSkipListNode psFoundNode = NULL;
+		BOOL bFound = InternalLockFreeSkipListFind(
+			psSkipList, psPredecessors, psSuccessors, &psFoundNode, pKey);
 
-		INT nCompare = 0;
-		BOOL bCompare = psNextNode != NULL && 
-			(nCompare = psSkipList->pfComparator(pKey, psNextNode->pKey)) >= 0;
-		if (bCompare)
+		if (bFound)
 		{
-			if (!nCompare)
+			psSkipList->pfValueChanger(&psFoundNode->pValue, pValue);
+			return TRUE;
+		}
+
+		PSLockFreeSkipListNode psNode = CreateLockFreeSkipListNode(
+			dwRndHeight,
+			pKey, pValue);
+
+		for (DWORD dwLevel = 0; dwLevel < dwRndHeight; dwLevel++)
+		{
+			psNode->pNext[dwLevel] = *psSuccessors;
+		}
+
+		if (!InterlockedCompareExchangePointer(
+			&(*psPredecessors)->pNext[0],
+			psNode, *psSuccessors
+		))
+		{
+			free(psNode);
+			continue;
+		}
+
+		for (DWORD dwLevel = 1; dwLevel < dwRndHeight; dwLevel++)
+		{
+			while (TRUE)
 			{
-				psSkipList->pfValueChanger(&psNextNode->pValue, pValue);
-				return TRUE;
+				PSLockFreeSkipListNode psSuccesseor = psSuccessors[dwLevel];
+				PSLockFreeSkipListNode psPredecessor = psPredecessors[dwLevel];
+
+				if (psSuccesseor != psNode->pNext[dwLevel])
+				{
+					PSLockFreeSkipListNode psCurrentSuccesseor = psNode->pNext[dwLevel];
+
+					if (!InterlockedCompareExchangePointer(
+						&psNode->pNext[dwLevel],
+						psSuccesseor, psCurrentSuccesseor
+						))
+					{
+						continue;
+					}
+				}
+
+				if (InterlockedCompareExchangePointer(
+					&psPredecessor->pNext[dwLevel],
+					psNode, psSuccessors
+					))
+				{
+					break;
+				}
+
+				memset(psPredecessors, 0, sizeof(psPredecessors));
+				memset(psSuccessors, 0, sizeof(psSuccessors));
+				InternalLockFreeSkipListFind(psSkipList, psPredecessors, psSuccessors, &psFoundNode, pKey);
 			}
-			psNode = psNextNode;
-		}
-		else
-		{
-			sListInsertion[dwHeight] = psNode;
-			if (dwHeight == 0)
-			{
-				psFoundNode = psNextNode;
-				break;
-			}
-			
-			dwHeight--;
-		}
-	}
-
-	LONG dwRndHeight = RandomHeight();
-	psFoundNode = CreateLockFreeSkipListNode(
-		dwRndHeight, pKey, pValue);
-	if (!psFoundNode)
-	{
-		LogError("[LockFreeSkipList] Ошибка выделения памяти");
-		return FALSE;
-	}
-
-	if (dwRndHeight > psSkipList->dwHeight)
-	{
-		for (DWORD dwHeightIdx = psSkipList->dwHeight;
-			dwHeightIdx < dwRndHeight; dwHeightIdx++)
-		{
-			sListInsertion[dwHeightIdx] = psSkipList->psNode;
 		}
 
-		psSkipList->dwHeight = dwRndHeight;
-	}
+		return TRUE;
 
-	for (DWORD dwIdx = 0; dwIdx < dwRndHeight; dwIdx++)
-	{
-		psFoundNode->pHead[dwIdx] = sListInsertion[dwIdx]->pHead[dwIdx];
-
-		sListInsertion[dwIdx]->pHead[dwIdx] = psFoundNode;
-		_ReadWriteBarrier();
-	}
-
-	InterlockedAdd64(&psSkipList->dwCount, 1);
-
-	return TRUE;
+	} while (TRUE);
 }
 
 /**
@@ -160,13 +192,13 @@ LockFreeSkipListFind(
 	PVOID				pKey
 )
 {
-	PSLockFreeSkipListNode psNode = psSkipList->psNode;
-	DWORD dwHeight = psSkipList->dwHeight - 1;
+	PSLockFreeSkipListNode psNode = psSkipList->psHead;
+	DWORD dwHeight = SKIP_LIST_MAX_HEIGHT - 1;
 
 	while (TRUE)
 	{
 		_ReadWriteBarrier();
-		PSLockFreeSkipListNode psNextNode = psNode->pHead[dwHeight];
+		PSLockFreeSkipListNode psNextNode = psNode->pNext[dwHeight];
 
 		INT nCompare = 0xDEADBEEF;
 		BOOL bCompare = psNextNode != NULL &&
@@ -199,14 +231,14 @@ LockFreeSkipListClear(
 	PSLockFreeSkipList	psSkipList
 )
 {
-	volatile PSLockFreeSkipListNode psIter = psSkipList->psNode->pHead[0];
-	for (DWORD dxIdx = 0; dxIdx < psSkipList->dwCount; dxIdx++)
-	{
-		volatile PSLockFreeSkipListNode psDelete = psIter;
-		psIter = psIter->pHead[0];
+	PSLockFreeSkipListNode psCurrentNode = psSkipList->psHead;
+	PSLockFreeSkipListNode psNextNode;
 
-		psSkipList->pfEraser(psDelete);
-		free(psDelete);
+	while (psCurrentNode != NULL) 
+	{
+		psNextNode = psCurrentNode->pNext[0];
+		psSkipList->pfEraser(psCurrentNode);
+		psCurrentNode = psNextNode;
 	}
 }
 
@@ -220,7 +252,6 @@ LockFreeSkipListClose(
 )
 {
 	LockFreeSkipListClear(psSkipList);
-
 	free(psSkipList);
 }
 
@@ -239,7 +270,7 @@ CreateLockFreeSkipListNode(
 	PVOID	    pValue)
 {
 	DWORD dwSize = sizeof(SLockFreeSkipListNode) + 
-		(dwHeight - 1) * sizeof(volatile PSLockFreeSkipListNode);
+		(dwHeight - 1) * sizeof(PSLockFreeSkipListNode);
 	PSLockFreeSkipListNode psSkipListNode = (PSLockFreeSkipListNode)malloc(dwSize);
 	if (psSkipListNode == NULL)
 	{
@@ -249,23 +280,64 @@ CreateLockFreeSkipListNode(
 
 	psSkipListNode->pKey = pKey;
 	psSkipListNode->pValue = pValue;
+	psSkipListNode->dwHeight = dwHeight;
+
+	for (DWORD dwIdx = 0; dwIdx < dwHeight; dwIdx++)
+	{
+		psSkipListNode->pNext[dwIdx] = NULL;
+	}
 
 	return psSkipListNode;
 }
 
-
 /**
- * Получить все элементы
+ * Найти ключ в списке с поиском предшественников и узлов для вставки
  * @param[in] psSkipList	Экземпляр списка
- * @param[out] pdwSize		Количество элементов
- * @return					Список
+ * @param[in] psPredsNodes	Узлы предшественники
+ * @param[in] psSuccsNodes	Узлы для вставки
+ * @param[out] psFoundNode	Найденный узел
+ * @param[in] pKey			Ключ
+ * @return Найденный узел
  */
-PSLockFreeSkipListNode*
-LockFreeSkipListGetAll(
-	PSLockFreeSkipList	psSkipList,
-	PDWORD				pdwSize
+BOOL
+InternalLockFreeSkipListFind(
+	PSLockFreeSkipList					psSkipList,
+	PSLockFreeSkipListNode*				psPredsNodes,
+	PSLockFreeSkipListNode*				psSuccsNodes,
+	PSLockFreeSkipListNode*				psFoundNode,
+	PVOID								pKey
 )
 {
-	*pdwSize = (DWORD)psSkipList->dwCount;
-	return psSkipList->psNode->pHead;
+	PVOID pCurrentKey = 0;
+
+	PSLockFreeSkipListNode psCurrentNode = NULL;
+	PSLockFreeSkipListNode psPredecessorNode = psSkipList->psHead;
+	for (INT dwLevel = SKIP_LIST_MAX_HEIGHT - 1; dwLevel >= 0; dwLevel--)
+	{
+		psCurrentNode = psPredecessorNode->pNext[dwLevel];
+
+		while (TRUE)
+		{
+			PSLockFreeSkipListNode psSuccessorNode = psCurrentNode->pNext[dwLevel];
+
+			pCurrentKey = psCurrentNode->pKey;
+
+			if (psSkipList->pfComparator(pCurrentKey, pKey) < 0)
+			{
+				psPredecessorNode = psCurrentNode;
+				psCurrentNode = psSuccessorNode;
+			}
+			else
+			{
+				break;
+			}
+		}
+
+		psPredsNodes[dwLevel] = psPredecessorNode;
+		psSuccsNodes[dwLevel] = psCurrentNode;
+	}
+
+	*psFoundNode = psCurrentNode;
+
+	return pCurrentKey == pKey;
 }

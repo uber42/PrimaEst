@@ -69,7 +69,7 @@ DeleteBitset(
 * @param[in] dwCount		Номер бита
 * @return					Экземпляр.
 */
-inline
+__inline
 static
 VOID 
 InternalBitsetSetBit(
@@ -117,7 +117,7 @@ BitsetSetBit
 * @param[in] dwOffset		Сдвиг от начала множества
 * @return					Экземпляр.
 */
-inline
+__inline
 static
 VOID
 InternalBitsetSetMask
@@ -147,7 +147,7 @@ InternalBitsetSetMask
 * @param[in] dwOffset		Сдвиг от начала множества
 * @return					Экземпляр.
 */
-inline
+__inline
 static
 VOID
 InternalBitsetSetMaskAligned
@@ -352,7 +352,7 @@ BitsetSet128Mask_x64
 * @param[in] dwCount		Номер бита
 * @return					Экземпляр.
 */
-inline
+__inline
 static
 BOOL
 InternalBitsetCheckBit(
@@ -398,7 +398,7 @@ BitsetCheckBit
 * @param[in] dwOffset		Сдвиг от начала множества
 * @return					Экземпляр.
 */
-inline
+__inline
 static
 BOOL
 InternalBitsetCheckMask
@@ -429,7 +429,7 @@ InternalBitsetCheckMask
 * @param[in] dwOffset		Сдвиг от начала множества
 * @return					Экземпляр.
 */
-inline
+__inline
 static
 BOOL
 InternalBitsetCheckMaskAligned

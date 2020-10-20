@@ -22,7 +22,7 @@ for i in range(0, len(fileContent), 4):
             byteorder='little', signed=True)
         )
 
-selection = list(range(1, 11))
+selection = list(range(1, 64))
 
 findselection = dataset[:len(dataset) // 2]
 findlockfreeselection = dataset[len(dataset) // 2:]

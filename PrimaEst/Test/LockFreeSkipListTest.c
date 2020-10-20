@@ -47,14 +47,12 @@ LockFreeSkipListAddTest()
 		LockFreeSkipListSet(psLockFree, (void*)i, (void*)i);
 	}
 	
-	DWORD dwCount = 0;
-	PSLockFreeSkipListNode *psNodes = LockFreeSkipListGetAll(
-		psLockFree, &dwCount);
-	PSLockFreeSkipListNode psIter = psNodes[0];
+	PSLockFreeSkipListNode psCurr = psLockFree->psHead->pNext[0];
+	PSLockFreeSkipListNode psNext;
 	for (int i = 1; i <= 10; i++)
 	{
-		assert((int)psIter->pKey == i);
-		psIter = psIter->pHead[0];
+		assert((int)psCurr->pKey == i);
+		psCurr = psCurr->pNext[0];
 	}
 
 	LockFreeSkipListClose(psLockFree);
@@ -77,11 +75,7 @@ LockFreeSkipListFindTest()
 	
 	for (int i = 1; i <= 10; i++)
 	{
-		PSLockFreeSkipListNode psNode = LockFreeSkipListFind(
-			psLockFree,
-			(void*)i);
-
-		assert((int)psNode->pKey == i);
+		assert(LockFreeSkipListFind(psLockFree, (void*)i) == TRUE);
 	}
 
 	LockFreeSkipListClose(psLockFree);
@@ -89,7 +83,7 @@ LockFreeSkipListFindTest()
 
 
 #define SKIP_LIST_TEST_THREAD_COUNT 10
-#define SKIP_LIST_TEST_BOUND		10000
+#define SKIP_LIST_TEST_BOUND		10000000
 
 typedef struct _SMultiThreadTestAddArg
 {
@@ -111,9 +105,7 @@ MultiThreadAddRoutine(
 
 	for (int i = arg.dwModus; i <= SKIP_LIST_TEST_BOUND; i += 10)
 	{
-		EnterCriticalSection(arg.crWriteLock);
 		LockFreeSkipListSet(arg.psLockFreeSkipList, (void*)i , (void*)i);
-		LeaveCriticalSection(arg.crWriteLock);
 	}
 
 	return 0;
@@ -132,13 +124,13 @@ MultiThreadFindRoutine(
 	for (int i = arg.dwModus; i <= SKIP_LIST_TEST_BOUND; i += 10)
 	{
 		int nCurrentMisses = -1;
-		PSLockFreeSkipListNode psNode;
+		BOOL bFound = FALSE;
 		do
 		{
 			nCurrentMisses++;
-			psNode = LockFreeSkipListFind(arg.psLockFreeSkipList, (void*)i);
+			bFound = LockFreeSkipListFind(arg.psLockFreeSkipList, (void*)i);
 		}
-		while (psNode != NULL && (int)psNode->pKey != i);
+		while (!bFound);
 
 		if (nCurrentMisses > 0)
 		{
@@ -181,14 +173,12 @@ LockFreeSkipListMultiThreadAddTest()
 		hThreads,
 		TRUE, INFINITE);
 
-	DWORD dwCount = 0;
-	PSLockFreeSkipListNode* psNodes = LockFreeSkipListGetAll(
-		psLockFree, &dwCount);
-	PSLockFreeSkipListNode psIter = psNodes[0];
+	PSLockFreeSkipListNode psCurr = psLockFree->psHead->pNext[0];
+	PSLockFreeSkipListNode psNext;
 	for (int i = 1; i <= SKIP_LIST_TEST_BOUND; i++)
 	{
-		assert((int)psIter->pKey == i);
-		psIter = psIter->pHead[0];
+		assert((int)psCurr->pKey == i);
+		psCurr = psCurr->pNext[0];
 	}
 
 	for (int i = 0; i < SKIP_LIST_TEST_THREAD_COUNT; i++)
@@ -317,21 +307,13 @@ LockFreeSkipListResetTest()
 		LockFreeSkipListSet(psLockFree, (void*)i, (void*)i);
 	}
 	
-	assert(psLockFree->dwCount == SKIP_LIST_TEST_BOUND);
-
 	for (int i = 1; i <= 10; i++)
 	{
 		static DWORD dwValue = 50;
 		DWORD dwKey = (SKIP_LIST_TEST_BOUND / 10) * i;
 
-		LockFreeSkipListSet(psLockFree, (void*)dwKey, (void*)dwValue);
-		
-		PSLockFreeSkipListNode psNode = LockFreeSkipListFind(psLockFree, (void*)dwKey);
-
-		assert(psNode->pValue == dwValue);
+		assert(LockFreeSkipListFind(psLockFree, (void*)dwKey) == TRUE);
 	}
-
-	assert(psLockFree->dwCount == SKIP_LIST_TEST_BOUND);
 
 
 	LockFreeSkipListClose(psLockFree);

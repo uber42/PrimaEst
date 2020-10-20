@@ -16,13 +16,16 @@
 typedef struct _SLockFreeSkipListNode
 {
 	/** Ключ */
-	PVOID pKey;
+	PVOID				pKey;
 
 	/** Значение */
-	PVOID pValue;
+	PVOID				pValue;
+
+	/** Высота узла */
+	DWORD				dwHeight;
 
 	/** Список узлов */
-	volatile struct _SLockFreeSkipListNode* pHead[1];
+	struct _SLockFreeSkipListNode* pNext[1];
 } SLockFreeSkipListNode, * PSLockFreeSkipListNode;
 
 /**
@@ -30,38 +33,36 @@ typedef struct _SLockFreeSkipListNode
  */
 typedef struct _SLockFreeSkipList 
 {
-	/** Количество записей */
-	volatile LONG64 dwCount;
-
-	/** Высота */
-	volatile LONG  dwHeight;
-
-	/** Компаратор */
-	FSkipListComp* pfComparator;
 
 	/** Функция удаления узла */
-	FSkipListNodeEraser* pfEraser;
+	FSkipListNodeEraser*		pfEraser;
 
 	/** Функция изменения значения узла */
-	FSkipListNodeValueChanger* pfValueChanger;
+	FSkipListNodeValueChanger*	pfValueChanger;
 
-	/** Список узлов */
-	PSLockFreeSkipListNode	psNode;
+	/** Компаратор */
+	FSkipListComp*				pfComparator;
+
+	/** Голова списка */
+	PSLockFreeSkipListNode		psHead;
+
+	/** Хвост списка */
+	PSLockFreeSkipListNode		psTail;
 } SLockFreeSkipList, *PSLockFreeSkipList;
 
 
 /**
- * Создать список с пропусками
+ * Создать Lock-Free список с пропусками
  * @param[in] pfComparator		Компаратор
  * @param[in] pfEraser			Функция удаления узла
  * @param[in] pfValueChanger	Функция изменения значения узла
  * @return Созданный список
  */
-PSLockFreeSkipList
+PSSkipList
 CreateLockFreeSkipList(
-	FSkipListComp* pfComparator,
-	FSkipListNodeEraser* pfEraser,
-	FSkipListNodeValueChanger* pfValueChanger
+	FSkipListComp*				pfComparator,
+	FSkipListNodeEraser*		pfEraser,
+	FSkipListNodeValueChanger*	pfValueChanger
 );
 
 /**
@@ -107,18 +108,6 @@ LockFreeSkipListClear(
 VOID
 LockFreeSkipListClose(
 	PSLockFreeSkipList	psSkipList
-);
-
-/**
- * Получить все элементы
- * @param[in] psSkipList	Экземпляр списка
- * @param[out] pdwSize		Количество элементов
- * @return					Список
- */
-PSLockFreeSkipListNode*
-LockFreeSkipListGetAll(
-	PSLockFreeSkipList	psSkipList,
-	PDWORD				pdwSize
 );
 
 

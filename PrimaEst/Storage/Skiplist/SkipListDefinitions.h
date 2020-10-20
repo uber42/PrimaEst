@@ -73,4 +73,21 @@ RandomHeight()
 	return dwHeight;
 }
 
+static
+DWORD
+RandomHeight1()
+{
+	DWORD dwRandom = LehmerRandom1();
+	DWORD dwBranching = 4;
+	DWORD dwHeight = 1;
+
+	while (dwHeight < SKIP_LIST_MAX_HEIGHT &&
+		LehmerRandom() % dwBranching == 0)
+	{
+		dwHeight++;
+	}
+
+	return dwHeight;
+}
+
 #endif
