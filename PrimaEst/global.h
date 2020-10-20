@@ -10,6 +10,8 @@
 
 #define _CRT_SECURE_NO_WARNINGS
 
+#include <assert.h>
+
 #include <Windows.h>
 
 #include <stdio.h>
@@ -39,8 +41,6 @@
 #include "Storage/CommitLog/CommitLog.h"
 
 #ifdef TESTS
-
-#include <assert.h>
 
 #include "Test/LockFreeSkipListTest.h"
 #include "Test/SkipListTest.h"
