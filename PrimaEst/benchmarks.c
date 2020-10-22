@@ -12,9 +12,9 @@
 int main()
 {
 	SkipListSelection();
-	/*LockFreeSkipListSelection();
+	LockFreeSkipListSelection();
 	MultiThreadFindSkipListSelection();
-	MultiThreadSetSkipListSelection();*/
+	MultiThreadSetSkipListSelection();
 }
 
 #endif

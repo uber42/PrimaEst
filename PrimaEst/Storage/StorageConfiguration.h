@@ -5,6 +5,9 @@
  * @date Oct 2020
  */
 
+#ifndef STORAGE_CONFIGURATION
+#define STORAGE_CONFIGURATION
+
 /**
  * Конфигурация лога фиксации
  */
@@ -22,3 +25,6 @@ typedef struct _SStorageConfiguration
 {
 	SCommitLogConfiguration		sCommitConfiguration;
 } SStorageConfiguration, *PSStorageConfiguration;
+
+
+#endif

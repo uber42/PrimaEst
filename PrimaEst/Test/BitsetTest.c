@@ -13,7 +13,12 @@ BitsetSetBitTest()
 {
 	DWORD dwCount = 15;
 
-	PSBitset psBitset = CreateBitset(dwCount);
+	SBitset sBitset;
+	InitializeBitset(&sBitset, dwCount);
+	PSBitset psBitset = &sBitset;
+
+	DWORD dwExceptedBlockCount = dwCount / (sizeof(BS_TYPE) * 8) + ((dwCount % (sizeof(BS_TYPE) * 8)) == 0 ? 0 : 1);
+	assert(psBitset->dwBlocksCount == dwExceptedBlockCount);
 
 	BS_TYPE bsMask = 0xA;
 
@@ -30,7 +35,7 @@ BitsetSetBitTest()
 	
 	dwCount = 90;
 
-	psBitset = CreateBitset(dwCount);
+	InitializeBitset(&sBitset, dwCount);
 
 	BS_TYPE bsMask_1 = 0xA;
 	BS_TYPE bsMask_2 = 0x42;
@@ -58,13 +63,18 @@ BitsetSet8MaskTest()
 {
 	DWORD dwCount = 90;
 
-	PSBitset psBitset = CreateBitset(dwCount);
+	SBitset sBitset;
+	InitializeBitset(&sBitset, dwCount);
+	PSBitset psBitset = &sBitset;
+
+	DWORD dwExceptedBlockCount = dwCount / (sizeof(BS_TYPE) * 8) + ((dwCount % (sizeof(BS_TYPE) * 8)) == 0 ? 0 : 1);
+	assert(psBitset->dwBlocksCount == dwExceptedBlockCount);
 
 	BS_TYPE bsMask_1 = 0xA;
 	BS_TYPE bsMask_2 = 0x11;
 
-	assert(BitsetSet8Mask(psBitset, bsMask_1, 5) == TRUE);
-	assert(BitsetSet8Mask(psBitset, bsMask_2, 70) == TRUE);
+	assert(BitsetSet8Mask(psBitset, (BYTE)bsMask_1, 5) == TRUE);
+	assert(BitsetSet8Mask(psBitset, (BYTE)bsMask_2, 70) == TRUE);
 
 	BS_TYPE pbsBuffer = *psBitset->pllBegin;
 	bsMask_1 <<= 5;
@@ -79,11 +89,11 @@ BitsetSet8MaskTest()
 
 	dwCount = 90;
 
-	psBitset = CreateBitset(dwCount);
+	InitializeBitset(&sBitset, dwCount);
 
 	BS_TYPE bsMask_3 = 0xFF;
 
-	assert(BitsetSet8Mask(psBitset, bsMask_3, 60) == TRUE);
+	assert(BitsetSet8Mask(psBitset, (BYTE)bsMask_3, 60) == TRUE);
 
 	pbsBuffer = *psBitset->pllBegin;
 	bsMask_3 <<= 60;
@@ -101,11 +111,13 @@ BitsetSet16MaskTest()
 {
 	DWORD dwCount = 90;
 
-	PSBitset psBitset = CreateBitset(dwCount);
+	SBitset sBitset;
+	InitializeBitset(&sBitset, dwCount);
+	PSBitset psBitset = &sBitset;
 
 	BS_TYPE bsMask = 0xFFFF;
 
-	assert(BitsetSet16Mask(psBitset, bsMask, 56) == TRUE);
+	assert(BitsetSet16Mask(psBitset, (WORD)bsMask, 56) == TRUE);
 
 	BS_TYPE pbsBuffer = *psBitset->pllBegin;
 	bsMask <<= 56;
@@ -123,7 +135,11 @@ BitsetSet64Mask_x86Test()
 {
 	DWORD dwCount = 250;
 
-	PSBitset psBitset = CreateBitset(dwCount);
+	SBitset sBitset;
+	InitializeBitset(&sBitset, dwCount);
+	PSBitset psBitset = &sBitset;
+	DWORD dwExceptedBlockCount = dwCount / (sizeof(BS_TYPE) * 8) + ((dwCount % (sizeof(BS_TYPE) * 8)) == 0 ? 0 : 1);
+	assert(psBitset->dwBlocksCount == dwExceptedBlockCount);
 
 	DWORD pbsMask[2] = { 0xAAAAAAAA, 0xFFFFFFFF };
 	BS_TYPE bsMask = 0xFFFFFFFFAAAAAAAA;
@@ -146,7 +162,11 @@ BitsetSet128Mask_x86Test()
 {
 	DWORD dwCount = 300;
 
-	PSBitset psBitset = CreateBitset(dwCount);
+	SBitset sBitset;
+	InitializeBitset(&sBitset, dwCount);
+	PSBitset psBitset = &sBitset;
+	DWORD dwExceptedBlockCount = dwCount / (sizeof(BS_TYPE) * 8) + ((dwCount % (sizeof(BS_TYPE) * 8)) == 0 ? 0 : 1);
+	assert(psBitset->dwBlocksCount == dwExceptedBlockCount);
 
 	DWORD pbsMask[4] = { 0xAAAAAAAA, 0xFFFFFFFF, 0xBBBBBBBB, 0xCCCCCCCC };
 	BS_TYPE bsMask[3] = { 0xAAAAAAAA00000000, 0xBBBBBBBBFFFFFFFF, 0x00000000CCCCCCCC };
@@ -170,7 +190,9 @@ BitsetSet64Mask_x64Test()
 {
 	DWORD dwCount = 250;
 
-	PSBitset psBitset = CreateBitset(dwCount);
+	SBitset sBitset;
+	InitializeBitset(&sBitset, dwCount);
+	PSBitset psBitset = &sBitset;
 
 	BS_TYPE bsMask = 0xFFFFFFFFAAAAAAAA;
 
@@ -192,7 +214,9 @@ BitsetSet128Mask_x64Test()
 {
 	DWORD dwCount = 300;
 
-	PSBitset psBitset = CreateBitset(dwCount);
+	SBitset sBitset;
+	InitializeBitset(&sBitset, dwCount);
+	PSBitset psBitset = &sBitset;
 
 	BS_TYPE pbsMask[2] = { 0xFFFFFFFFAAAAAAAA, 0xCCCCCCCCBBBBBBBB };
 	BS_TYPE bsMask[3] = { 0xAAAAAAAA00000000, 0xBBBBBBBBFFFFFFFF, 0x00000000CCCCCCCC };
@@ -216,7 +240,11 @@ BitsetCheckBitTest()
 {
 	DWORD dwCount = 15;
 
-	PSBitset psBitset = CreateBitset(dwCount);
+	SBitset sBitset;
+	InitializeBitset(&sBitset, dwCount);
+	PSBitset psBitset = &sBitset;
+	DWORD dwExceptedBlockCount = dwCount / (sizeof(BS_TYPE) * 8) + ((dwCount % (sizeof(BS_TYPE) * 8)) == 0 ? 0 : 1);
+	assert(psBitset->dwBlocksCount == dwExceptedBlockCount);
 
 	BS_TYPE bsMask = 0xA;
 
@@ -241,10 +269,12 @@ BitsetCheck8MaskTest()
 {
 	DWORD dwCount = 90;
 
-	PSBitset psBitset = CreateBitset(dwCount);
+	SBitset sBitset;
+	InitializeBitset(&sBitset, dwCount);
+	PSBitset psBitset = &sBitset;
 
-	BS_TYPE bsMask_1 = 0xA;
-	BS_TYPE bsMask_2 = 0x11;
+	BYTE bsMask_1 = 0xA;
+	BYTE bsMask_2 = 0x11;
 
 	assert(BitsetSet8Mask(psBitset, bsMask_1, 5) == TRUE);
 	assert(BitsetSet8Mask(psBitset, bsMask_2, 70) == TRUE);
@@ -260,7 +290,9 @@ BitsetCheck64Mask_x86Test()
 {
 	DWORD dwCount = 250;
 
-	PSBitset psBitset = CreateBitset(dwCount);
+	SBitset sBitset;
+	InitializeBitset(&sBitset, dwCount);
+	PSBitset psBitset = &sBitset;
 
 	DWORD pbsMask[2] = { 0xAAAAAAAA, 0xFFFFFFFF };
 
@@ -276,7 +308,9 @@ BitsetCheck128Mask_x86Test()
 {
 	DWORD dwCount = 300;
 
-	PSBitset psBitset = CreateBitset(dwCount);
+	SBitset sBitset;
+	InitializeBitset(&sBitset, dwCount);
+	PSBitset psBitset = &sBitset;
 
 	DWORD pbsMask[4] = { 0xAAAAAAAA, 0xFFFFFFFF, 0xBBBBBBBB, 0xCCCCCCCC };
 	BS_TYPE bsMask[3] = { 0xAAAAAAAA00000000, 0xBBBBBBBBFFFFFFFF, 0x00000000CCCCCCCC };
@@ -293,7 +327,9 @@ BitsetCheck64Mask_x64Test()
 {
 	DWORD dwCount = 250;
 
-	PSBitset psBitset = CreateBitset(dwCount);
+	SBitset sBitset;
+	InitializeBitset(&sBitset, dwCount);
+	PSBitset psBitset = &sBitset;
 
 	BS_TYPE bsMask = 0xFFFFFFFFAAAAAAAA;
 
@@ -309,7 +345,9 @@ BitsetCheck128Mask_x64Test()
 {
 	DWORD dwCount = 300;
 
-	PSBitset psBitset = CreateBitset(dwCount);
+	SBitset sBitset;
+	InitializeBitset(&sBitset, dwCount);
+	PSBitset psBitset = &sBitset;
 
 	BS_TYPE pbsMask[2] = { 0xFFFFFFFFAAAAAAAA, 0xCCCCCCCCBBBBBBBB };
 	BS_TYPE bsMask[3] = { 0xAAAAAAAA00000000, 0xBBBBBBBBFFFFFFFF, 0x00000000CCCCCCCC };
@@ -326,7 +364,11 @@ BitsetCheck128MaskAligned_x86Test()
 {
 	DWORD dwCount = 512;
 
-	PSBitset psBitset = CreateBitset(dwCount);
+	SBitset sBitset;
+	InitializeBitset(&sBitset, dwCount);
+	PSBitset psBitset = &sBitset;
+	DWORD dwExceptedBlockCount = dwCount / (sizeof(BS_TYPE) * 8) + ((dwCount % (sizeof(BS_TYPE) * 8)) == 0 ? 0 : 1);
+	assert(psBitset->dwBlocksCount == dwExceptedBlockCount);
 
 	DWORD pbsMask[4] = { 0xAAAAAAAA, 0xFFFFFFFF, 0xBBBBBBBB, 0xCCCCCCCC };
 
@@ -342,7 +384,11 @@ BitsetCheck128MaskAligned_x64Test()
 {
 	DWORD dwCount = 512;
 
-	PSBitset psBitset = CreateBitset(dwCount);
+	SBitset sBitset;
+	InitializeBitset(&sBitset, dwCount);
+	PSBitset psBitset = &sBitset;
+	DWORD dwExceptedBlockCount = dwCount / (sizeof(BS_TYPE) * 8) + ((dwCount % (sizeof(BS_TYPE) * 8)) == 0 ? 0 : 1);
+	assert(psBitset->dwBlocksCount == dwExceptedBlockCount);
 
 	BS_TYPE pbsMask[2] = { 0xFFFFFFFFAAAAAAAA, 0xCCCCCCCCBBBBBBBB };
 

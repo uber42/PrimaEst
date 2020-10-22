@@ -5,8 +5,8 @@
  * @date Oct 2020
  */
 
-#ifndef SKIP_LIST_TEST_H
-#define SKIP_LIST_TEST_H
+#ifndef LOCK_FREE_SKIP_LIST_TEST_H
+#define LOCK_FREE_SKIP_LIST_TEST_H
 
 VOID
 LockFreeSkipListAddTest();

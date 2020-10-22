@@ -1,5 +1,5 @@
 #
-# @file FindMultiThread.h
+# @file FindMultiThread.py
 #
 # @author Pavel Chursin
 # @date Oct 2020

@@ -1,5 +1,5 @@
 #
-# @file SkipListPlot.h
+# @file SkipListPlot.py
 #
 # @author Pavel Chursin
 # @date Oct 2020

@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <intrin.h>
 #include <assert.h>
+#include <math.h>
 
  /** ThridParty */
 #include "ThirdParty/cJSON/cJSON_Utils.h"
@@ -40,6 +41,7 @@
 #include "Storage/Skiplist/LockFreeSkipList.h"
 #include "Storage/Skiplist/SkipListDefinitions.h"
 #include "Storage/CommitLog/CommitLog.h"
+#include "Storage/BloomFilter/BloomFilter.h"
 
 #ifdef TESTS
 
@@ -47,6 +49,7 @@
 #include "Test/SkipListTest.h"
 #include "Test/LogTest.h"
 #include "Test/BitsetTest.h"
+#include "Test/BloomFilterTest.h"
 
 #endif
 

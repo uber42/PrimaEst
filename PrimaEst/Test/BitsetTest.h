@@ -5,6 +5,9 @@
  * @date Oct 2020
  */
 
+#ifndef BITSET_TEST_H
+#define BITSET_TEST_H
+
 
 VOID
 BitsetSetBitTest();
@@ -50,3 +53,6 @@ BitsetCheck128MaskAligned_x86Test();
 
 VOID
 BitsetCheck128MaskAligned_x64Test();
+
+
+#endif

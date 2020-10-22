@@ -8,30 +8,26 @@
 #include "../global.h"
 
 
- /**
- * Создать байтовое множество
- * @param[in] dwCount		Количество битов в множестве
- * @return					Экземпляр.
- */
-PSBitset
-CreateBitset(
-	DWORD	dwCount
+/**
+* Создать байтовое множество
+* @param[inout] psBitset	Экзмепляр
+* @param[in]	dwCount		Количество битов в множестве
+* @return					Результат работы.
+*/
+BOOL
+InitializeBitset(
+	PSBitset	psBitset,
+	DWORD		dwCount
 )
 {
-	PSBitset psBitset = malloc(sizeof(SBitset));
-	if (!psBitset)
-	{
-		return NULL;
-	}
-
 	DWORD dwBlocks = dwCount / (sizeof(BS_TYPE) * 0x8);
-	DWORD dwAlign = dwCount % sizeof(BS_TYPE) == 0 ? 0 : 1;
+	DWORD dwAlign = !(dwCount % (sizeof(BS_TYPE) * 0x8)) ? 0 : 1;
 	DWORD dwSize = (dwBlocks + dwAlign) * sizeof(BS_TYPE);
 	PBS_TYPE pBuffer = malloc(dwSize);
 	if (!pBuffer)
 	{
-		free(psBitset);
-		return NULL;
+		LogError("[Bitset] Ошибка выделения памяти");
+		return FALSE;
 	}
 
 	memset(pBuffer, 0, dwSize);
@@ -42,7 +38,19 @@ CreateBitset(
 	psBitset->dwCount = dwCount;
 	psBitset->dwSize = dwSize;
 
-	return psBitset;
+	return TRUE;
+}
+
+/**
+* Очистить байтовое множество
+* @param[in] psBitset		Экземпляр
+*/
+VOID
+ClearBitset(
+	PSBitset	psBitset
+)
+{
+	memset(psBitset->pllSet, 0, psBitset->dwSize);
 }
 
 /**
@@ -57,7 +65,6 @@ DeleteBitset(
 	if (psBitset != NULL)
 	{
 		free(psBitset->pllSet);
-		free(psBitset);
 
 		psBitset = NULL;
 	}
@@ -83,7 +90,7 @@ InternalBitsetSetBit(
 	PBS_TYPE pdwOffset = psBitset->pllBegin - dwOffset;
 	BS_TYPE	 dwMask = (BS_TYPE)1 << (BS_TYPE_OFFSET - dwByteNum);
 
-	*pdwOffset |= dwMask;
+	InterlockedOr64(pdwOffset, dwMask);
 }
 
 
@@ -107,6 +114,21 @@ BitsetSetBit
 
 	InternalBitsetSetBit(psBitset, dwNumber);
 	return TRUE;
+}
+
+/**
+* Установить бит без проверки
+* @param[in] psBitset		Экземпляр
+* @param[in] dwCount		Номер бита
+*/
+VOID
+BitsetSetBitProxy
+(
+	PSBitset	psBitset,
+	DWORD		dwNumber
+)
+{
+	InternalBitsetSetBit(psBitset, dwNumber);
 }
 
 
@@ -136,8 +158,8 @@ InternalBitsetSetMask
 	BS_TYPE  bLowPart = (BS_TYPE)bMask << dwByteNum;
 	BS_TYPE  bHighPart = (BS_TYPE)bMask >> (BS_TYPE_BITS - dwByteNum);
 
-	*pbCurrentBlock |= bHighPart;
-	*pbNextBlock |= bLowPart;
+	InterlockedOr64(pbCurrentBlock, bHighPart);
+	InterlockedOr64(pbNextBlock, bLowPart);
 }
 
 /**
@@ -161,7 +183,7 @@ InternalBitsetSetMaskAligned
 
 	PBS_TYPE pbCurrentBlock = psBitset->pllBegin - dwBsOffset;
 
-	*pbCurrentBlock |= bMask;
+	InterlockedOr64(pbCurrentBlock, bMask);
 }
 
 /**
@@ -366,6 +388,7 @@ InternalBitsetCheckBit(
 	PBS_TYPE pdwOffset = psBitset->pllBegin - dwOffset;
 	BS_TYPE	 dwMask = (BS_TYPE)1 << (BS_TYPE_OFFSET - dwByteNum);
 
+	_ReadWriteBarrier();
 	return (*pdwOffset & dwMask) == dwMask;
 }
 
@@ -390,6 +413,22 @@ BitsetCheckBit
 
 	return InternalBitsetCheckBit(psBitset, dwNumber);
 }
+
+/**
+* Проверить бит без проверки на вхождения во множество
+* @param[in] psBitset		Экземпляр
+* @param[in] dwCount		Номер бита
+*/
+BOOL
+BitsetCheckBitProxy
+(
+	PSBitset	psBitset,
+	DWORD		dwNumber
+)
+{
+	return InternalBitsetCheckBit(psBitset, dwNumber);
+}
+
 
 /**
 * Проверить маску
@@ -417,7 +456,7 @@ InternalBitsetCheckMask
 	BS_TYPE  bLowPart = (BS_TYPE)bMask << dwByteNum;
 	BS_TYPE  bHighPart = (BS_TYPE)bMask >> (BS_TYPE_BITS - dwByteNum);
 
-
+	_ReadWriteBarrier();
 	return	(*pbCurrentBlock & bHighPart) == bHighPart &&
 			(*pbNextBlock & bLowPart) == bLowPart;
 }
@@ -442,6 +481,7 @@ InternalBitsetCheckMaskAligned
 	DWORD dwBsOffset = dwOffset / BS_TYPE_BITS;
 	PBS_TYPE pbCurrentBlock = psBitset->pllBegin - dwBsOffset;
 
+	_ReadWriteBarrier();
 	return	(*pbCurrentBlock & bMask) == bMask;
 }
 

@@ -52,6 +52,12 @@
     <Filter Include="Test\TestResources">
       <UniqueIdentifier>{cb510614-b440-4923-af58-e5a8621dcbb4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Test\BloomFilter">
+      <UniqueIdentifier>{8ed5ab82-84e4-4cff-943a-7adf9e34f5c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Benchmarks\BloomFilter">
+      <UniqueIdentifier>{abf03a3f-0cc6-4be1-955c-07cc8100cd48}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Storage\Skiplist\SkipList.h">
@@ -118,8 +124,11 @@
     <ClInclude Include="Test\BitsetTest.h">
       <Filter>Test\BitsetTest</Filter>
     </ClInclude>
-    <ClInclude Include="Tools\MarkablePtr.h">
-      <Filter>Tools</Filter>
+    <ClInclude Include="Test\BloomFilterTest.h">
+      <Filter>Test\BloomFilter</Filter>
+    </ClInclude>
+    <ClInclude Include="Benchmarks\BloomFilter\BloomFilterSelection.h">
+      <Filter>Benchmarks\BloomFilter</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -179,6 +188,12 @@
     <ClCompile Include="Test\BitsetTest.c">
       <Filter>Test\BitsetTest</Filter>
     </ClCompile>
+    <ClCompile Include="Test\BloomFilterTest.c">
+      <Filter>Test\BloomFilter</Filter>
+    </ClCompile>
+    <ClCompile Include="Benchmarks\BloomFilter\BloomFilterSelection.c">
+      <Filter>Benchmarks\BloomFilter</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Test\Resources\TestLogConfigurationBad.json">
@@ -201,6 +216,15 @@
     </None>
     <None Include="Benchmarks\SkipList\Readme.md">
       <Filter>Benchmarks\SkipList</Filter>
+    </None>
+    <None Include="Benchmarks\BloomFilter\BloomFilterMemory.py">
+      <Filter>Benchmarks\BloomFilter</Filter>
+    </None>
+    <None Include="Benchmarks\BloomFilter\BloomFilterHashCount.py">
+      <Filter>Benchmarks\BloomFilter</Filter>
+    </None>
+    <None Include="Benchmarks\BloomFilter\Readme.md">
+      <Filter>Benchmarks\BloomFilter</Filter>
     </None>
   </ItemGroup>
 </Project>

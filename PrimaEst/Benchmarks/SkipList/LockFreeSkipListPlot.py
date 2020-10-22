@@ -1,5 +1,5 @@
 #
-# @file LockFreeSkipListPlot.h
+# @file LockFreeSkipListPlot.py
 #
 # @author Pavel Chursin
 # @date Oct 2020

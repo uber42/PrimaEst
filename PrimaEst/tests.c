@@ -11,6 +11,9 @@
 
 int main()
 {
+	BloomFilterTest();
+	BloomFilterMultiThreadTest();
+
 	//BitsetSetBitTest();
 	//BitsetSet8MaskTest();
 	//BitsetSet16MaskTest();
@@ -27,18 +30,18 @@ int main()
 	//BitsetCheck128MaskAligned_x86Test();
 	//BitsetCheck128MaskAligned_x64Test();
 
-	LockFreeSkipListAddTest();
-	LockFreeSkipListFindTest();
-	LockFreeSkipListMultiThreadAddTest();
-	LockFreeSkipListMultiThreadFind();
-	LockFreeSkipListMultiThreadAddAndFind();
-	LockFreeSkipListResetTest();
+	//LockFreeSkipListAddTest();
+	//LockFreeSkipListFindTest();
+	//LockFreeSkipListMultiThreadAddTest();
+	//LockFreeSkipListMultiThreadFind();
+	//LockFreeSkipListMultiThreadAddAndFind();
+	//LockFreeSkipListResetTest();
 
-	SkipListAddTest();
-	SkipListSetTest();
-	SkipListFindTest();
-	SkipListPrintTest();
-	SkipListRemoveTest();
+	//SkipListAddTest();
+	//SkipListSetTest();
+	//SkipListFindTest();
+	//SkipListPrintTest();
+	//SkipListRemoveTest();
 
 	//LogEnumFnvTest();
 	//ParseLogTest_1();

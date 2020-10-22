@@ -22,30 +22,32 @@ typedef unsigned __int64 BS_TYPE, * PBS_TYPE;
 typedef struct _SBitset
 {
 	/** Количество битов */
-	DWORD		dwCount;
+	DWORD				dwCount;
 
 	/** Размер множества */
-	DWORD		dwSize;
+	DWORD				dwSize;
 
 	/** Количество блоков выделенной памяти */
-	DWORD		dwBlocksCount;
+	DWORD				dwBlocksCount;
 
 	/** Биты */
-	PBS_TYPE	pllSet;
+	volatile PBS_TYPE	pllSet;
 
 	/** Указатель на начало */
-	PBS_TYPE	pllBegin;
+	volatile PBS_TYPE	pllBegin;
 } SBitset, *PSBitset;
 
 
 /**
-* Создать байтовое множество
-* @param[in] dwCount		Количество битов в множестве
-* @return					Экземпляр.
+* Инициализировать байтовое множество
+* @param[inout] psBitset	Экзмепляр
+* @param[in]	dwCount		Количество битов в множестве
+* @return					Результат работы.
 */
-PSBitset
-CreateBitset(
-	DWORD	dwCount
+BOOL
+InitializeBitset(
+	PSBitset	psBitset,
+	DWORD		dwCount
 );
 
 /**
@@ -57,6 +59,14 @@ DeleteBitset(
 	PSBitset	psBitset
 );
 
+/**
+* Очистить байтовое множество
+* @param[in] psBitset		Экземпляр
+*/
+VOID
+ClearBitset(
+	PSBitset	psBitset
+);
 
 /**
 * Установить бит
@@ -66,6 +76,18 @@ DeleteBitset(
 */
 BOOL
 BitsetSetBit
+(
+	PSBitset	psBitset,
+	DWORD		dwNumber
+);
+
+/**
+* Установить бит без проверки
+* @param[in] psBitset		Экземпляр
+* @param[in] dwCount		Номер бита
+*/
+VOID
+BitsetSetBitProxy
 (
 	PSBitset	psBitset,
 	DWORD		dwNumber
@@ -221,6 +243,17 @@ BitsetCheckBit
 	DWORD		dwNumber
 );
 
+/**
+* Проверить бит без проверки
+* @param[in] psBitset		Экземпляр
+* @param[in] dwCount		Номер бита
+*/
+BOOL
+BitsetCheckBitProxy
+(
+	PSBitset	psBitset,
+	DWORD		dwNumber
+);
 
 /**
 * Проверить маску 8 бит

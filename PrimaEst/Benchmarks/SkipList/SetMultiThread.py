@@ -1,5 +1,5 @@
 #
-# @file SetMultiThread.h
+# @file SetMultiThread.py
 #
 # @author Pavel Chursin
 # @date Oct 2020

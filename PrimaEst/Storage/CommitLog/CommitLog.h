@@ -5,6 +5,8 @@
  * @date Oct 2020
  */
 
+#ifndef COMMIT_LOG_H
+#define COMMIT_LOG_H
 
 typedef struct _SCommitLogSegmentIndex
 {
@@ -22,3 +24,7 @@ typedef struct _SCommitLog
 {
 	DWORD	dwSegmentsCount;
 } *SCommitLog, PSCommitLog;
+
+
+
+#endif

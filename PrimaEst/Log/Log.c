@@ -745,6 +745,7 @@ LogWriteInternal(
 		.pBuffer = psLogEntry,
 		.dwBufferSize = sizeof(SLogEntry)
 	};
+
 	BOOL bResult = MessageQueuePush(
 		g_sAsyncLogger.hMessageQueue,
 		sMessageData, &(DWORD){0}

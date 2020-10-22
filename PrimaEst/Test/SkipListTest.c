@@ -66,6 +66,7 @@ SkipListAddTest()
 	PSList sList = SkipListGetAll(psSkipList);
 	for (PSList sListCurrent = sList->pFlink;
 		sListCurrent != sList;
+#pragma warning(suppress : 28182)
 		sListCurrent = sListCurrent->pFlink)
 	{
 		PSSkipListNode psSkipListNode = CONTAINING_RECORD(
@@ -108,6 +109,7 @@ SkipListSetTest()
 			pLink[0]
 		);
 
+#pragma warning(suppress : 26541)
 		assert((size_t)psSkipListNode->pKey == dwIdx &&
 			(size_t)psSkipListNode->pValue == (0x400 + dwIdx));
 		dwIdx++;
@@ -189,6 +191,7 @@ SkipListPrintTest()
 	PSList sList = SkipListGetAll(psSkipList);
 	for (PSList sListCurrent = sList->pFlink;
 		sListCurrent != sList;
+#pragma warning(suppress : 28182)
 		sListCurrent = sListCurrent->pFlink)
 	{
 		PSSkipListNode psSkipListNode = CONTAINING_RECORD(
