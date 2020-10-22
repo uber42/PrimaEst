@@ -245,7 +245,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Benchmarks\BloomFilter\BloomFilterSelection.h" />
     <ClInclude Include="Benchmarks\SkipList\SkipListSelection.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="Log\Log.h" />
@@ -272,7 +271,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="benchmarks.c" />
-    <ClCompile Include="Benchmarks\BloomFilter\BloomFilterSelection.c" />
     <ClCompile Include="Benchmarks\SkipList\SkipListSelection.c" />
     <ClCompile Include="Log\Log.c" />
     <ClCompile Include="Storage\BloomFilter\BloomFilter.c" />

@@ -127,9 +127,6 @@
     <ClInclude Include="Test\BloomFilterTest.h">
       <Filter>Test\BloomFilter</Filter>
     </ClInclude>
-    <ClInclude Include="Benchmarks\BloomFilter\BloomFilterSelection.h">
-      <Filter>Benchmarks\BloomFilter</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Storage\Skiplist\SkipList.c">
@@ -190,9 +187,6 @@
     </ClCompile>
     <ClCompile Include="Test\BloomFilterTest.c">
       <Filter>Test\BloomFilter</Filter>
-    </ClCompile>
-    <ClCompile Include="Benchmarks\BloomFilter\BloomFilterSelection.c">
-      <Filter>Benchmarks\BloomFilter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
