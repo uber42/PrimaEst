@@ -104,7 +104,7 @@ BloomFilterAdd(
 	{
 		for (DWORD dwHashIdx = 0; dwHashIdx < ARRAYSIZE(dwHashes); dwHashIdx++)
 		{
-			BitsetSetBitProxy(psBitset, dwHashes[dwHashIdx] % psBitset->dwSize);
+			BitsetSetBitProxy(psBitset, dwHashes[dwHashIdx] % psBitset->dwCount);
 			dwHashes[dwHashIdx] += dwDeltas[dwHashIdx];
 		}
 	}
@@ -157,7 +157,7 @@ BloomFilterTryMatch(
 	{
 		for (DWORD dwHashIdx = 0; dwHashIdx < ARRAYSIZE(dwHashes); dwHashIdx++)
 		{
-			if (!BitsetCheckBitProxy(psBitset, dwHashes[dwHashIdx] % psBitset->dwSize))
+			if (!BitsetCheckBitProxy(psBitset, dwHashes[dwHashIdx] % psBitset->dwCount))
 			{
 				return FALSE;
 			}

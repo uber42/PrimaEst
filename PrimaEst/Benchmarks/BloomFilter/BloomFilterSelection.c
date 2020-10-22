@@ -20,40 +20,31 @@ static int nSelectionCount[] =
 	1000000
 };
 
-typedef struct 
-
-LONG*
-InternalSelection()
-{
-
-}
-
-
 VOID
 BloomFilterProbablySelection()
 {
-	HANDLE hOutFile = CreateFile(
-		".\\Benchmarks\\SkipList\\SkipListSelection.bin",
-		GENERIC_WRITE,
-		0, NULL,
-		CREATE_ALWAYS,
-		0, NULL
-	);
-	if (hOutFile == INVALID_HANDLE_VALUE)
-	{
-		return;
-	}
+	//HANDLE hOutFile = CreateFile(
+	//	".\\Benchmarks\\BloomFilter\\BloomFilterSelection.bin",
+	//	GENERIC_WRITE,
+	//	0, NULL,
+	//	CREATE_ALWAYS,
+	//	0, NULL
+	//);
+	//if (hOutFile == INVALID_HANDLE_VALUE)
+	//{
+	//	return;
+	//}
 
-	LONG* plSelection = InternalSelection();
+	//LONG* plSelection = InternalSelection();
 
-	DWORD dwBytesWrite = 0;
-	WriteFile(
-		hOutFile,
-		plSelection,
-		sizeof(LONG) * ARRAYSIZE(nSelectionCount),
-		&dwBytesWrite, NULL);
+	//DWORD dwBytesWrite = 0;
+	//WriteFile(
+	//	hOutFile,
+	//	plSelection,
+	//	sizeof(LONG) * ARRAYSIZE(nSelectionCount),
+	//	&dwBytesWrite, NULL);
 
-	CloseHandle(hOutFile);
+	//CloseHandle(hOutFile);
 
-	free(plSelection);
+	//free(plSelection);
 }
