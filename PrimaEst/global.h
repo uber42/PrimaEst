@@ -10,15 +10,23 @@
 
 #define _CRT_SECURE_NO_WARNINGS
 
-#include <assert.h>
+ /** WSA */
+#pragma comment(lib,"Ws2_32.lib")
+#include <winsock2.h>
+#include <ws2tcpip.h>
 
+/** Windows */
 #include <Windows.h>
 
+/** STD */
 #include <stdio.h>
 #include <stdlib.h>
 #include <intrin.h>
 #include <assert.h>
 #include <math.h>
+
+/** Log */
+#include "Log/Log.h"
 
  /** ThridParty */
 #include "ThirdParty/cJSON/cJSON_Utils.h"
@@ -29,8 +37,8 @@
 #include "Tools/MessageQueue.h"
 #include "Tools/Fnv1a.h"
 #include "Tools/Crc32.h"
-#include "Log/Log.h"
 #include "Tools/Bitset.h"
+#include "Tools/SocketWrapper.h"
 
 /** UTILS */
 #include "Utils/Random.h"

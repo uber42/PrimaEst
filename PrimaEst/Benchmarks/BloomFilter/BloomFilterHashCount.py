@@ -13,7 +13,7 @@ from pylab import meshgrid
 def hashcount(errorProbably):
     return -np.log2(errorProbably)
 
-probabilities = np.arange(0.1, 1, 0.01)
+probabilities = np.arange(0.00001, 1, 0.00001)
 
 
 plt.xlabel("Вероятность", fontsize=16)

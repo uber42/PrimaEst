@@ -11,8 +11,23 @@
 
 int main()
 {
-	BloomFilterTest();
-	BloomFilterMultiThreadTest();
+	SLogConfiguration sLogConfiguration;
+
+	BOOL bResult = ParseLoggerConfiguration(
+		L"../PrimaEst/Test/Resources/TestLogConfigurationOk.json",
+		&sLogConfiguration);
+	if (!bResult)
+	{
+		printf("Ошибка инициализации лога");
+		return FALSE;
+	}
+
+	SocketWrapperTest();
+	SocketWrapperTimeoutTest();
+	SocketWrapperWithCheckSumTest();
+
+	//BloomFilterTest();
+	//BloomFilterMultiThreadTest();
 
 	//BitsetSetBitTest();
 	//BitsetSet8MaskTest();
@@ -48,6 +63,8 @@ int main()
 	//ParseLogTest_2();
 	//LogWriteTest_1();
 	//LogMultiThreadWriteTest_1();
+
+	DeinitializeAsyncLogger();
 
 	system("PAUSE");
 }

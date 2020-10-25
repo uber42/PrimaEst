@@ -1,5 +1,5 @@
 {
-  "OutputType": "Text",
+  "OutputType": "Console",
   "LogFilePath": "./Log.txt",
   "LowPriority": "Debug",
   "HighPriority":  "Extra"

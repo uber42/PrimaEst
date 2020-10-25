@@ -57,7 +57,7 @@ typedef struct _SBloomFilter
 * Инициализировать фильтр Блума
 * @param[inout] psBloomFilter	Экзмепляр
 * @param[in]	dwCapacity		Вместимость фильтра
-* @param[in]	dwErrorProbably	Вероятность ложноположительного срабатывания  [1; 100]
+* @param[in]	dwErrorProbably	Вероятность ложноположительного срабатывания  [1; 1000000]
 * @return						Результат работы.
 */
 BOOL

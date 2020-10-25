@@ -58,6 +58,24 @@
     <Filter Include="Benchmarks\BloomFilter">
       <UniqueIdentifier>{abf03a3f-0cc6-4be1-955c-07cc8100cd48}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Test\SocketWrapperTest">
+      <UniqueIdentifier>{360e69a6-686e-4270-8d6f-84cbdcdb4f82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Consensus">
+      <UniqueIdentifier>{4fa54bf1-91ea-4056-996e-312098ca259e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Consensus\ReplicatedStateMachine">
+      <UniqueIdentifier>{de7a20a0-ce84-4eca-8781-30427cf93514}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Consensus\ReplicatedLog">
+      <UniqueIdentifier>{e83146ef-80f6-4c85-91b8-37d2cd203ff8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Consensus\Raft">
+      <UniqueIdentifier>{77a49fe0-ce56-40ba-9dbc-8556f8871562}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Consensus\RPC">
+      <UniqueIdentifier>{8405c28d-cae0-4765-a917-fa434c555705}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Storage\Skiplist\SkipList.h">
@@ -127,6 +145,15 @@
     <ClInclude Include="Test\BloomFilterTest.h">
       <Filter>Test\BloomFilter</Filter>
     </ClInclude>
+    <ClInclude Include="Test\SocketWrapperTest.h">
+      <Filter>Test\SocketWrapperTest</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools\SocketWrapper.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Consensus\Raft\Raft.h">
+      <Filter>Consensus\Raft</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Storage\Skiplist\SkipList.c">
@@ -187,6 +214,15 @@
     </ClCompile>
     <ClCompile Include="Test\BloomFilterTest.c">
       <Filter>Test\BloomFilter</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\SocketWrapperTest.c">
+      <Filter>Test\SocketWrapperTest</Filter>
+    </ClCompile>
+    <ClCompile Include="Tools\SocketWrapper.c">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Consensus\Raft\Raft.c">
+      <Filter>Consensus\Raft</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

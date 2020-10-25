@@ -11,7 +11,7 @@
  * Инициализировать фильтр Блума
  * @param[inout] psBloomFilter		Экзмепляр
  * @param[in]	 dwCapacity			Вместимость фильтра
- * @param[in]	 dwErrorProbably	Вероятность ложноположительного срабатывания [1; 100]
+ * @param[in]	 dwErrorProbably	Вероятность ложноположительного срабатывания [1; 1000000]
  * @return							Результат работы.
  */
 BOOL
@@ -21,14 +21,14 @@ InitializeBloomFilter(
 	DWORD			dwErrorProbably
 )
 {
-	if (dwErrorProbably < 1 || dwErrorProbably > 100)
+	if (dwErrorProbably < 1 || dwErrorProbably > 10000000)
 	{
 		LogError("[Bloom Filter] Вероятность ложноположительного срабатывания не принадлежит диапозону [1; 100]");
 		return FALSE;
 	}
 
 	/** 0.4761 ~ ln2 * ln2 */
-	DWORD dwBitsetSize = (DWORD)(-(dwCapacity * log((DOUBLE)dwErrorProbably / 100)) / 0.4761);
+	DWORD dwBitsetSize = (DWORD)(-(dwCapacity * log((DOUBLE)dwErrorProbably / 1000000)) / 0.4761);
 	/** 0.1732 ~ ln2 / 4 */
 	DWORD dwHashCount = (DWORD)((dwBitsetSize / dwCapacity) * 0.1732);
 
