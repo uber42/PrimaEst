@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file LockFreeSkipListTest.c
  *
  * @author Pavel Chursin

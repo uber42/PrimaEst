@@ -10,9 +10,6 @@
     <Filter Include="Test">
       <UniqueIdentifier>{b1d6d90f-f3e6-41fe-b5f4-be396522a602}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Utils">
-      <UniqueIdentifier>{ab5e19d1-0394-4bcf-b62c-ed8c9d625be8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ThirdParty">
       <UniqueIdentifier>{7b9ddcb9-5892-459e-b46a-ac0da8afd498}</UniqueIdentifier>
     </Filter>
@@ -76,6 +73,9 @@
     <Filter Include="Consensus\RPC">
       <UniqueIdentifier>{8405c28d-cae0-4765-a917-fa434c555705}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Test\RpcTest">
+      <UniqueIdentifier>{1ad2c1fd-4bb4-4334-be49-e5c559d2557f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Storage\Skiplist\SkipList.h">
@@ -84,9 +84,6 @@
     <ClInclude Include="global.h" />
     <ClInclude Include="Tools\List.h">
       <Filter>Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\Random.h">
-      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Tools\Fnv1a.h">
       <Filter>Tools</Filter>
@@ -153,6 +150,27 @@
     </ClInclude>
     <ClInclude Include="Consensus\Raft\Raft.h">
       <Filter>Consensus\Raft</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools\Random.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Consensus\RPC\ClientRPC.h">
+      <Filter>Consensus\RPC</Filter>
+    </ClInclude>
+    <ClInclude Include="Consensus\RPC\ServerRPC.h">
+      <Filter>Consensus\RPC</Filter>
+    </ClInclude>
+    <ClInclude Include="Consensus\RPC\RequestsRPC.h">
+      <Filter>Consensus\Raft</Filter>
+    </ClInclude>
+    <ClInclude Include="Consensus\RPC\ResponsesRPC.h">
+      <Filter>Consensus\Raft</Filter>
+    </ClInclude>
+    <ClInclude Include="Consensus\RPC\DefinitionRPC.h">
+      <Filter>Consensus\RPC</Filter>
+    </ClInclude>
+    <ClInclude Include="Test\RpcTest.h">
+      <Filter>Test\RpcTest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +241,15 @@
     </ClCompile>
     <ClCompile Include="Consensus\Raft\Raft.c">
       <Filter>Consensus\Raft</Filter>
+    </ClCompile>
+    <ClCompile Include="Consensus\RPC\ClientRPC.c">
+      <Filter>Consensus\RPC</Filter>
+    </ClCompile>
+    <ClCompile Include="Consensus\RPC\ServerRPC.c">
+      <Filter>Consensus\RPC</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\RpcTest.c">
+      <Filter>Test\RpcTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

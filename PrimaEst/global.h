@@ -39,9 +39,7 @@
 #include "Tools/Crc32.h"
 #include "Tools/Bitset.h"
 #include "Tools/SocketWrapper.h"
-
-/** UTILS */
-#include "Utils/Random.h"
+#include "Tools/Random.h"
 
 /** STORAGE */
 #include "Storage/StorageConfiguration.h"
@@ -51,6 +49,12 @@
 #include "Storage/CommitLog/CommitLog.h"
 #include "Storage/BloomFilter/BloomFilter.h"
 
+/** CONSENSUS */
+#include "Consensus/RPC/DefinitionRPC.h"
+#include "Consensus/RPC/ServerRPC.h"
+#include "Consensus/RPC/ClientRPC.h"
+
+
 #ifdef TESTS
 
 #include "Test/LockFreeSkipListTest.h"
@@ -58,6 +62,7 @@
 #include "Test/LogTest.h"
 #include "Test/BitsetTest.h"
 #include "Test/BloomFilterTest.h"
+#include "Test/RpcTest.h"
 
 #endif
 

@@ -1,4 +1,4 @@
-/**
+п»ї/**
  * @file BloomFilterTest.c
  *
  * @author Pavel Chursin
@@ -16,16 +16,16 @@ typedef struct _SBloomFilterKeysTest
 
 typedef struct _SBloomFilterMultiThreadTest
 {
-	/** Экземпляр фильтра блума */
+	/** Р­РєР·РµРјРїР»СЏСЂ С„РёР»СЊС‚СЂР° Р±Р»СѓРјР° */
 	PSBloomFilter psBloomFilter;
 
-	/** Начало диапозона */
+	/** РќР°С‡Р°Р»Рѕ РґРёР°РїРѕР·РѕРЅР° */
 	DWORD	dwFrom;
 
-	/** Конец диапозона */
+	/** РљРѕРЅРµС† РґРёР°РїРѕР·РѕРЅР° */
 	DWORD	dwTo;
 
-	/** Ключ для вставки */
+	/** РљР»СЋС‡ РґР»СЏ РІСЃС‚Р°РІРєРё */
 	PSBloomFilterKeysTest psKeys;
 } SBloomFilterMultiThreadTest, *PSBloomFilterMultiThreadTest;
 

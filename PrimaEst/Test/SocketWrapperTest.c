@@ -56,27 +56,23 @@ ServerTestRoutine(
 		assert(FALSE);
 	}
 	
-	BYTE pbBuffer_1[1024];
-	PBYTE pbEnd = &pbBuffer_1;
+	DWORD dwSize = 1024;
+	PBYTE pbBuffer = malloc(dwSize);
 
-	DWORD dwSize = _ALLOCA_S_THRESHOLD;
-	BOOL bReallocated = FALSE;
 	bResult = SocketReceive(
 		sClientSocket,
-		&pbEnd,
-		&dwSize,
-		0, &bReallocated);
+		&pbBuffer,
+		&dwSize, 0);
 	if (!bResult)
 	{
 		CloseSocket(&sServerSocket);
 		assert(FALSE);
 	}
 
-	assert(bReallocated);
 	assert(dwSize == sizeof(g_bTestBuffer_1));
 	for (DWORD dwIdx = 0; dwIdx < sizeof(g_bTestBuffer_1); dwIdx++)
 	{
-		assert(pbEnd[dwIdx] == g_bTestBuffer_1[dwIdx]);
+		assert(pbBuffer[dwIdx] == g_bTestBuffer_1[dwIdx]);
 	}
 
 	CloseSocket(&sClientSocket);
@@ -88,26 +84,27 @@ ServerTestRoutine(
 		CloseSocket(&sServerSocket);
 		assert(FALSE);
 	}
-	BYTE pbBuffer_2[1024];
-	dwSize = sizeof(pbBuffer_2);
-	pbEnd = &pbBuffer_2;
+
+	dwSize = 1024;
+	PBYTE pbBuffer_2 = malloc(dwSize);
 	bResult = SocketReceive(
 		sClientSocket,
-		&pbEnd,
-		&dwSize,
-		0, &bReallocated);
+		&pbBuffer_2,
+		&dwSize, 0);
 	if (!bResult)
 	{
 		CloseSocket(&sServerSocket);
 		assert(FALSE);
 	}
 
-	assert(bReallocated == FALSE);
 	assert(dwSize == sizeof(g_bTestBuffer_2));
 	for (DWORD dwIdx = 0; dwIdx < sizeof(g_bTestBuffer_2); dwIdx++)
 	{
-		assert(pbEnd[dwIdx] == g_bTestBuffer_2[dwIdx]);
+		assert(pbBuffer_2[dwIdx] == g_bTestBuffer_2[dwIdx]);
 	}
+
+	free(pbBuffer);
+	free(pbBuffer_2);
 
 	CloseSocket(&sServerSocket);
 	CloseSocket(&sClientSocket);
@@ -228,27 +225,23 @@ ServerWithCheckSumTestRoutine(
 		assert(FALSE);
 	}
 
-	BYTE pbBuffer_1[1024];
-	PBYTE pbEnd = &pbBuffer_1;
+	DWORD dwSize = 1024;
+	PBYTE pbBuffer = malloc(dwSize);
 
-	DWORD dwSize = _ALLOCA_S_THRESHOLD;
-	BOOL bReallocated = FALSE;
 	bResult = SocketReceiveWithCheck(
 		sClientSocket,
-		&pbEnd,
-		&dwSize,
-		0, &bReallocated);
+		&pbBuffer,
+		&dwSize, 0);
 	if (!bResult)
 	{
 		CloseSocket(&sServerSocket);
 		assert(FALSE);
 	}
 
-	assert(bReallocated);
 	assert(dwSize == sizeof(g_bTestBuffer_1));
 	for (DWORD dwIdx = 0; dwIdx < sizeof(g_bTestBuffer_1); dwIdx++)
 	{
-		assert(pbEnd[dwIdx] == g_bTestBuffer_1[dwIdx]);
+		assert(pbBuffer[dwIdx] == g_bTestBuffer_1[dwIdx]);
 	}
 
 	CloseSocket(&sClientSocket);
@@ -260,26 +253,23 @@ ServerWithCheckSumTestRoutine(
 		CloseSocket(&sServerSocket);
 		assert(FALSE);
 	}
-	BYTE pbBuffer_2[1024];
-	dwSize = sizeof(pbBuffer_2);
-	pbEnd = &pbBuffer_2;
+
+
+	dwSize = 1024;
+	PBYTE pbBuffer_2 = malloc(dwSize);
 	bResult = SocketReceiveWithCheck(
 		sClientSocket,
-		&pbEnd,
-		&dwSize,
-		0, &bReallocated);
-	if (!bResult)
-	{
-		CloseSocket(&sServerSocket);
-		assert(FALSE);
-	}
+		&pbBuffer_2,
+		&dwSize, 0);
 
-	assert(bReallocated == FALSE);
 	assert(dwSize == sizeof(g_bTestBuffer_2));
 	for (DWORD dwIdx = 0; dwIdx < sizeof(g_bTestBuffer_2); dwIdx++)
 	{
-		assert(pbEnd[dwIdx] == g_bTestBuffer_2[dwIdx]);
+		assert(pbBuffer_2[dwIdx] == g_bTestBuffer_2[dwIdx]);
 	}
+
+	free(pbBuffer);
+	free(pbBuffer_2);
 
 	CloseSocket(&sServerSocket);
 	CloseSocket(&sClientSocket);
@@ -418,20 +408,21 @@ SocketWrapperTimeoutTest()
 		assert(FALSE);
 	}
 
-	BYTE pbBuffer[1];
-	DWORD dwSize = sizeof(pbBuffer);
+	PBYTE pbBuffer = NULL;
+	DWORD dwSize = 0;
 	BOOL bReallocated = FALSE;
 	bResult = SocketReceive(
 		sServerSocket,
 		&pbBuffer, dwSize,
-		250, &bReallocated);
+		250);
 	
 	assert(!bResult);
-	assert(!bReallocated);
-	assert(dwSize == sizeof(pbBuffer));
+	assert(dwSize == 0);
 	assert(WSAGetLastError() == TIMEOUT_EXPIRED);
 
 	CloseSocket(&sServerSocket);
+
+	free(pbBuffer);
 
 	DeinitializeWSA();
 }

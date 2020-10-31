@@ -22,9 +22,12 @@ int main()
 		return FALSE;
 	}
 
-	SocketWrapperTest();
-	SocketWrapperTimeoutTest();
-	SocketWrapperWithCheckSumTest();
+	RpcTest();
+	RpcMultiThreadTest();
+
+	//SocketWrapperTest();
+	//SocketWrapperTimeoutTest();
+	//SocketWrapperWithCheckSumTest();
 
 	//BloomFilterTest();
 	//BloomFilterMultiThreadTest();

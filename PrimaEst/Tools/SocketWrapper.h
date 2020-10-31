@@ -8,9 +8,13 @@
 #ifndef SOCKET_WRAPPER_H
 #define SOCKET_WRAPPER_H
 
-#define SOCKET_RECEIVE_CHUNK 0x1000
+#define SOCKET_RECEIVE_CHUNK	0x1000 // 0x40000 ~ 0.25 mb
 
-#define TIMEOUT_EXPIRED		 0x00C0FFEE
+#define TIMEOUT_EXPIRED			0x00C0FFEE
+
+#define IPV4_ADDRESS_MAX_LENGTH 16
+#define PORT_MAX_SYMBOL_LENGTH	6
+
 
 typedef struct _SSocket
 {
@@ -112,17 +116,17 @@ SocketSend(
 * @param[in]	pBuffer			Буфер с данными
 * @param[inout] dwSize			Размер данных
 * @param[in]	lTimeout		Таймаут
-* @param[out]	pbReallocated	Реаллоцирована ли память
 * @return						Результат работы.
 * Если таймаут равен нулю, то вызов ждет бесконечно
+* Если размер буфера равен нулю, то функция сама выделит
+* буфер нужного размера
 */
 BOOL
 SocketReceive(
 	SSocket sSocket,
-	PBYTE*  ppBuffer,
+	PBYTE	*pBuffer,
 	PDWORD	pdwSize,
-	LONG	lTimeout,
-	PBOOL	pbReallocated
+	LONG	lTimeout
 );
 
 /**
@@ -145,18 +149,29 @@ SocketSendWithCheck(
 * @param[in]	pBuffer			Буфер с данными
 * @param[inout] dwSize			Размер данных
 * @param[in]	lTimeout		Таймаут
-* @param[out]	pbReallocated	Реаллоцирована ли память
 * @return						Результат работы.
 * Если таймаут равен нулю, то вызов ждет бесконечно
+* Если размер буфера равен нулю, то функция сама выделит
+* буфер нужного размера
 */
 BOOL
 SocketReceiveWithCheck(
 	SSocket sSocket,
-	PBYTE* ppBuffer,
+	PBYTE	*pBuffer,
 	PDWORD	pdwSize,
-	LONG	lTimeout,
-	PBOOL	pbReallocated
+	LONG	lTimeout
 );
+
+/**
+* Проверить закрыт ли сокет
+* @param[in]	sSocket			Сокет
+* @return						Закрыт ли сокет
+*/
+BOOL
+SocketIsClosed(
+	SSocket sSocket
+);
+
 
 /**
 * Закрыть сокет

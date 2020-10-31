@@ -9,6 +9,8 @@
 
 static WSADATA g_wsaData = { 0 };
 
+#pragma pack(push)
+
 /**
 * Структура заголовок сообщения
 */
@@ -20,6 +22,9 @@ typedef struct _SSocketMessageHeader
 	/** Хэш сообщения */
 	DWORD	dwCrc32;
 } SSocketMessageHeader, *PSSocketMessageHeader;
+
+
+#pragma pack(pop)
 
 /**
 * Ожидание изменения состояния на чтение
@@ -131,6 +136,18 @@ CreateSocket(
 		return FALSE;
 	}
 	
+	DWORD dwOption = 1;
+	nResult = setsockopt(
+		psSocket->hSocket,
+		SOL_SOCKET,
+		SO_REUSEADDR,
+		&dwOption,
+		sizeof(dwOption));
+	if (nResult == SOCKET_ERROR)
+	{
+		LogError("[Socket Wrapper] Ошибка установки параметра");
+	}
+
 	return TRUE;
 }
 
@@ -252,17 +269,17 @@ SocketSend(
 	SSocketMessageHeader sHeader = { 0 };
 	sHeader.dwSize = dwSize;
 
-	INT nResult = send(
+	DWORD dwHeaderSize = sizeof(SSocketMessageHeader);
+	BOOL bResult = SocketSendInternal(
 		sSocket.hSocket,
-		(PBYTE)&sHeader,
-		sizeof(SSocketMessageHeader), 0);
-	if (nResult != sizeof(SSocketMessageHeader))
+		&sHeader,
+		dwHeaderSize);
+	if (!bResult)
 	{
-		LogError("[Socket Wrapper] Ошибка отправки заголовка : %d", WSAGetLastError());
 		return FALSE;
 	}
 
-	BOOL bResult = SocketSendInternal(
+	bResult = SocketSendInternal(
 		sSocket.hSocket,
 		pBuffer,
 		dwSize);
@@ -280,23 +297,22 @@ SocketSend(
 * @param[in]	pBuffer			Буфер с данными
 * @param[inout] dwSize			Размер данных
 * @param[in]	lTimeout		Таймаут
-* @param[out]	pbReallocated	Реаллоцирована ли память
 * @return						Результат работы.
 * Если таймаут равен нулю, то вызов ждет бесконечно
+* Если размер буфера равен нулю, то функция сама выделит
+* буфер нужного размера
 */
 BOOL
 SocketReceive(
 	SSocket sSocket,
-	PBYTE*  ppBuffer,
+	PBYTE	*pBuffer,
 	PDWORD	pdwSize,
-	LONG	lTimeout,
-	PBOOL	pbReallocated
+	LONG	lTimeout
 )
 {
 	TIMEVAL	 sTimeVal;
 	PTIMEVAL psTimeVal = NULL;
-
-	*pbReallocated = FALSE;
+	BOOL	 bReallocated = FALSE;
 
 	if (lTimeout != 0)
 	{
@@ -306,19 +322,13 @@ SocketReceive(
 		psTimeVal = &sTimeVal;
 	}
 
-	BOOL bResult = SocketReadSelect(
-		sSocket.hSocket, psTimeVal);
-	if (!bResult)
-	{
-		return FALSE;
-	}
-
 	SSocketMessageHeader sHeader;
-	INT nResult = recv(
+	BOOL bResult = SocketReceiveInternal(
 		sSocket.hSocket,
 		&sHeader,
-		sizeof(SSocketMessageHeader), 0);
-	if (nResult != sizeof(SSocketMessageHeader))
+		sizeof(SSocketMessageHeader), 
+		psTimeVal);
+	if (!bResult)
 	{
 		LogError("[Socket Wrapper] Ошибка принятия заголовка : %d", WSAGetLastError());
 		return FALSE;
@@ -326,28 +336,44 @@ SocketReceive(
 
 	if (*pdwSize < sHeader.dwSize)
 	{
-		*ppBuffer = malloc(sHeader.dwSize);
-		if (!ppBuffer)
+		PBYTE pbAllocatedBuffer = NULL;
+		if (*pdwSize == 0)
 		{
-			LogError("[Socket Wrapper] Ошибка выделения памяти");
-			LogDebug("[Socket Wrapper] SocketRecevice -> malloc");
-			return FALSE;
+			pbAllocatedBuffer = malloc(sHeader.dwSize);
+			if (!pbAllocatedBuffer)
+			{
+				LogError("[Socket Wrapper] Ошибка выделения памяти");
+				LogDebug("[Socket Wrapper] SocketRecevice -> malloc");
+				return FALSE;
+			}
 		}
-		*pbReallocated = TRUE;
+		else
+		{
+			pbAllocatedBuffer = realloc(*pBuffer, sHeader.dwSize);
+			if (!pbAllocatedBuffer)
+			{
+				LogError("[Socket Wrapper] Ошибка реаллоцирования памяти");
+				LogDebug("[Socket Wrapper] SocketRecevice -> realloc");
+				return FALSE;
+			}
+		}
+		
+		*pBuffer = pbAllocatedBuffer;
+		bReallocated = TRUE;
 	}
 
 	*pdwSize = sHeader.dwSize;
 
 	bResult = SocketReceiveInternal(
 		sSocket.hSocket,
-		*ppBuffer,
+		*pBuffer,
 		*pdwSize,
 		psTimeVal);
 	if (!bResult)
 	{
-		if (*pbReallocated)
+		if (bReallocated)
 		{
-			free(*ppBuffer);
+			free(*pBuffer);
 		}
 		return FALSE;
 	}
@@ -403,23 +429,21 @@ SocketSendWithCheck(
 * @param[in]	pBuffer			Буфер с данными
 * @param[inout] dwSize			Размер данных
 * @param[in]	lTimeout		Таймаут
-* @param[out]	pbReallocated	Реаллоцирована ли память
 * @return						Результат работы.
 * Если таймаут равен нулю, то вызов ждет бесконечно
+* Если размер буфера равен нулю, то функция сама выделит
+* буфер нужного размера
 */
 BOOL
 SocketReceiveWithCheck(
 	SSocket sSocket,
-	PBYTE* ppBuffer,
+	PBYTE	*pBuffer,
 	PDWORD	pdwSize,
-	LONG	lTimeout,
-	PBOOL	pbReallocated
+	LONG	lTimeout
 )
 {
 	TIMEVAL	 sTimeVal;
 	PTIMEVAL psTimeVal = NULL;
-
-	*pbReallocated = FALSE;
 
 	if (lTimeout != 0)
 	{
@@ -449,43 +473,81 @@ SocketReceiveWithCheck(
 
 	if (*pdwSize < sHeader.dwSize)
 	{
-		*ppBuffer = malloc(sHeader.dwSize);
-		if (!ppBuffer)
+		PBYTE pbAllocatedBuffer = NULL;
+		if (*pdwSize == 0)
 		{
-			LogError("[Socket Wrapper] Ошибка выделения памяти");
-			LogDebug("[Socket Wrapper] SocketRecevice -> malloc");
-			return FALSE;
+			pbAllocatedBuffer = malloc(sHeader.dwSize);
+			if (!pbAllocatedBuffer)
+			{
+				LogError("[Socket Wrapper] Ошибка выделения памяти");
+				LogDebug("[Socket Wrapper] SocketRecevice -> malloc");
+				return FALSE;
+			}
 		}
-		*pbReallocated = TRUE;
+		else
+		{
+			pbAllocatedBuffer = realloc(*pBuffer, sHeader.dwSize);
+			if (!pbAllocatedBuffer)
+			{
+				LogError("[Socket Wrapper] Ошибка реаллоцирования памяти");
+				LogDebug("[Socket Wrapper] SocketRecevice -> realloc");
+				return FALSE;
+			}
+		}
+
+		*pBuffer = pbAllocatedBuffer;
 	}
 
 	*pdwSize = sHeader.dwSize;
 
 	bResult = SocketReceiveInternal(
 		sSocket.hSocket,
-		*ppBuffer,
+		*pBuffer,
 		*pdwSize,
 		psTimeVal);
 	if (!bResult)
 	{
-		if (*pbReallocated)
-		{
-			free(*ppBuffer);
-		}
 		return FALSE;
 	}
 
-	DWORD dwHash = Crc32BufferCompute(*ppBuffer, *pdwSize);
+	DWORD dwHash = Crc32BufferCompute(*pBuffer, *pdwSize);
 	if (dwHash != sHeader.dwCrc32)
 	{
-		if (*pbReallocated)
-		{
-			free(*ppBuffer);
-		}
 		return FALSE;
 	}
 
 	return TRUE;
+}
+
+/**
+* Проверить закрыт ли сокет
+* @param[in]	sSocket			Сокет
+* @return						Закрыт ли сокет
+*/
+BOOL
+SocketIsClosed(
+	SSocket sSocket
+)
+{
+	fd_set hSet;
+	FD_ZERO(&hSet);
+	FD_SET(sSocket.hSocket, &hSet);
+
+	TIMEVAL sTimeout = { 0 };
+	select(
+		sSocket.hSocket + 1,
+		&hSet, 0, 0, &sTimeout);
+	if (!FD_ISSET(sSocket.hSocket, &hSet))
+	{
+		return FALSE;
+	}
+	
+	int nBytesCanRead = 0;
+	ioctlsocket(
+		sSocket.hSocket,
+		FIONREAD,
+		&nBytesCanRead);
+	return nBytesCanRead == 0;
 }
 
 /**
@@ -524,7 +586,7 @@ SocketReadSelect(
 	FD_SET(hSocket, &fdReadSet);
 
 	INT nResult = select(
-		NULL,
+		hSocket + 1,
 		&fdReadSet,
 		NULL, NULL, pTimeout);
 	if (nResult == SOCKET_ERROR)
@@ -630,11 +692,19 @@ SocketReceiveInternal(
 			return FALSE;
 		}
 
+		DWORD dwDifference = dwSize - dwReadByte;
+		DWORD dwNeedRead = (dwDifference) < SOCKET_RECEIVE_CHUNK ?
+			dwDifference : SOCKET_RECEIVE_CHUNK;
 		INT nResult = recv(
 			hSocket, szBuffer,
-			SOCKET_RECEIVE_CHUNK, 0);
+			dwNeedRead, 0);
 		if (nResult > 0)
 		{
+			if (dwSize < dwReadByte + nResult)
+			{
+				LogError("[Socket Wrapper] Ошибка чтения из сокета");
+				return FALSE;
+			}
 			memcpy(pBuffer + dwReadByte, szBuffer, nResult);
 			dwReadByte += nResult;
 

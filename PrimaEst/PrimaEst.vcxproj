@@ -247,6 +247,11 @@
   <ItemGroup>
     <ClInclude Include="Benchmarks\SkipList\SkipListSelection.h" />
     <ClInclude Include="Consensus\Raft\Raft.h" />
+    <ClInclude Include="Consensus\RPC\ClientRPC.h" />
+    <ClInclude Include="Consensus\RPC\DefinitionRPC.h" />
+    <ClInclude Include="Consensus\RPC\RequestsRPC.h" />
+    <ClInclude Include="Consensus\RPC\ResponsesRPC.h" />
+    <ClInclude Include="Consensus\RPC\ServerRPC.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="Log\Log.h" />
     <ClInclude Include="Storage\BloomFilter\BloomFilter.h" />
@@ -259,6 +264,7 @@
     <ClInclude Include="Test\BloomFilterTest.h" />
     <ClInclude Include="Test\LockFreeSkipListTest.h" />
     <ClInclude Include="Test\LogTest.h" />
+    <ClInclude Include="Test\RpcTest.h" />
     <ClInclude Include="Test\SkipListTest.h" />
     <ClInclude Include="Test\SocketWrapperTest.h" />
     <ClInclude Include="ThirdParty\cJSON\cJSON.h" />
@@ -269,13 +275,15 @@
     <ClInclude Include="Tools\Fnv1a.h" />
     <ClInclude Include="Tools\List.h" />
     <ClInclude Include="Tools\MessageQueue.h" />
+    <ClInclude Include="Tools\Random.h" />
     <ClInclude Include="Tools\SocketWrapper.h" />
-    <ClInclude Include="Utils\Random.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="benchmarks.c" />
     <ClCompile Include="Benchmarks\SkipList\SkipListSelection.c" />
     <ClCompile Include="Consensus\Raft\Raft.c" />
+    <ClCompile Include="Consensus\RPC\ClientRPC.c" />
+    <ClCompile Include="Consensus\RPC\ServerRPC.c" />
     <ClCompile Include="Log\Log.c" />
     <ClCompile Include="Storage\BloomFilter\BloomFilter.c" />
     <ClCompile Include="Storage\CommitLog\CommitLog.c" />
@@ -287,6 +295,7 @@
     <ClCompile Include="Test\BloomFilterTest.c" />
     <ClCompile Include="Test\LockFreeSkipListTest.c" />
     <ClCompile Include="Test\LogTest.c" />
+    <ClCompile Include="Test\RpcTest.c" />
     <ClCompile Include="Test\SkipListTest.c" />
     <ClCompile Include="Test\SocketWrapperTest.c" />
     <ClCompile Include="ThirdParty\cJSON\cJSON.c" />
