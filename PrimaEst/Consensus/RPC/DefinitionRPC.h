@@ -1,15 +1,15 @@
-#ifndef DEFENITION_RPC_H
+п»ї#ifndef DEFENITION_RPC_H
 #define DEFENITION_RPC_H
 
 /**
-* RPC Запрос
+* RPC Р—Р°РїСЂРѕСЃ
 */
 typedef struct _SRpcRequest
 {
-	/** Тип запроса */
+	/** РўРёРї Р·Р°РїСЂРѕСЃР° */
 	DWORD	dwRequestID;
 
-	/** Данные */
+	/** Р”Р°РЅРЅС‹Рµ */
 	BYTE	pbBuffer[0];
 } SRpcRequest, *PSRpcRequest;
 
@@ -17,17 +17,17 @@ typedef struct _SRpcRequest
 #define RPC_RESPONSE_SIZE (sizeof(SRpcResponse) - RPC_RESPONSE_BUFFER_SIZE)
 
 /**
-* RPC Запрос
+* RPC Р—Р°РїСЂРѕСЃ
 */
 typedef struct _SRpcResponse
 {
-	/** Тип запроса */
+	/** РўРёРї Р·Р°РїСЂРѕСЃР° */
 	DWORD	dwRequestID;
 
-	/** Успешно ли ? */
+	/** РЈСЃРїРµС€РЅРѕ Р»Рё ? */
 	BOOL	bSuccess;
 
-	/** Данные */
+	/** Р”Р°РЅРЅС‹Рµ */
 	BYTE	pbBuffer[RPC_RESPONSE_BUFFER_SIZE];
 } SRpcResponse, * PSRpcResponse;
 

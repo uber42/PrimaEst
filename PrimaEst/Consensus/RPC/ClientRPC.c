@@ -8,12 +8,21 @@
 #include "../../global.h"
 #include "DefinitionRPC.h"
 
-
+ /**
+ * Переподключиться к RPC серверу
+ * @param[in] psRpcServer		Экземпляр клиента
+ * @return						Результат работы.
+ */
 BOOL
 RPCReconnect(
 	PSRpcClient	sRpcClient
 );
 
+/**
+* Переподключиться к RPC серверу
+* @param[in] psRpcServer		Экземпляр клиента
+* @return						Результат работы.
+*/
 BOOL
 RPCReconnect(
 	PSRpcClient	sRpcClient
@@ -42,7 +51,13 @@ RPCReconnect(
 	return TRUE;
 }
 
-
+/**
+* Создать RPC соединение
+* @param[in] sRpcClient	Экземпляр клинета
+* @param[in] szAddress	Адрес RPC сервера
+* @param[in] szPort		Порт RPC сервера
+* @return				Результат работы.
+*/
 BOOL
 CreateRPCClient(
 	PSRpcClient	sRpcClient,
@@ -71,7 +86,16 @@ CreateRPCClient(
 	return TRUE;
 }
 
-
+/**
+* Вызвать RPC функцию
+* @param[in] sRpcClient		Экземпляр клинета
+* @param[in] dwRpcCall		Идентификатор функции
+* @param[in] pbBuffer		Входной буфер
+* @param[in] dwSize			Размер входных данных
+* @param[in] pdwResult		Результат вызова
+* @param[in] pbResultBuffer	Выходные данные
+* @return					Результат работы.
+*/
 BOOL
 CallRPC(
 	PSRpcClient	sRpcClient,
@@ -142,6 +166,10 @@ CallRPC(
 	return TRUE;
 }
 
+/**
+* Закрыть RPC соединение
+* @param[in] sRpcClient		Экземпляр клинета
+*/
 VOID
 CloseRPCClient(
 	PSRpcClient	sRpcClient

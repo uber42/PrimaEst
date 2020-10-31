@@ -9,18 +9,30 @@
 #include "DefinitionRPC.h"
 
 
+/**
+* Структура аргумент клиентской сессии RPC
+*/
 typedef struct _SClientRoutineArg
 {
+	/** Клиентский сокет */
 	SSocket				sClientSocket;
 
+	/** Обработчик RPC */
 	RPCRequestHandler	cbRpcHandler;
 
+	/** Работает ли сервер */
 	volatile BOOL*		bIsWork;
 
+	/** Количество подключений */
 	volatile DWORD*		dwConnections;
 } SClientRoutineArg, * PSClientRoutineArg;
 
 
+/**
+* Обработчик клиентской сессии RPC
+* @param[in] lpThreadParameter	Аргумент обработчика
+* @return						Результат работы.
+*/
 static
 DWORD
 WINAPI
@@ -28,7 +40,11 @@ RPCClientRoutine(
 	LPVOID	lpThreadParameter
 );
 
-
+/**
+* Обработчик принятия подключений
+* @param[in] lpThreadParameter	Аргумент обработчика
+* @return						Результат работы.
+*/
 static
 DWORD
 WINAPI
@@ -36,7 +52,11 @@ RPCServerRoutine(
 	LPVOID	lpThreadParameter
 );
 
-
+/**
+* Обработчик принятия подключений
+* @param[in] lpThreadParameter	Аргумент обработчика
+* @return						Результат работы.
+*/
 static
 DWORD
 WINAPI
@@ -120,6 +140,11 @@ RPCServerRoutine(
 	return 0;
 }
 
+/**
+* Обработчик клиентской сессии RPC
+* @param[in] lpThreadParameter	Аргумент обработчика
+* @return						Результат работы.
+*/
 static
 DWORD
 WINAPI
@@ -178,6 +203,15 @@ RPCClientRoutine(
 	return 0;
 }
 
+/**
+* Инициализировать RPC сервер
+* @param[in] psRpcServer		Экземпляр сервера
+* @param[in] pszAddress			Адрес
+* @param[in] pszPort			Порт
+* @param[in] dwMaxConnections	Максимальное количество соединений
+* @param[in] cbRequestHandler	Обработчик RPC
+* @return						Результат работы.
+*/
 BOOL
 InitializeRPCServer(
 	PSRpcServer			psRpcServer,
@@ -220,6 +254,10 @@ InitializeRPCServer(
 }
 
 
+/**
+* Запустить RPC сервер
+* @param[in] psRpcServer		Экземпляр сервера
+*/
 BOOL
 StartRPCServer(
 	PSRpcServer	psRpcServer
@@ -251,6 +289,11 @@ StartRPCServer(
 	return TRUE;
 }
 
+/**
+* Закрыть описатель RPC сервера
+* @param[in] psRpcServer		Экземпляр сервера
+* @return						Результат работы.
+*/
 VOID
 CloseRPCServer(
 	PSRpcServer	psRpcServer

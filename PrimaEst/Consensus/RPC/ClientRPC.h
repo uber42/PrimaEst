@@ -8,6 +8,9 @@
 #ifndef CLIENT_RPC_H
 #define CLIENT_RPC_H
 
+/**
+* Структура RPC клинет
+*/
 typedef struct _SRpcClient
 {
 	/** Сокет */
@@ -21,6 +24,13 @@ typedef struct _SRpcClient
 } SRpcClient, *PSRpcClient;
 
 
+/**
+* Создать RPC соединение
+* @param[in] sRpcClient	Экземпляр клинета
+* @param[in] szAddress	Адрес RPC сервера
+* @param[in] szPort		Порт RPC сервера
+* @return				Результат работы.
+*/
 BOOL
 CreateRPCClient(
 	PSRpcClient	sRpcClient,
@@ -28,7 +38,16 @@ CreateRPCClient(
 	PCHAR		szPort
 );
 
-
+/**
+* Вызвать RPC функцию
+* @param[in] sRpcClient		Экземпляр клинета
+* @param[in] dwRpcCall		Идентификатор функции
+* @param[in] pbBuffer		Входной буфер
+* @param[in] dwSize			Размер входных данных
+* @param[in] pdwResult		Результат вызова
+* @param[in] pbResultBuffer	Выходные данные
+* @return					Результат работы.
+*/
 BOOL
 CallRPC(
 	PSRpcClient	sRpcClient,
@@ -39,7 +58,10 @@ CallRPC(
 	PBYTE		pbResultBuffer
 );
 
-
+/**
+* Закрыть RPC соединение
+* @param[in] sRpcClient		Экземпляр клинета
+*/
 VOID
 CloseRPCClient(
 	PSRpcClient	sRpcClient
