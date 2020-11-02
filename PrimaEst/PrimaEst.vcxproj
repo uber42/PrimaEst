@@ -192,6 +192,10 @@
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>BENCHMARKS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -247,10 +251,10 @@
   <ItemGroup>
     <ClInclude Include="Benchmarks\SkipList\SkipListSelection.h" />
     <ClInclude Include="Consensus\Raft\Raft.h" />
+    <ClInclude Include="Consensus\Raft\RequestsRPC.h" />
+    <ClInclude Include="Consensus\Raft\ResponsesRPC.h" />
     <ClInclude Include="Consensus\RPC\ClientRPC.h" />
     <ClInclude Include="Consensus\RPC\DefinitionRPC.h" />
-    <ClInclude Include="Consensus\RPC\RequestsRPC.h" />
-    <ClInclude Include="Consensus\RPC\ResponsesRPC.h" />
     <ClInclude Include="Consensus\RPC\ServerRPC.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="Log\Log.h" />
@@ -311,11 +315,7 @@
     <None Include="Benchmarks\BloomFilter\BloomFilterHashCount.py" />
     <None Include="Benchmarks\BloomFilter\BloomFilterMemory.py" />
     <None Include="Benchmarks\BloomFilter\Readme.md" />
-    <None Include="Benchmarks\SkipList\FindMultiThread.py" />
-    <None Include="Benchmarks\SkipList\LockFreeSkipListPlot.py" />
     <None Include="Benchmarks\SkipList\Readme.md" />
-    <None Include="Benchmarks\SkipList\SetMultiThread.py" />
-    <None Include="Benchmarks\SkipList\SkipListPlot.py" />
     <None Include="Test\Resources\TestLogConfigurationBad.json" />
     <None Include="Test\Resources\TestLogConfigurationOk.json" />
   </ItemGroup>

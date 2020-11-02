@@ -1,4 +1,4 @@
-#ifndef RAFT_H
+﻿#ifndef RAFT_H
 #define RAFT_H
 
 typedef struct _SRaft

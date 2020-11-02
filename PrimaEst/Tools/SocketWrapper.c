@@ -444,6 +444,7 @@ SocketReceiveWithCheck(
 {
 	TIMEVAL	 sTimeVal;
 	PTIMEVAL psTimeVal = NULL;
+	BOOL	 bReallocated = FALSE;
 
 	if (lTimeout != 0)
 	{
@@ -495,6 +496,7 @@ SocketReceiveWithCheck(
 			}
 		}
 
+		bReallocated = TRUE;
 		*pBuffer = pbAllocatedBuffer;
 	}
 
@@ -507,12 +509,20 @@ SocketReceiveWithCheck(
 		psTimeVal);
 	if (!bResult)
 	{
+		if (bReallocated)
+		{
+			free(*pBuffer);
+		}
 		return FALSE;
 	}
 
 	DWORD dwHash = Crc32BufferCompute(*pBuffer, *pdwSize);
 	if (dwHash != sHeader.dwCrc32)
 	{
+		if (bReallocated)
+		{
+			free(*pBuffer);
+		}
 		return FALSE;
 	}
 

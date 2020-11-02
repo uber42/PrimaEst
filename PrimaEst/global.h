@@ -9,6 +9,7 @@
 #define GLOBAL_H
 
 #define _CRT_SECURE_NO_WARNINGS
+#define BENCHMARKS
 
  /** WSA */
 #pragma comment(lib,"Ws2_32.lib")
@@ -53,6 +54,8 @@
 #include "Consensus/RPC/DefinitionRPC.h"
 #include "Consensus/RPC/ServerRPC.h"
 #include "Consensus/RPC/ClientRPC.h"
+#include "Consensus/Raft/RequestsRPC.h"
+#include "Consensus/Raft/ResponsesRPC.h"
 
 
 #ifdef TESTS

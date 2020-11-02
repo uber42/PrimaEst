@@ -160,17 +160,17 @@
     <ClInclude Include="Consensus\RPC\ServerRPC.h">
       <Filter>Consensus\RPC</Filter>
     </ClInclude>
-    <ClInclude Include="Consensus\RPC\RequestsRPC.h">
-      <Filter>Consensus\Raft</Filter>
-    </ClInclude>
-    <ClInclude Include="Consensus\RPC\ResponsesRPC.h">
-      <Filter>Consensus\Raft</Filter>
-    </ClInclude>
     <ClInclude Include="Consensus\RPC\DefinitionRPC.h">
       <Filter>Consensus\RPC</Filter>
     </ClInclude>
     <ClInclude Include="Test\RpcTest.h">
       <Filter>Test\RpcTest</Filter>
+    </ClInclude>
+    <ClInclude Include="Consensus\Raft\RequestsRPC.h">
+      <Filter>Consensus\Raft</Filter>
+    </ClInclude>
+    <ClInclude Include="Consensus\Raft\ResponsesRPC.h">
+      <Filter>Consensus\Raft</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -258,18 +258,6 @@
     </None>
     <None Include="Test\Resources\TestLogConfigurationOk.json">
       <Filter>Test\TestResources</Filter>
-    </None>
-    <None Include="Benchmarks\SkipList\LockFreeSkipListPlot.py">
-      <Filter>Benchmarks\SkipList</Filter>
-    </None>
-    <None Include="Benchmarks\SkipList\SkipListPlot.py">
-      <Filter>Benchmarks\SkipList</Filter>
-    </None>
-    <None Include="Benchmarks\SkipList\FindMultiThread.py">
-      <Filter>Benchmarks\SkipList</Filter>
-    </None>
-    <None Include="Benchmarks\SkipList\SetMultiThread.py">
-      <Filter>Benchmarks\SkipList</Filter>
     </None>
     <None Include="Benchmarks\SkipList\Readme.md">
       <Filter>Benchmarks\SkipList</Filter>

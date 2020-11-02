@@ -161,7 +161,7 @@ RPCClientRoutine(
 		BOOL bResult = SocketReceive(
 			sArg->sClientSocket,
 			&pBuffer,
-			&dwSize, 0);
+			&dwSize, 10000);
 		if (!bResult)
 		{			
 			if (WSAGetLastError() == TIMEOUT_EXPIRED)

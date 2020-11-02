@@ -58,7 +58,7 @@ typedef struct _SLockFreeSkipList
  * @param[in] pfValueChanger	Функция изменения значения узла
  * @return Созданный список
  */
-PSSkipList
+PSLockFreeSkipList
 CreateLockFreeSkipList(
 	FSkipListComp*				pfComparator,
 	FSkipListNodeEraser*		pfEraser,

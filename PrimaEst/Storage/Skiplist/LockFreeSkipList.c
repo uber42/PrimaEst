@@ -46,7 +46,7 @@ InternalLockFreeSkipListFind(
  * @param[in] pfValueChanger	Функция изменения значения узла
  * @return Созданный список
  */
-PSSkipList
+PSLockFreeSkipList
 CreateLockFreeSkipList(
 	FSkipListComp*				pfComparator,
 	FSkipListNodeEraser*		pfEraser,
@@ -132,7 +132,7 @@ LockFreeSkipListSet(
 			psNode->pNext[dwLevel] = *psSuccessors;
 		}
 
-		if (InterlockedCompareExchangePointer(
+		if (InterlockedCompareExchange64(
 			&(*psPredecessors)->pNext[0],
 			psNode, *psSuccessors
 		) != *psSuccessors)
@@ -152,7 +152,7 @@ LockFreeSkipListSet(
 				{
 					PSLockFreeSkipListNode psCurrentSuccessor = psNode->pNext[dwLevel];
 
-					if (InterlockedCompareExchangePointer(
+					if (InterlockedCompareExchange64(
 						&psNode->pNext[dwLevel],
 						psSuccessor, psCurrentSuccessor
 						) != psCurrentSuccessor)
@@ -161,7 +161,7 @@ LockFreeSkipListSet(
 					}
 				}
 
-				if (InterlockedCompareExchangePointer(
+				if (InterlockedCompareExchange64(
 					&psPredecessor->pNext[dwLevel],
 					psNode, psSuccessor
 					) == psSuccessor)
@@ -169,8 +169,6 @@ LockFreeSkipListSet(
 					break;
 				}
 
-				memset(psPredecessors, 0, sizeof(psPredecessors));
-				memset(psSuccessors, 0, sizeof(psSuccessors));
 				InternalLockFreeSkipListFind(psSkipList, psPredecessors, psSuccessors, &psFoundNode, pKey);
 			}
 		}
@@ -183,7 +181,7 @@ LockFreeSkipListSet(
 /**
  * Найти ключ в списке
  * @param[in] psSkipList	Экземпляр списка
- * @param[in] pKey		Ключ
+ * @param[in] pKey			Ключ
  * @return Найденный узел
  */
 BOOL
@@ -193,32 +191,31 @@ LockFreeSkipListFind(
 )
 {
 	DWORD dwHeight = SKIP_LIST_MAX_HEIGHT - 1;
-	PSLockFreeSkipListNode psNode = psSkipList->psHead;
+	PSLockFreeSkipListNode psPredcessor = psSkipList->psHead;
+	PSLockFreeSkipListNode psCurrentNode = NULL;
 
-	while (TRUE)
+	for (INT nLevel = dwHeight;
+		nLevel >= 0; nLevel--)
 	{
-		_ReadWriteBarrier();
-		PSLockFreeSkipListNode psNextNode = psNode->pNext[dwHeight];
+		psCurrentNode = psPredcessor->pNext[nLevel];
 
-		INT nCompare = 0xDEADBEEF;
-		BOOL bCompare = psNextNode != NULL &&
-			(nCompare = psSkipList->pfComparator(pKey, psNextNode->pKey)) > 0;
-		if (bCompare)
+		while (TRUE)
 		{
-			psNode = psNextNode;
-		}
-		else
-		{
-			if (dwHeight == 0)
+			PSLockFreeSkipListNode psSuccessor = psCurrentNode->pNext[nLevel];
+
+			BOOL bCompare = psSkipList->pfComparator(pKey, psCurrentNode->pKey) > 0;
+			if (bCompare)
 			{
-				return !nCompare ? TRUE : FALSE;
+				psPredcessor = psCurrentNode;
+				psCurrentNode = psSuccessor;
 			}
-
-			dwHeight--;
+			{
+				break;
+			}
 		}
 	}
 
-	return FALSE;
+	return psSkipList->pfComparator(pKey, psCurrentNode->pKey) == 0;
 }
 
 /**
@@ -237,6 +234,8 @@ LockFreeSkipListClear(
 	{
 		psNextNode = psCurrentNode->pNext[0];
 		psSkipList->pfEraser(psCurrentNode);
+
+		free(psCurrentNode);
 		psCurrentNode = psNextNode;
 	}
 }

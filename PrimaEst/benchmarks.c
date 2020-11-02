@@ -1,7 +1,6 @@
 ﻿/**
  * @file benchmarks.c
- *
- * @author Pavel Chursin
+ * * @author Pavel Chursin
  * @date Oct 2020
  */
 
@@ -11,12 +10,13 @@
 
 int main()
 {
-	BloomFilterSelection();
+	//BloomFilterSelection();
 
 	//SkipListSelection();
+	//MultiThreadRemoveSkipListSelection();
 	//LockFreeSkipListSelection();
 	//MultiThreadFindSkipListSelection();
-	//MultiThreadSetSkipListSelection();
+	MultiThreadSetSkipListSelection();
 }
 
 #endif

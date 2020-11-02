@@ -9,7 +9,7 @@
 #define SKIP_LIST_DEFINITIONS_H
 
 /** Максимальная высота */
-#define SKIP_LIST_MAX_HEIGHT 12
+#define SKIP_LIST_MAX_HEIGHT 11
 
 /**
  * Компаратор ключей

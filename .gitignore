@@ -343,3 +343,4 @@ healthchecksdb
 *.exe
 
 Log.txt
+*.bin
