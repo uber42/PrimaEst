@@ -198,6 +198,8 @@ RPCClientRoutine(
 	}
 
 	InterlockedDecrement(sArg->dwConnections);
+
+	CloseSocket(&sArg->sClientSocket);
 	free(sArg);
 	
 	return 0;

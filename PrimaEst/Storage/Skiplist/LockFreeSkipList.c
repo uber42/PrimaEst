@@ -209,6 +209,7 @@ LockFreeSkipListFind(
 				psPredcessor = psCurrentNode;
 				psCurrentNode = psSuccessor;
 			}
+			else
 			{
 				break;
 			}

@@ -18,12 +18,19 @@ int main()
 		&sLogConfiguration);
 	if (!bResult)
 	{
-		printf("Ошибка инициализации лога");
+		printf("РћС€РёР±РєР° Р·Р°РїСѓСЃРєР° Р»РѕРіРёСЂРѕРІР°РЅРёСЏ");
 		return FALSE;
 	}
 
-	RpcTest();
-	RpcMultiThreadTest();
+	//TimerSetTest();
+	//TimerCancelTest();
+
+	//MCReceiveSendTest();
+	//MCSendReceiveTest();
+	//MCMultiThreadTest();
+
+	//RpcTest();
+	//RpcMultiThreadTest();
 
 	//SocketWrapperTest();
 	//SocketWrapperTimeoutTest();
@@ -68,6 +75,8 @@ int main()
 	//LogMultiThreadWriteTest_1();
 
 	DeinitializeAsyncLogger();
+
+	_CrtDumpMemoryLeaks();
 
 	system("PAUSE");
 }

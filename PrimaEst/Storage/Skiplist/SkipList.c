@@ -137,6 +137,8 @@ SkipListSet(
 			}
 			else if (nCompareResult == 0)
 			{
+				free(psSkipListNode);
+
 				psSkipList->pfValueChanger(&psSkipListCurrentNode->pValue, pValue);
 				return psSkipListCurrentNode;
 			}

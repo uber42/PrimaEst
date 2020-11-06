@@ -76,6 +76,12 @@
     <Filter Include="Test\RpcTest">
       <UniqueIdentifier>{1ad2c1fd-4bb4-4334-be49-e5c559d2557f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Test\MessageChannelTest">
+      <UniqueIdentifier>{17136d9d-609b-4d60-93ec-108ff8ac00e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test\TimerTest">
+      <UniqueIdentifier>{2750fd2c-0119-43b2-810e-fb4aa1b92913}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Storage\Skiplist\SkipList.h">
@@ -172,6 +178,18 @@
     <ClInclude Include="Consensus\Raft\ResponsesRPC.h">
       <Filter>Consensus\Raft</Filter>
     </ClInclude>
+    <ClInclude Include="Tools\Timer.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools\MessageChannel.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Test\MessageChannelTest.h">
+      <Filter>Test\MessageChannelTest</Filter>
+    </ClInclude>
+    <ClInclude Include="Test\TimerTest.h">
+      <Filter>Test\TimerTest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Storage\Skiplist\SkipList.c">
@@ -250,6 +268,18 @@
     </ClCompile>
     <ClCompile Include="Test\RpcTest.c">
       <Filter>Test\RpcTest</Filter>
+    </ClCompile>
+    <ClCompile Include="Tools\Timer.c">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Tools\MessageChannel.c">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\MessageChannelTest.c">
+      <Filter>Test\MessageChannelTest</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\TimerTest.c">
+      <Filter>Test\TimerTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

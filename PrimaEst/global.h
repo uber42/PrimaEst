@@ -9,7 +9,16 @@
 #define GLOBAL_H
 
 #define _CRT_SECURE_NO_WARNINGS
-#define BENCHMARKS
+
+#ifdef TESTS
+
+/** Ловим утечки памяти */
+#define __CRTDBG_MAP_ALLOC
+#include <crtdbg.h>
+#define DEBUG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
+#define new DEBUG_NEW
+
+#endif
 
  /** WSA */
 #pragma comment(lib,"Ws2_32.lib")
@@ -40,7 +49,9 @@
 #include "Tools/Crc32.h"
 #include "Tools/Bitset.h"
 #include "Tools/SocketWrapper.h"
+#include "Tools/MessageChannel.h"
 #include "Tools/Random.h"
+#include "Tools/Timer.h"
 
 /** STORAGE */
 #include "Storage/StorageConfiguration.h"
@@ -56,6 +67,7 @@
 #include "Consensus/RPC/ClientRPC.h"
 #include "Consensus/Raft/RequestsRPC.h"
 #include "Consensus/Raft/ResponsesRPC.h"
+#include "Consensus/Raft/Raft.h"
 
 
 #ifdef TESTS
@@ -66,6 +78,8 @@
 #include "Test/BitsetTest.h"
 #include "Test/BloomFilterTest.h"
 #include "Test/RpcTest.h"
+#include "Test/MessageChannelTest.h"
+#include "Test/TimerTest.h"
 
 #endif
 

@@ -88,6 +88,8 @@ BloomFilterTest()
 		);
 	}
 
+	free(psKeys);
+
 	DeleteBloomFilter(&sBloomFilter);
 }
 
@@ -172,6 +174,8 @@ BloomFilterMultiThreadTest()
 
 		assert(sBloomFilter.sBitset.pllSet[dwIdx] == sBloomFilterMT.sBitset.pllSet[dwIdx]);
 	}
+
+	free(psKeys);
 
 	DeleteBloomFilter(&sBloomFilterMT);
 	DeleteBloomFilter(&sBloomFilter);

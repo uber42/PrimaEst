@@ -91,7 +91,7 @@ ParseLogTest_1()
 	assert(sLogConfiguration.eLowerLevelPriority == ELP_DEBUG);
 	assert(sLogConfiguration.eUpperLevelPriority == ELP_EXTRA);
 	assert(strcmp(sLogConfiguration.szLogFilePath, "./Log.txt") == 0);
-	assert(sLogConfiguration.eOutputType == EOT_TEXTFILE);
+	assert(sLogConfiguration.eOutputType == EOT_CONSOLE);
 }
 
 VOID

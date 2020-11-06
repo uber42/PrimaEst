@@ -169,7 +169,7 @@ SkipListRemoveTest()
 		assert(psSkipListNode == NULL);
 	}
 
-	SkipListClear(psSkipList);
+	SkipListClose(psSkipList);
 }
 
 VOID

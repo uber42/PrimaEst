@@ -441,11 +441,14 @@ ParseLoggerConfiguration(
 	}
 	CloseHandle(hFile);
 
-	return ParseLoggerConfigurationInternal(
+	bResult = ParseLoggerConfigurationInternal(
 		pszBuffer,
 		dwFileSizeLow,
 		psLogConfiguration
 	);
+	
+	free(pszBuffer);
+	return bResult;
 }
 
 /**
@@ -460,8 +463,8 @@ LoggerRoutine(
 {
 	UNREFERENCED_PARAMETER(lpThreadParameter);
 
-	while (MessageQueueGetCount(g_sAsyncLogger.hMessageQueue) != 0 ||
-		g_sAsyncLogger.bIsWork)
+	while (g_sAsyncLogger.bIsWork || 
+		MessageQueueGetCount(g_sAsyncLogger.hMessageQueue) != 0)
 	{
 		DWORD dwError;
 		SMessageData sMessageData = { 0 };
