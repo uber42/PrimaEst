@@ -1,3 +1,10 @@
+/**
+ * @file Timer.h
+ *
+ * @author Pavel Chursin
+ * @date Nov 2020
+ */
+
 #ifndef TIMER_H
 #define TIMER_H
 

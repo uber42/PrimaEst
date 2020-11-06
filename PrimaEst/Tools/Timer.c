@@ -1,30 +1,41 @@
+п»ї/**
+ * @file Timer.c
+ *
+ * @author Pavel Chursin
+ * @date Nov 2020
+ */
+
 #include "../global.h"
 
 typedef struct _SApcProcArgument
 {
-	/** Канал для сигнала */
+	/** РљР°РЅР°Р» РґР»СЏ СЃРёРіРЅР°Р»Р° */
 	MESSAGE_CHANNEL	hMessageChannel;
 
-	/** ИД сообщения передаваемого в канал */
+	/** РР” СЃРѕРѕР±С‰РµРЅРёСЏ РїРµСЂРµРґР°РІР°РµРјРѕРіРѕ РІ РєР°РЅР°Р» */
 	DWORD			dwSignalId;
 } SApcProcArgument, * PSApcProcArgument;
 
 typedef struct _STimer
 {
-	/** Поток таймера */
+	/** РџРѕС‚РѕРє С‚Р°Р№РјРµСЂР° */
 	HANDLE			hThread;
 
-	/** Канал передачи таймаута */
+	/** РљР°РЅР°Р» РїРµСЂРµРґР°С‡Рё С‚Р°Р№РјР°СѓС‚Р° */
 	MESSAGE_CHANNEL hTimeoutChannel;
 
-	/** Дескриптор таймера */
+	/** Р”РµСЃРєСЂРёРїС‚РѕСЂ С‚Р°Р№РјРµСЂР° */
 	HANDLE			hWaitableTimer;
 
-	/** Аргумент APC процедуры таймера */
+	/** РђСЂРіСѓРјРµРЅС‚ APC РїСЂРѕС†РµРґСѓСЂС‹ С‚Р°Р№РјРµСЂР° */
 	SApcProcArgument sData;
 	
 } STimer, *PSTimer;
 
+
+/**
+* Р—Р°РіР»СѓС€РєР° РґР»СЏ РїСЂРµСЂС‹РІР°РЅРёСЏ СЂР°Р±РѕС‚С‹ С‚Р°Р№РјРµСЂР°
+*/
 static
 VOID
 WINAPI
@@ -41,6 +52,9 @@ TimerAPCProcStub(
 	return;
 }
 
+/**
+* APC Р’С‹Р·РѕРІ СЃСЂР°Р±Р°С‚С‹РІР°СЋС‰РёР№ РїРѕ РёСЃС‚РµС‡РµРЅРёРё С‚Р°Р№РјРµСЂР° 
+*/
 static
 VOID
 WINAPI
@@ -65,6 +79,9 @@ TimerAPCProc(
 }
 
 
+/**
+* РћР±СЂР°Р±РѕС‚С‡РёРє РїРѕС‚РѕРєР° С‚Р°Р№РјРµСЂР°
+*/
 static
 DWORD
 WINAPI
@@ -120,11 +137,11 @@ TimerRoutine(
 
 
 /**
-* Создать таймер
-* @param[out]   hTimer			Экземпляр таймера.
-* @param[in]	hMessageChannel	Канал для подачи сигнала истечения таймера.
-* @param[in]	dwSignalId		ИД для передачи в канал.
-* @return Результат работы функции.
+* РЎРѕР·РґР°С‚СЊ С‚Р°Р№РјРµСЂ
+* @param[out]   hTimer			Р­РєР·РµРјРїР»СЏСЂ С‚Р°Р№РјРµСЂР°.
+* @param[in]	hMessageChannel	РљР°РЅР°Р» РґР»СЏ РїРѕРґР°С‡Рё СЃРёРіРЅР°Р»Р° РёСЃС‚РµС‡РµРЅРёСЏ С‚Р°Р№РјРµСЂР°.
+* @param[in]	dwSignalId		РР” РґР»СЏ РїРµСЂРµРґР°С‡Рё РІ РєР°РЅР°Р».
+* @return Р РµР·СѓР»СЊС‚Р°С‚ СЂР°Р±РѕС‚С‹ С„СѓРЅРєС†РёРё.
 */
 BOOL
 CreateChannelTimer(
@@ -180,10 +197,10 @@ CreateChannelTimer(
 
 
 /**
-* Установить таймер
-* @param[out]   hTimer			Экземпляр таймера.
-* @param[in]	dwTimeout		Время срабатывания.
-* @return Результат работы функции.
+* РЈСЃС‚Р°РЅРѕРІРёС‚СЊ С‚Р°Р№РјРµСЂ
+* @param[out]   hTimer			Р­РєР·РµРјРїР»СЏСЂ С‚Р°Р№РјРµСЂР°.
+* @param[in]	dwTimeout		Р’СЂРµРјСЏ СЃСЂР°Р±Р°С‚С‹РІР°РЅРёСЏ.
+* @return Р РµР·СѓР»СЊС‚Р°С‚ СЂР°Р±РѕС‚С‹ С„СѓРЅРєС†РёРё.
 */
 BOOL
 SetChannelTimer(
@@ -204,8 +221,8 @@ SetChannelTimer(
 
 
 /**
-* Сбросить таймер
-* @param[out]   hTimer			Экземпляр таймера.
+* РЎР±СЂРѕСЃРёС‚СЊ С‚Р°Р№РјРµСЂ
+* @param[out]   hTimer			Р­РєР·РµРјРїР»СЏСЂ С‚Р°Р№РјРµСЂР°.
 */
 VOID
 ResetChannelTimer(
@@ -218,8 +235,8 @@ ResetChannelTimer(
 }
 
 /**
-* Удалить таймер
-* @param[out]   hTimer			Экземпляр таймера.
+* РЈРґР°Р»РёС‚СЊ С‚Р°Р№РјРµСЂ
+* @param[out]   hTimer			Р­РєР·РµРјРїР»СЏСЂ С‚Р°Р№РјРµСЂР°.
 */
 VOID
 DeleteChannelTimer(

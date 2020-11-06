@@ -1,3 +1,11 @@
+п»ї/**
+ * @file MessageChannel.h
+ *
+ * @author Pavel Chursin
+ * @date Nov 2020
+ */
+
+
 #ifndef MESSAGE_CHANNEL_H
 #define MESSAGE_CHANNEL_H
 
@@ -6,7 +14,7 @@
 typedef PVOID MESSAGE_CHANNEL;
 
 /**
-* В какой памяти находится буфер передаваемый по каналу
+* Р’ РєР°РєРѕР№ РїР°РјСЏС‚Рё РЅР°С…РѕРґРёС‚СЃСЏ Р±СѓС„РµСЂ РїРµСЂРµРґР°РІР°РµРјС‹Р№ РїРѕ РєР°РЅР°Р»Сѓ
 */
 typedef enum _EMCBufferAllocated
 {
@@ -16,9 +24,9 @@ typedef enum _EMCBufferAllocated
 } EMCBufferAllocated, *PEMCBufferAllocated;
 
 /**
-* Создать канал сообщений
-* @param[out]   hMessageChannel		Экземпляр канала сообщений.
-* @return Результат работы функции.
+* РЎРѕР·РґР°С‚СЊ РєР°РЅР°Р» СЃРѕРѕР±С‰РµРЅРёР№
+* @param[out]   hMessageChannel		Р­РєР·РµРјРїР»СЏСЂ РєР°РЅР°Р»Р° СЃРѕРѕР±С‰РµРЅРёР№.
+* @return Р РµР·СѓР»СЊС‚Р°С‚ СЂР°Р±РѕС‚С‹ С„СѓРЅРєС†РёРё.
 */
 BOOL
 CreateMessageChannel(
@@ -26,13 +34,13 @@ CreateMessageChannel(
 );
 
 /**
-* Отправить сообщение в канал
-* @param[in]   hMessageChannel		Экземпляр канала сообщений.
-* @param[in]   dwMessageId			ИД сообщения.
-* @param[in]   pBuffer				Буфер.
-* @param[in]   dwBufferSize			Размер буфера
-* @param[in]   eBufferAllocatedIn	Где выделен буфер (Стек или куча).
-* @return Результат работы функции.
+* РћС‚РїСЂР°РІРёС‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ РІ РєР°РЅР°Р»
+* @param[in]   hMessageChannel		Р­РєР·РµРјРїР»СЏСЂ РєР°РЅР°Р»Р° СЃРѕРѕР±С‰РµРЅРёР№.
+* @param[in]   dwMessageId			РР” СЃРѕРѕР±С‰РµРЅРёСЏ.
+* @param[in]   pBuffer				Р‘СѓС„РµСЂ.
+* @param[in]   dwBufferSize			Р Р°Р·РјРµСЂ Р±СѓС„РµСЂР°
+* @param[in]   eBufferAllocatedIn	Р“РґРµ РІС‹РґРµР»РµРЅ Р±СѓС„РµСЂ (РЎС‚РµРє РёР»Рё РєСѓС‡Р°).
+* @return Р РµР·СѓР»СЊС‚Р°С‚ СЂР°Р±РѕС‚С‹ С„СѓРЅРєС†РёРё.
 */
 BOOL
 SendMessageChannel(
@@ -44,11 +52,11 @@ SendMessageChannel(
 );
 
 /**
-* Принять сообщение из канала
-* @param[in]   hMessageChannel		Экземпляр канала сообщений.
-* @param[in]   pBuffer				Буфер.
-* @param[in]   dwBufferSize			Размер буфера.
-* @return ИД сообщения
+* РџСЂРёРЅСЏС‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ РёР· РєР°РЅР°Р»Р°
+* @param[in]   hMessageChannel		Р­РєР·РµРјРїР»СЏСЂ РєР°РЅР°Р»Р° СЃРѕРѕР±С‰РµРЅРёР№.
+* @param[in]   pBuffer				Р‘СѓС„РµСЂ.
+* @param[in]   dwBufferSize			Р Р°Р·РјРµСЂ Р±СѓС„РµСЂР°.
+* @return РР” СЃРѕРѕР±С‰РµРЅРёСЏ
 */
 DWORD
 ReceiveMessageChannel(
@@ -58,9 +66,9 @@ ReceiveMessageChannel(
 );
 
 /**
-* Получить размер текущего сообщения в канале
-* @param[in]   hMessageChannel		Экземпляр канала сообщений.
-* @return Размер
+* РџРѕР»СѓС‡РёС‚СЊ СЂР°Р·РјРµСЂ С‚РµРєСѓС‰РµРіРѕ СЃРѕРѕР±С‰РµРЅРёСЏ РІ РєР°РЅР°Р»Рµ
+* @param[in]   hMessageChannel		Р­РєР·РµРјРїР»СЏСЂ РєР°РЅР°Р»Р° СЃРѕРѕР±С‰РµРЅРёР№.
+* @return Р Р°Р·РјРµСЂ
 */
 DWORD
 MCGetCurrentBufferSize(
@@ -68,8 +76,8 @@ MCGetCurrentBufferSize(
 );
 
 /**
-* Закрыть канал сообщений
-* @param[in]   hMessageChannel		Экземпляр канала сообщений.
+* Р—Р°РєСЂС‹С‚СЊ РєР°РЅР°Р» СЃРѕРѕР±С‰РµРЅРёР№
+* @param[in]   hMessageChannel		Р­РєР·РµРјРїР»СЏСЂ РєР°РЅР°Р»Р° СЃРѕРѕР±С‰РµРЅРёР№.
 */
 VOID
 CloseMessageChannel(

@@ -1,3 +1,10 @@
+﻿/**
+ * @file TimerTest.c
+ *
+ * @author Pavel Chursin
+ * @date Nov 2020
+ */
+
 #include "../global.h"
 #include <time.h>
 

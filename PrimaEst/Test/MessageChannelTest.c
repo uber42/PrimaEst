@@ -1,3 +1,10 @@
+﻿/**
+ * @file MessageChannelTest.c
+ *
+ * @author Pavel Chursin
+ * @date Nov 2020
+ */
+
 #include "../global.h"
 
 #define TEST_MC_ID 1244
